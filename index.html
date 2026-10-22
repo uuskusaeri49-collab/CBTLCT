@@ -52,20 +52,9 @@
         import { getFirestore, collection, doc, setDoc, updateDoc, onSnapshot, addDoc, getDoc } from "https://www.gstatic.com/firebasejs/10.8.1/firebase-firestore.js";
         import { getAuth, signInAnonymously, onAuthStateChanged } from "https://www.gstatic.com/firebasejs/10.8.1/firebase-auth.js";
 
-        // Expose Firebase functions to global window object
-        window.doc = doc;
-        window.setDoc = setDoc;
-        window.updateDoc = updateDoc;
-        window.getDoc = getDoc;
-        window.collection = collection;
-        window.onSnapshot = onSnapshot;
-        window.addDoc = addDoc;
-        window.getDocs = getDocs;
-        window.query = query;
-
         const appId = typeof __app_id !== 'undefined' ? __app_id : 'cbt-cerdas-cermat-app';
         
-    // ⚠️ GANTI FIREBASE CONFIG INI DENGAN MILIK ANDA UNTUK GITHUB PAGES ⚠️
+        // ⚠️ FIREBASE CONFIG MILIK BOS ⚠️
         const firebaseConfig = {
             apiKey: "AIzaSyBFW85Dnj5hCe2nTVhPBLFuSjrA6mKcNy8",
             authDomain: "cbt-lct-fa5ff.firebaseapp.com",
@@ -80,8 +69,8 @@
             window.db = getFirestore(app);
             window.auth = getAuth(app);
             
-            // --- INI BAGIAN YANG DITAMBAHKAN AGAR ADMIN BISA MENYIMPAN DATA ---
-            window.appId = firebaseConfig.appId; // Mengambil ID unik proyek Bos
+            // --- DEKLARASI FUNGSI DATABASE ---
+            window.appId = firebaseConfig.appId;
             window.doc = doc;
             window.setDoc = setDoc; 
             window.updateDoc = updateDoc;
@@ -89,7 +78,7 @@
             window.onSnapshot = onSnapshot;
             window.addDoc = addDoc;
             window.getDoc = getDoc;
-            // -----------------------------------------------------------------
+            // ---------------------------------
             
             // Authentication System (Anti-Refresh Guard)
             const initAuth = async () => {
@@ -105,11 +94,12 @@
                 if (window.initAppLogic) window.initAppLogic();
             }).catch(err => {
                 console.error("Auth Error:", err);
-                document.getElementById('loading-text').innerText = "Gagal terhubung ke server.";
+                document.getElementById('loading-text').innerText = "Gagal terhubung ke server. (Auth)";
             });
 
         } catch (e) {
             console.error("Firebase Init Error:", e);
+            document.getElementById('loading-text').innerText = "Gagal memuat sistem Firebase.";
         }
     </script>
 </head>
