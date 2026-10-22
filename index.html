@@ -23,7 +23,6 @@
 
     <script type="module">
         import { initializeApp } from "https://www.gstatic.com/firebasejs/10.8.1/firebase-app.js";
-        // --- DITAMBAHKAN getDocs dan deleteDoc UNTUK FITUR RESET ---
         import { getFirestore, collection, doc, setDoc, updateDoc, onSnapshot, addDoc, getDoc, getDocs, deleteDoc } from "https://www.gstatic.com/firebasejs/10.8.1/firebase-firestore.js";
         import { getAuth, signInAnonymously, signInWithCustomToken } from "https://www.gstatic.com/firebasejs/10.8.1/firebase-auth.js";
 
@@ -51,11 +50,10 @@
             window.onSnapshot = onSnapshot;
             window.addDoc = addDoc;
             window.getDoc = getDoc;
-            window.getDocs = getDocs; // Fitur Reset
-            window.deleteDoc = deleteDoc; // Fitur Reset
+            window.getDocs = getDocs; 
+            window.deleteDoc = deleteDoc; 
             // ---------------------------------
             
-            // Authentication System (Anti-Refresh Guard)
             const initAuth = async () => {
                 if (typeof __initial_auth_token !== 'undefined' && __initial_auth_token) {
                     await signInWithCustomToken(window.auth, __initial_auth_token);
@@ -195,7 +193,8 @@
                         <input type="text" id="input-new-group" placeholder="Misal: SDN 1 Pusat" class="flex-1 px-3 py-1.5 border border-slate-300 rounded text-sm outline-none" onkeypress="if(event.key==='Enter') addGroup()">
                         <button onclick="addGroup()" class="px-3 py-1.5 bg-slate-800 text-white rounded text-sm hover:bg-slate-700">+</button>
                     </div>
-                    <div id="admin-group-list" class="flex flex-wrap gap-2 max-h-24 overflow-y-auto p-2 border border-slate-100 bg-slate-50 rounded"></div>
+                    <!-- LIST KELOMPOK TERBARU DENGAN TOMBOL EDIT/HAPUS -->
+                    <div id="admin-group-list" class="flex flex-wrap gap-2 max-h-32 overflow-y-auto p-2 border border-slate-100 bg-slate-50 rounded"></div>
                 </div>
 
                 <div class="mb-5 border-t pt-4">
@@ -213,7 +212,6 @@
                     <p class="text-xs text-green-600 mt-2 hidden text-center" id="jadwal-success-msg">Pengaturan tersimpan!</p>
                 </div>
 
-                <!-- 4. ZONA RESET (BARU DITAMBAHKAN) -->
                 <div class="border-t border-red-200 pt-4 mt-5">
                     <label class="text-xs font-bold text-red-500 uppercase tracking-wider block mb-2">4. Zona Berbahaya</label>
                     <button onclick="konfirmasiReset()" class="w-full py-2 bg-red-50 text-red-600 border border-red-200 rounded text-sm font-bold hover:bg-red-600 hover:text-white transition-colors">Reset Semua Nilai (Sesi Baru)</button>
@@ -277,7 +275,7 @@
     </div>
 
     <script>
-        // --- BANK SOAL (OTOMATIS SAMA SEPERTI SEBELUMNYA) ---
+        // --- BANK SOAL (TETAP AMAN) ---
         const bankSoal = [
             { id: 1, type: 'pg', text: "Perhatikan urutan pola bilangan berikut: 4, 9, 14, 19, ... Bilangan selanjutnya dalam urutan ini adalah...", img: null, options: [{ val: 'A', text: '24' }, { val: 'B', text: '22' }, { val: 'C', text: '23' }, { val: 'D', text: '25' }], answer: 'A' },
             { id: 2, type: 'pg', text: "Diberikan data survei warna kesukaan suatu kelas: Merah (10 orang), Biru (15 orang), dan Hijau (5 orang). Di antara diagram batang di bawah ini, manakah yang berhasil mewakili data tersebut dengan skala grafik yang tepat?", img: null, options: [{ val: 'A', text: 'Diagram Batang D (Merah: 10, Biru: 5, Hijau: 15)' }, { val: 'B', text: 'Diagram Batang B (Merah: 15, Biru: 10, Hijau: 5)' }, { val: 'C', text: 'Diagram Batang C (Merah: 5, Biru: 15, Hijau: 10)' }, { val: 'D', text: 'Diagram Batang A (Merah: 10, Biru: 15, Hijau: 5)' }], answer: 'D' },
@@ -409,9 +407,38 @@
             inp.value = '';
         }
 
+        // --- TAMBAHAN MENU EDIT DAN HAPUS KELOMPOK ---
+        window.editGroup = async function(oldName) {
+            const newName = prompt(`Ubah nama kelompok "${oldName}" menjadi:`, oldName);
+            if(!newName || newName.trim() === '' || newName === oldName) return;
+            if(globalConfig.groups.includes(newName.trim())) return showModal("Gagal", "Nama kelompok tersebut sudah ada!");
+            
+            const idx = globalConfig.groups.indexOf(oldName);
+            if(idx !== -1) {
+                globalConfig.groups[idx] = newName.trim();
+                const settingDocRef = window.doc(window.db, 'artifacts', window.appId, 'public', 'data', 'settings', 'global');
+                await window.setDoc(settingDocRef, { groups: globalConfig.groups }, { merge: true });
+            }
+        }
+
+        window.hapusGroup = async function(name) {
+            if(!confirm(`Yakin ingin menghapus kelompok "${name}"?`)) return;
+            globalConfig.groups = globalConfig.groups.filter(g => g !== name);
+            const settingDocRef = window.doc(window.db, 'artifacts', window.appId, 'public', 'data', 'settings', 'global');
+            await window.setDoc(settingDocRef, { groups: globalConfig.groups }, { merge: true });
+        }
+
         function updateGroupListUI() {
             const list = document.getElementById('admin-group-list');
-            if(list) list.innerHTML = (globalConfig.groups || []).map(g => `<span class="bg-white border border-slate-200 px-3 py-1 text-sm font-medium rounded-full shadow-sm text-slate-700">${g}</span>`).join('');
+            if(list) list.innerHTML = (globalConfig.groups || []).map(g => {
+                const safeG = g.replace(/'/g, "\\'"); // Pengaman karakter tanda kutip
+                return `
+                <div class="inline-flex items-center bg-white border border-slate-200 rounded-full shadow-sm text-sm overflow-hidden group">
+                    <span class="px-3 py-1 font-medium text-slate-700">${g}</span>
+                    <button onclick="editGroup('${safeG}')" class="px-2 py-1 bg-slate-50 text-blue-600 hover:bg-blue-100 hover:text-blue-700 border-l border-slate-200 transition-colors" title="Ubah (Edit)">✎</button>
+                    <button onclick="hapusGroup('${safeG}')" class="px-2 py-1 bg-slate-50 text-red-500 hover:bg-red-100 hover:text-red-700 border-l border-slate-200 transition-colors" title="Hapus">✕</button>
+                </div>`;
+            }).join('');
             
             const select = document.getElementById('peserta-kelompok');
             if(select) {
@@ -419,6 +446,7 @@
                 else select.innerHTML = '<option value="">-- Pilih Kelompok Anda --</option>' + globalConfig.groups.map(g => `<option value="${g}">${g}</option>`).join('');
             }
         }
+        // ----------------------------------------------
 
         async function generateNewToken(isInit = false) {
             const chars = 'ABCDEFGHIJKLMNOPQRSTUVWXYZ0123456789'; let newT = '';
@@ -439,7 +467,6 @@
             setTimeout(() => document.getElementById('jadwal-success-msg').classList.add('hidden'), 3000);
         }
 
-        // --- FUNGSI RESET DATA (BARU) ---
         window.konfirmasiReset = function() {
             showModal("Peringatan Keras", "Yakin ingin menghapus <b>SEMUA NILAI</b> peserta di Live Score?<br><br>Gunakan ini hanya jika Anda ingin memulai perlombaan sesi/babak baru.", `
                 <button onclick="closeModal()" class="px-4 py-2 bg-slate-300 text-slate-800 rounded font-medium hover:bg-slate-400">Batal</button>
@@ -468,7 +495,6 @@
                 showModal("Error", "Gagal mereset data. Periksa koneksi Anda.");
             }
         }
-        // ---------------------------------
 
         function startAdminRealtime() {
             if(!window.db) return;
@@ -504,7 +530,6 @@
             if(!nama || !kel || !token) return showModal("Peringatan", "Harap isi Nama, pilih Kelompok, dan masukkan Token!");
             if(token !== globalConfig.token) return showModal("Akses Ditolak", "Token ujian tidak valid/salah!");
             
-            // --- LOGIKA PENGAMAN JADWAL KETAT (BARU) ---
             if (!globalConfig.jadwalMulai) {
                 return showModal("Ujian Belum Dibuka", "Panitia belum mengatur jadwal ujian.<br>Silakan tunggu instruksi Panitia.");
             }
@@ -512,7 +537,6 @@
                 const formatWaktu = new Date(globalConfig.jadwalMulai).toLocaleString('id-ID', { dateStyle: 'full', timeStyle: 'short' });
                 return showModal("Ujian Belum Mulai", `Jadwal ujian Anda baru akan dibuka pada:<br><strong>${formatWaktu}</strong><br><br>Mohon tunggu.`);
             }
-            // ---------------------------------------------
 
             const btn = document.getElementById('btn-login-peserta'); btn.innerText = "Memproses..."; btn.disabled = true;
             participant = { name: nama, group: kel };
@@ -526,7 +550,7 @@
                 await window.setDoc(userStateRef, { status: 'ongoing', participant: participant, qOrder: activeQuestions.map(q => q.id), endTime: examEndTime, answers: {}, raguStatuses: {}, lastQIndex: 0 });
             }
 
-            document.getElementById('exam-user-info').innerText = `Peserta: ${participant.name} \vert{}${participant.group}`;
+            document.getElementById('exam-user-info').innerText = `Peserta: ${participant.name} | ${participant.group}`;
             generateNavGrid(); loadQuestion(0); switchView('view-exam');
             clearInterval(timerInterval); timerInterval = setInterval(updateTimer, 1000);
             btn.innerText = "Mulai Ujian"; btn.disabled = false;
