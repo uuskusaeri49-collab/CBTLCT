@@ -48,9 +48,9 @@
     </style>
 
     <script type="module">
-        import { initializeApp } from "https://www.gstatic.com/firebasejs/11.6.1/firebase-app.js";
-        import { getAuth, signInAnonymously, signInWithCustomToken, onAuthStateChanged } from "https://www.gstatic.com/firebasejs/11.6.1/firebase-auth.js";
-        import { getFirestore, doc, setDoc, getDoc, updateDoc, collection, onSnapshot, addDoc, query, getDocs } from "https://www.gstatic.com/firebasejs/11.6.1/firebase-firestore.js";
+        import { initializeApp } from "https://www.gstatic.com/firebasejs/10.8.1/firebase-app.js";
+        import { getFirestore, collection, doc, setDoc, updateDoc, onSnapshot, addDoc, getDoc } from "https://www.gstatic.com/firebasejs/10.8.1/firebase-firestore.js";
+        import { getAuth, signInAnonymously, onAuthStateChanged } from "https://www.gstatic.com/firebasejs/10.8.1/firebase-auth.js";
 
         // Expose Firebase functions to global window object
         window.doc = doc;
@@ -79,6 +79,17 @@
             const app = initializeApp(firebaseConfig);
             window.db = getFirestore(app);
             window.auth = getAuth(app);
+            
+            // --- INI BAGIAN YANG DITAMBAHKAN AGAR ADMIN BISA MENYIMPAN DATA ---
+            window.appId = firebaseConfig.appId; // Mengambil ID unik proyek Bos
+            window.doc = doc;
+            window.setDoc = setDoc; 
+            window.updateDoc = updateDoc;
+            window.collection = collection;
+            window.onSnapshot = onSnapshot;
+            window.addDoc = addDoc;
+            window.getDoc = getDoc;
+            // -----------------------------------------------------------------
             
             // Authentication System (Anti-Refresh Guard)
             const initAuth = async () => {
