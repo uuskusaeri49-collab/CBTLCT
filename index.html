@@ -65,24 +65,20 @@
 
         const appId = typeof __app_id !== 'undefined' ? __app_id : 'cbt-cerdas-cermat-app';
         
-        // ⚠️ GANTI FIREBASE CONFIG INI DENGAN MILIK ANDA UNTUK GITHUB PAGES ⚠️
-        const firebaseConfig = typeof __firebase_config !== 'undefined' 
-            ? JSON.parse(__firebase_config) 
-            : {
-                 const firebaseConfig = {
-			apiKey: "AIzaSyBFW85Dnj5hCe2nTVhPBLFuSjrA6mKcNy8",
-			authDomain: "cbt-lct-fa5ff.firebaseapp.com",
-			projectId: "cbt-lct-fa5ff",
-			storageBucket: "cbt-lct-fa5ff.firebasestorage.app",
-			messagingSenderId: "518087343231",
-			appId: "1:518087343231:web:395301edff791d799e534a"
-				};
+    // ⚠️ GANTI FIREBASE CONFIG INI DENGAN MILIK ANDA UNTUK GITHUB PAGES ⚠️
+        const firebaseConfig = {
+            apiKey: "AIzaSyBFW85Dnj5hCe2nTVhPBLFuSjrA6mKcNy8",
+            authDomain: "cbt-lct-fa5ff.firebaseapp.com",
+            projectId: "cbt-lct-fa5ff",
+            storageBucket: "cbt-lct-fa5ff.firebasestorage.app",
+            messagingSenderId: "518087343231",
+            appId: "1:518087343231:web:395301edff791d799e534a"
+        };
 
         try {
             const app = initializeApp(firebaseConfig);
             window.db = getFirestore(app);
             window.auth = getAuth(app);
-            window.appId = appId;
             
             // Authentication System (Anti-Refresh Guard)
             const initAuth = async () => {
