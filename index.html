@@ -23,7 +23,8 @@
 
     <script type="module">
         import { initializeApp } from "https://www.gstatic.com/firebasejs/10.8.1/firebase-app.js";
-        import { getFirestore, collection, doc, setDoc, updateDoc, onSnapshot, addDoc, getDoc, getDocs, deleteDoc } from "https://www.gstatic.com/firebasejs/10.8.1/firebase-firestore.js";
+        // --- TAMBAHAN query DAN where UNTUK FITUR KUOTA ---
+        import { getFirestore, collection, doc, setDoc, updateDoc, onSnapshot, addDoc, getDoc, getDocs, deleteDoc, query, where } from "https://www.gstatic.com/firebasejs/10.8.1/firebase-firestore.js";
         import { getAuth, signInAnonymously, signInWithCustomToken } from "https://www.gstatic.com/firebasejs/10.8.1/firebase-auth.js";
 
         // ⚠️ FIREBASE CONFIG MILIK BOS ⚠️
@@ -51,7 +52,9 @@
             window.addDoc = addDoc;
             window.getDoc = getDoc;
             window.getDocs = getDocs; 
-            window.deleteDoc = deleteDoc; 
+            window.deleteDoc = deleteDoc;
+            window.query = query;
+            window.where = where;
             // ---------------------------------
             
             const initAuth = async () => {
@@ -183,7 +186,6 @@
         </header>
 
         <div class="flex-1 p-4 md:p-6 flex flex-col md:flex-row gap-6 overflow-hidden bg-slate-100">
-            <!-- PENGATURAN KIRI -->
             <div class="w-full md:w-1/3 bg-white rounded-xl shadow-sm border border-slate-200 p-5 flex flex-col overflow-y-auto">
                 <h2 class="text-base font-bold text-slate-800 border-b pb-2 mb-4">Pengaturan Ujian</h2>
                 
@@ -193,7 +195,6 @@
                         <input type="text" id="input-new-group" placeholder="Misal: SDN 1 Pusat" class="flex-1 px-3 py-1.5 border border-slate-300 rounded text-sm outline-none" onkeypress="if(event.key==='Enter') addGroup()">
                         <button onclick="addGroup()" class="px-3 py-1.5 bg-slate-800 text-white rounded text-sm hover:bg-slate-700">+</button>
                     </div>
-                    <!-- LIST KELOMPOK TERBARU DENGAN TOMBOL EDIT/HAPUS -->
                     <div id="admin-group-list" class="flex flex-wrap gap-2 max-h-32 overflow-y-auto p-2 border border-slate-100 bg-slate-50 rounded"></div>
                 </div>
 
@@ -218,7 +219,6 @@
                 </div>
             </div>
 
-            <!-- LIVE SCORE KANAN -->
             <div class="w-full md:w-2/3 bg-white rounded-xl shadow-sm border border-slate-200 p-5 flex flex-col">
                 <div class="flex justify-between items-center border-b pb-2 mb-4 shrink-0">
                     <h2 class="text-base font-bold text-slate-800">Live Score Kumulatif</h2>
@@ -407,12 +407,10 @@
             inp.value = '';
         }
 
-        // --- TAMBAHAN MENU EDIT DAN HAPUS KELOMPOK ---
         window.editGroup = async function(oldName) {
             const newName = prompt(`Ubah nama kelompok "${oldName}" menjadi:`, oldName);
             if(!newName || newName.trim() === '' || newName === oldName) return;
             if(globalConfig.groups.includes(newName.trim())) return showModal("Gagal", "Nama kelompok tersebut sudah ada!");
-            
             const idx = globalConfig.groups.indexOf(oldName);
             if(idx !== -1) {
                 globalConfig.groups[idx] = newName.trim();
@@ -431,7 +429,7 @@
         function updateGroupListUI() {
             const list = document.getElementById('admin-group-list');
             if(list) list.innerHTML = (globalConfig.groups || []).map(g => {
-                const safeG = g.replace(/'/g, "\\'"); // Pengaman karakter tanda kutip
+                const safeG = g.replace(/'/g, "\\'");
                 return `
                 <div class="inline-flex items-center bg-white border border-slate-200 rounded-full shadow-sm text-sm overflow-hidden group">
                     <span class="px-3 py-1 font-medium text-slate-700">${g}</span>
@@ -446,7 +444,6 @@
                 else select.innerHTML = '<option value="">-- Pilih Kelompok Anda --</option>' + globalConfig.groups.map(g => `<option value="${g}">${g}</option>`).join('');
             }
         }
-        // ----------------------------------------------
 
         async function generateNewToken(isInit = false) {
             const chars = 'ABCDEFGHIJKLMNOPQRSTUVWXYZ0123456789'; let newT = '';
@@ -467,8 +464,9 @@
             setTimeout(() => document.getElementById('jadwal-success-msg').classList.add('hidden'), 3000);
         }
 
+        // --- FUNGSI RESET DATA ---
         window.konfirmasiReset = function() {
-            showModal("Peringatan Keras", "Yakin ingin menghapus <b>SEMUA NILAI</b> peserta di Live Score?<br><br>Gunakan ini hanya jika Anda ingin memulai perlombaan sesi/babak baru.", `
+            showModal("Peringatan Keras", "Yakin ingin menghapus <b>SEMUA NILAI & KUOTA PESERTA</b>?<br><br>Gunakan ini hanya jika Anda ingin memulai perlombaan sesi/babak baru.", `
                 <button onclick="closeModal()" class="px-4 py-2 bg-slate-300 text-slate-800 rounded font-medium hover:bg-slate-400">Batal</button>
                 <button onclick="eksekusiReset()" class="px-4 py-2 bg-red-600 text-white rounded font-medium hover:bg-red-700">Ya, Hapus Semua!</button>
             `);
@@ -478,17 +476,25 @@
             closeModal();
             if(!window.db) return;
             document.getElementById('view-loading').classList.remove('hidden-view');
-            document.getElementById('loading-text').innerText = "Menghapus semua data nilai...";
+            document.getElementById('loading-text').innerText = "Menghapus semua riwayat peserta...";
             
             try {
-                const scoresCollRef = window.collection(window.db, 'artifacts', window.appId, 'public', 'data', 'scores');
-                const snapshot = await window.getDocs(scoresCollRef);
                 const deletePromises = [];
-                snapshot.forEach(docSnap => deletePromises.push(window.deleteDoc(docSnap.ref)));
+                
+                // Hapus Live Score
+                const scoresCollRef = window.collection(window.db, 'artifacts', window.appId, 'public', 'data', 'scores');
+                const snapshotScores = await window.getDocs(scoresCollRef);
+                snapshotScores.forEach(docSnap => deletePromises.push(window.deleteDoc(docSnap.ref)));
+
+                // Hapus Registri Kuota Peserta (AGAR BISA LOGIN LAGI DARI 0)
+                const partCollRef = window.collection(window.db, 'artifacts', window.appId, 'public', 'data', 'participants');
+                const snapshotPart = await window.getDocs(partCollRef);
+                snapshotPart.forEach(docSnap => deletePromises.push(window.deleteDoc(docSnap.ref)));
+                
                 await Promise.all(deletePromises);
                 
                 document.getElementById('view-loading').classList.add('hidden-view');
-                showModal("Berhasil", "Semua data nilai berhasil direset menjadi kosong.");
+                showModal("Berhasil", "Semua data nilai dan riwayat kuota peserta berhasil direset menjadi kosong.");
             } catch(e) {
                 console.error("Gagal reset:", e);
                 document.getElementById('view-loading').classList.add('hidden-view');
@@ -539,8 +545,32 @@
             }
 
             const btn = document.getElementById('btn-login-peserta'); btn.innerText = "Memproses..."; btn.disabled = true;
-            participant = { name: nama, group: kel };
             
+            // --- LOGIKA CEK KUOTA (MAKSIMAL 5 ORANG PER KELOMPOK) ---
+            try {
+                const partRef = window.collection(window.db, 'artifacts', window.appId, 'public', 'data', 'participants');
+                const qGroup = window.query(partRef, window.where('group', '==', kel));
+                const snapGroup = await window.getDocs(qGroup);
+                
+                let alreadyRegistered = false;
+                snapGroup.forEach(d => { if(d.id === window.userId) alreadyRegistered = true; });
+                
+                if(!alreadyRegistered && snapGroup.size >= 5) {
+                    btn.innerText = "Mulai Ujian"; btn.disabled = false;
+                    return showModal("Kelompok Penuh 🛑", `Mohon maaf, kuota untuk kelompok <b>${kel}</b> sudah penuh (Maksimal 5 Orang).<br><br>Jika ini adalah sebuah kesalahan, harap hubungi Panitia.`);
+                }
+                
+                if(!alreadyRegistered) {
+                    await window.setDoc(window.doc(partRef, window.userId), { group: kel, name: nama });
+                }
+            } catch(e) {
+                console.error("Gagal cek kuota:", e);
+                btn.innerText = "Mulai Ujian"; btn.disabled = false;
+                return showModal("Error", "Gagal menghubungi server untuk mengecek kuota.");
+            }
+            // --------------------------------------------------------
+
+            participant = { name: nama, group: kel };
             let arr = [...bankSoal];
             for (let i = arr.length - 1; i > 0; i--) { const j = Math.floor(Math.random() * (i + 1)); [arr[i], arr[j]] = [arr[j], arr[i]]; }
             activeQuestions = arr; answers = {}; raguStatuses = {}; examEndTime = Date.now() + (60 * 60 * 1000); 
@@ -550,7 +580,7 @@
                 await window.setDoc(userStateRef, { status: 'ongoing', participant: participant, qOrder: activeQuestions.map(q => q.id), endTime: examEndTime, answers: {}, raguStatuses: {}, lastQIndex: 0 });
             }
 
-            document.getElementById('exam-user-info').innerText = `Peserta: ${participant.name} | ${participant.group}`;
+            document.getElementById('exam-user-info').innerText = `Peserta: ${participant.name} \vert{}${participant.group}`;
             generateNavGrid(); loadQuestion(0); switchView('view-exam');
             clearInterval(timerInterval); timerInterval = setInterval(updateTimer, 1000);
             btn.innerText = "Mulai Ujian"; btn.disabled = false;
