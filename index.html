@@ -763,18 +763,31 @@
         }
 
         function handleAdminLogin() {
-            const u = document.getElementById('admin-user').value;
-            const p = document.getElementById('admin-pass').value;
-            if(u === 'admin' && p === 'admin') {
-                sessionStorage.setItem('isAdmin', 'true');
-                document.getElementById('admin-user').value = '';
-                document.getElementById('admin-pass').value = '';
-                startAdminRealtime();
-                switchView('view-admin-dash');
-            } else {
-                showModal("Gagal", "Username/Password Admin salah!");
+        // .trim().toLowerCase() berfungsi menghapus spasi gaib dan huruf besar otomatis
+        const u = document.getElementById('admin-user').value.trim().toLowerCase();
+        const p = document.getElementById('admin-pass').value.trim().toLowerCase();
+
+        if(u === 'admin' && p === 'admin') {
+            sessionStorage.setItem('isAdmin', 'true');
+            document.getElementById('admin-user').value = '';
+            document.getElementById('admin-pass').value = '';
+            
+            // Pindahkan layar terlebih dahulu agar admin langsung masuk
+            switchView('view-admin-dash');
+            
+            // Gunakan try-catch: jika database lambat, admin tetap bisa masuk
+            try {
+                if (typeof startAdminRealtime === "function") {
+                    startAdminRealtime();
+                }
+            } catch (err) {
+                console.error("Firebase Realtime Error:", err);
+                showModal("Pemberitahuan", "Berhasil masuk Admin, tetapi Live Score sedang memuat atau terkendala.");
             }
+        } else {
+            showModal("Gagal", "Username atau Password Admin salah!");
         }
+    }
 
         function logoutAdmin() {
             sessionStorage.removeItem('isAdmin');
