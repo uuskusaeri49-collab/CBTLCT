@@ -81,14 +81,13 @@
         </div>
     </div>
 
-    <!-- VIEW 1: Portal Selection (DIPERBARUI MENJADI 3 KOTAK) -->
+    <!-- VIEW 1: Portal Selection -->
     <div id="view-portal" class="hidden-view flex-1 flex flex-col items-center justify-center p-4">
         <div class="text-center mb-10">
             <h1 class="text-4xl font-extrabold text-blue-900 mb-4 tracking-tight">CBT Cerdas Cermat</h1>
             <p class="text-slate-500 text-lg">Pilih portal untuk masuk ke dalam sistem.</p>
         </div>
         <div class="grid grid-cols-1 md:grid-cols-3 gap-6 max-w-5xl w-full">
-            
             <button onclick="switchView('view-login-admin')" class="group bg-white p-8 rounded-2xl shadow-sm border border-slate-200 hover:shadow-md hover:border-blue-400 transition-all flex flex-col items-center">
                 <div class="w-16 h-16 bg-blue-100 text-blue-600 rounded-full flex items-center justify-center mb-4 group-hover:bg-blue-600 group-hover:text-white transition-colors">
                     <svg class="w-8 h-8" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 12l2 2 4-4m5.618-4.016A11.955 11.955 0 0112 2.944a11.955 11.955 0 01-8.618 3.04A12.02 12.02 0 003 9c0 5.591 3.824 10.29 9 11.622 5.176-1.332 9-6.03 9-11.622 0-1.042-.133-2.052-.382-3.016z"></path></svg>
@@ -97,7 +96,6 @@
                 <p class="text-slate-500 text-xs">Atur Sistem & Reset</p>
             </button>
 
-            <!-- KOTAK BARU: PORTAL SEKOLAH -->
             <button onclick="switchView('view-login-sekolah')" class="group bg-white p-8 rounded-2xl shadow-sm border border-slate-200 hover:shadow-md hover:border-purple-400 transition-all flex flex-col items-center">
                 <div class="w-16 h-16 bg-purple-100 text-purple-600 rounded-full flex items-center justify-center mb-4 group-hover:bg-purple-600 group-hover:text-white transition-colors">
                     <svg class="w-8 h-8" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M15 12a3 3 0 11-6 0 3 3 0 016 0z"></path><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M2.458 12C3.732 7.943 7.523 5 12 5c4.478 0 8.268 2.943 9.542 7-1.274 4.057-5.064 7-9.542 7-4.477 0-8.268-2.943-9.542-7z"></path></svg>
@@ -113,16 +111,13 @@
                 <h2 class="text-xl font-bold text-slate-800 mb-2">Portal Peserta</h2>
                 <p class="text-slate-500 text-xs">Masuk & Kerjakan Ujian</p>
             </button>
-
         </div>
     </div>
 
     <!-- VIEW: Login Admin -->
     <div id="view-login-admin" class="hidden-view flex-1 flex flex-col items-center justify-center p-4">
         <div class="bg-white p-8 rounded-2xl shadow-lg border border-slate-100 max-w-md w-full relative">
-            <button onclick="switchView('view-portal')" class="absolute top-4 left-4 text-slate-400 hover:text-slate-700">
-                <svg class="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M10 19l-7-7m0 0l7-7m-7 7h18"></path></svg>
-            </button>
+            <button onclick="switchView('view-portal')" class="absolute top-4 left-4 text-slate-400 hover:text-slate-700"><svg class="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M10 19l-7-7m0 0l7-7m-7 7h18"></path></svg></button>
             <div class="text-center mb-8 mt-2"><h2 class="text-2xl font-bold text-slate-800">Login Panitia</h2></div>
             <div class="space-y-4">
                 <div><label class="block text-sm font-medium text-slate-700 mb-1">Username</label><input type="text" id="admin-user" class="w-full px-4 py-2 border rounded-lg outline-none"></div>
@@ -132,16 +127,11 @@
         </div>
     </div>
 
-    <!-- VIEW BARU: Login Pemantau Sekolah -->
+    <!-- VIEW: Login Pemantau Sekolah -->
     <div id="view-login-sekolah" class="hidden-view flex-1 flex flex-col items-center justify-center p-4">
         <div class="bg-white p-8 rounded-2xl shadow-lg border border-slate-100 max-w-md w-full relative">
-            <button onclick="switchView('view-portal')" class="absolute top-4 left-4 text-slate-400 hover:text-slate-700">
-                <svg class="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M10 19l-7-7m0 0l7-7m-7 7h18"></path></svg>
-            </button>
-            <div class="text-center mb-8 mt-2">
-                <h2 class="text-2xl font-bold text-purple-800">Login Pemantau</h2>
-                <p class="text-xs text-slate-500 mt-1">Gunakan akun dari Panitia</p>
-            </div>
+            <button onclick="switchView('view-portal')" class="absolute top-4 left-4 text-slate-400 hover:text-slate-700"><svg class="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M10 19l-7-7m0 0l7-7m-7 7h18"></path></svg></button>
+            <div class="text-center mb-8 mt-2"><h2 class="text-2xl font-bold text-purple-800">Login Pemantau</h2><p class="text-xs text-slate-500 mt-1">Gunakan akun dari Panitia</p></div>
             <div class="space-y-4">
                 <div><label class="block text-sm font-medium text-slate-700 mb-1">Username Sekolah</label><input type="text" id="sekolah-user" class="w-full px-4 py-2 border border-slate-300 rounded-lg outline-none"></div>
                 <div><label class="block text-sm font-medium text-slate-700 mb-1">Password</label><input type="password" id="sekolah-pass" class="w-full px-4 py-2 border border-slate-300 rounded-lg outline-none" onkeypress="if(event.key==='Enter') handleSekolahLogin()"></div>
@@ -153,9 +143,7 @@
     <!-- VIEW: Login Peserta -->
     <div id="view-login-peserta" class="hidden-view flex-1 flex flex-col items-center justify-center p-4">
         <div class="bg-white p-8 rounded-2xl shadow-lg border border-slate-100 max-w-md w-full relative">
-            <button onclick="switchView('view-portal')" class="absolute top-4 left-4 text-slate-400 hover:text-slate-700">
-                <svg class="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M10 19l-7-7m0 0l7-7m-7 7h18"></path></svg>
-            </button>
+            <button onclick="switchView('view-portal')" class="absolute top-4 left-4 text-slate-400 hover:text-slate-700"><svg class="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M10 19l-7-7m0 0l7-7m-7 7h18"></path></svg></button>
             <div class="text-center mb-8 mt-2"><h2 class="text-2xl font-bold text-slate-800">Login Ujian</h2><p class="text-xs text-slate-500 mt-1">Pastikan Token & Jadwal Sesuai</p></div>
             <div class="space-y-4">
                 <div><label class="block text-sm font-medium text-slate-700 mb-1">Nama Lengkap</label><input type="text" id="peserta-nama" class="w-full px-4 py-2 border rounded-lg outline-none"></div>
@@ -169,10 +157,7 @@
     <!-- VIEW: Admin Dashboard -->
     <div id="view-admin-dash" class="hidden-view h-full flex flex-col">
         <header class="bg-blue-800 text-white p-4 flex justify-between items-center shadow-md z-10 shrink-0">
-            <div class="flex items-center gap-3">
-                <div class="bg-white/20 p-2 rounded-lg"><svg class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 4.354a4 4 0 110 5.292M15 21H3v-1a6 6 0 0112 0v1zm0 0h6v-1a6 6 0 00-9-5.197M13 7a4 4 0 11-8 0 4 4 0 018 0z"></path></svg></div>
-                <h1 class="text-xl font-bold tracking-wide">Panel Panitia</h1>
-            </div>
+            <div class="flex items-center gap-3"><div class="bg-white/20 p-2 rounded-lg"><svg class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 4.354a4 4 0 110 5.292M15 21H3v-1a6 6 0 0112 0v1zm0 0h6v-1a6 6 0 00-9-5.197M13 7a4 4 0 11-8 0 4 4 0 018 0z"></path></svg></div><h1 class="text-xl font-bold tracking-wide">Panel Panitia</h1></div>
             <button onclick="logoutAdmin()" class="text-sm bg-blue-900 hover:bg-red-600 px-4 py-1.5 rounded-full transition-colors font-medium">Logout Admin</button>
         </header>
 
@@ -186,7 +171,6 @@
                     <div id="admin-group-list" class="flex flex-wrap gap-2 max-h-32 overflow-y-auto p-2 border border-slate-100 bg-slate-50 rounded"></div>
                 </div>
 
-                <!-- TAMBAHAN MENU ADMIN: BUAT AKUN PEMANTAU -->
                 <div class="mb-5 border-t pt-4 bg-purple-50 p-3 rounded-lg border border-purple-100">
                     <label class="text-xs font-bold text-purple-700 uppercase tracking-wider block mb-2">2. Buat Akun Pemantau (Guru)</label>
                     <div class="flex flex-col gap-2 mb-2">
@@ -227,7 +211,7 @@
         </div>
     </div>
 
-    <!-- VIEW BARU: Dashboard Pemantau Sekolah -->
+    <!-- VIEW: Dashboard Pemantau Sekolah -->
     <div id="view-dash-sekolah" class="hidden-view h-full flex flex-col bg-slate-100">
         <header class="bg-purple-800 text-white p-4 flex justify-between items-center shadow-md z-10 shrink-0">
             <h1 class="text-lg md:text-xl font-bold tracking-wide">Pemantau: <span id="sekolah-nama-header" class="text-purple-200"></span></h1>
@@ -235,7 +219,6 @@
         </header>
 
         <div class="flex-1 p-4 md:p-6 flex flex-col md:flex-row gap-6 overflow-hidden">
-            <!-- Kiri: Info Spesifik Kelompok -->
             <div class="w-full md:w-1/3 flex flex-col gap-4">
                 <div class="bg-white p-5 rounded-xl shadow-sm border border-purple-200 text-center relative overflow-hidden">
                     <div class="absolute -right-4 -top-4 w-16 h-16 bg-purple-50 rounded-full z-0"></div>
@@ -247,16 +230,13 @@
                     <div class="text-4xl font-black text-green-600 mt-2" id="sekolah-total-skor">- <span class="text-sm font-normal text-slate-400">Poin</span></div>
                 </div>
                 <div class="bg-white p-4 rounded-xl shadow-sm border border-slate-200 flex-1 overflow-y-auto flex flex-col">
-                    <h3 class="text-sm font-bold text-slate-800 border-b pb-2 mb-3 shrink-0">Rincian Nilai Peserta Anda</h3>
+                    <h3 class="text-sm font-bold text-slate-800 border-b pb-2 mb-3 shrink-0">Status Peserta & Rincian Nilai</h3>
                     <div id="sekolah-rincian-peserta" class="space-y-2 overflow-y-auto flex-1"></div>
                 </div>
             </div>
             
-            <!-- Kanan: Klasemen Umum (Transparansi) -->
             <div class="w-full md:w-2/3 bg-white p-5 rounded-xl shadow-sm border border-slate-200 flex flex-col">
-                <h3 class="text-base font-bold text-slate-800 border-b pb-2 mb-4 shrink-0 flex items-center gap-2">
-                    Klasemen Seluruh Peserta <span class="text-[10px] bg-red-100 text-red-600 px-2 py-0.5 rounded-full uppercase animate-pulse">Live</span>
-                </h3>
+                <h3 class="text-base font-bold text-slate-800 border-b pb-2 mb-4 shrink-0 flex items-center gap-2">Klasemen Seluruh Peserta <span class="text-[10px] bg-red-100 text-red-600 px-2 py-0.5 rounded-full uppercase animate-pulse">Live</span></h3>
                 <div id="sekolah-klasemen-umum" class="flex-1 overflow-y-auto space-y-3 pr-2"></div>
             </div>
         </div>
@@ -362,21 +342,16 @@
                     } else { generateNewToken(true); }
                 }, (err) => console.log(err));
 
-                // Cek Sesi Admin
                 if(sessionStorage.getItem('isAdmin') === 'true') {
                     startAdminRealtime(); switchView('view-admin-dash'); return;
                 }
                 
-                // Cek Sesi Pemantau Sekolah
                 if(sessionStorage.getItem('isSekolah') === 'true') {
                     const myGroup = sessionStorage.getItem('sekolahGroup');
                     document.getElementById('sekolah-nama-header').innerText = myGroup;
-                    startSekolahRealtime(myGroup);
-                    switchView('view-dash-sekolah');
-                    return;
+                    startSekolahRealtime(myGroup); switchView('view-dash-sekolah'); return;
                 }
 
-                // Cek Sesi Ujian Peserta
                 const userStateRef = window.doc(window.db, 'artifacts', window.appId, 'users', window.userId, 'exam', 'state');
                 const userSnap = await window.getDoc(userStateRef);
                 
@@ -400,26 +375,21 @@
             const u = document.getElementById('admin-user').value.trim().toLowerCase();
             const p = document.getElementById('admin-pass').value.trim().toLowerCase();
             if(u === 'admin' && p === 'admin') {
-                sessionStorage.setItem('isAdmin', 'true');
-                document.getElementById('admin-user').value = ''; document.getElementById('admin-pass').value = '';
+                sessionStorage.setItem('isAdmin', 'true'); document.getElementById('admin-user').value = ''; document.getElementById('admin-pass').value = '';
                 switchView('view-admin-dash'); try { if (typeof startAdminRealtime === "function") startAdminRealtime(); } catch (err) { }
             } else { showModal("Gagal", "Username atau Password Admin salah!"); }
         }
         function logoutAdmin() { sessionStorage.removeItem('isAdmin'); switchView('view-portal'); }
 
         window.handleSekolahLogin = function() {
-            const u = document.getElementById('sekolah-user').value.trim();
-            const p = document.getElementById('sekolah-pass').value.trim();
+            const u = document.getElementById('sekolah-user').value.trim(); const p = document.getElementById('sekolah-pass').value.trim();
             const acc = (globalConfig.accounts || []).find(x => x.user === u && x.pass === p);
             
             if(acc) {
-                sessionStorage.setItem('isSekolah', 'true');
-                sessionStorage.setItem('sekolahGroup', acc.group);
+                sessionStorage.setItem('isSekolah', 'true'); sessionStorage.setItem('sekolahGroup', acc.group);
                 document.getElementById('sekolah-user').value = ''; document.getElementById('sekolah-pass').value = '';
-                
                 document.getElementById('sekolah-nama-header').innerText = acc.group;
-                startSekolahRealtime(acc.group);
-                switchView('view-dash-sekolah');
+                startSekolahRealtime(acc.group); switchView('view-dash-sekolah');
             } else { showModal("Gagal Masuk", "Username Sekolah atau Password salah/tidak terdaftar!"); }
         }
         window.logoutSekolah = function() { sessionStorage.removeItem('isSekolah'); sessionStorage.removeItem('sekolahGroup'); switchView('view-portal'); }
@@ -429,7 +399,6 @@
             const inp = document.getElementById('input-new-group'); const val = inp.value.trim();
             if(!val) return; if(!globalConfig.groups) globalConfig.groups = [];
             if(globalConfig.groups.includes(val)) return showModal("Gagal", "Nama kelompok sudah ada!");
-            
             globalConfig.groups.push(val);
             const settingDocRef = window.doc(window.db, 'artifacts', window.appId, 'public', 'data', 'settings', 'global');
             await window.setDoc(settingDocRef, { groups: globalConfig.groups }, { merge: true });
@@ -455,18 +424,13 @@
 
         // --- MANAJEMEN AKUN PEMANTAU (ADMIN) ---
         window.addSchoolAccount = async function() {
-            const u = document.getElementById('input-acc-user').value.trim();
-            const p = document.getElementById('input-acc-pass').value.trim();
-            const g = document.getElementById('input-acc-group').value;
-            
+            const u = document.getElementById('input-acc-user').value.trim(); const p = document.getElementById('input-acc-pass').value.trim(); const g = document.getElementById('input-acc-group').value;
             if(!u || !p || !g) return showModal("Perhatian", "Lengkapi Username, Password, dan pilih Kelompok yang akan dihubungkan.");
             if(!globalConfig.accounts) globalConfig.accounts = [];
             if(globalConfig.accounts.find(x => x.user.toLowerCase() === u.toLowerCase())) return showModal("Gagal", "Username tersebut sudah dipakai sekolah lain.");
-            
             globalConfig.accounts.push({user: u, pass: p, group: g});
             const settingDocRef = window.doc(window.db, 'artifacts', window.appId, 'public', 'data', 'settings', 'global');
             await window.setDoc(settingDocRef, { accounts: globalConfig.accounts }, { merge: true });
-            
             document.getElementById('input-acc-user').value = ''; document.getElementById('input-acc-pass').value = '';
             showModal("Sukses", `Akun untuk kelompok <b>${g}</b> berhasil dibuat!<br>Username: <b>${u}</b><br>Password: <b>${p}</b>`);
         }
@@ -477,42 +441,31 @@
             await window.setDoc(settingDocRef, { accounts: globalConfig.accounts }, { merge: true });
         }
 
-        // --- UPDATE UI ADMIN PANEL ---
         function updateGroupListUI() {
-            // Render Daftar Kelompok
             const list = document.getElementById('admin-group-list');
             if(list) list.innerHTML = (globalConfig.groups || []).map(g => {
                 const safeG = g.replace(/'/g, "\\'");
                 return `<div class="inline-flex items-center bg-white border border-slate-200 rounded-full shadow-sm text-sm overflow-hidden group"><span class="px-3 py-1 font-medium text-slate-700">${g}</span><button onclick="editGroup('${safeG}')" class="px-2 py-1 bg-slate-50 text-blue-600 hover:bg-blue-100 hover:text-blue-700 border-l border-slate-200" title="Edit">✎</button><button onclick="hapusGroup('${safeG}')" class="px-2 py-1 bg-slate-50 text-red-500 hover:bg-red-100 border-l border-slate-200" title="Hapus">✕</button></div>`;
             }).join('');
             
-            // Render Dropdown untuk Login Peserta
             const select = document.getElementById('peserta-kelompok');
             if(select) {
                 if(!globalConfig.groups || globalConfig.groups.length === 0) select.innerHTML = '<option value="">-- Admin Belum Membuat Kelompok --</option>';
                 else select.innerHTML = '<option value="">-- Pilih Kelompok Anda --</option>' + globalConfig.groups.map(g => `<option value="${g}">${g}</option>`).join('');
             }
             
-            // Render Dropdown untuk Buat Akun Sekolah
             const accSelect = document.getElementById('input-acc-group');
             if(accSelect) {
                 if(!globalConfig.groups || globalConfig.groups.length === 0) accSelect.innerHTML = '<option value="">-- Buat Kelompok Dulu --</option>';
                 else accSelect.innerHTML = '<option value="">-- Sambungkan ke Kelompok --</option>' + globalConfig.groups.map(g => `<option value="${g}">${g}</option>`).join('');
             }
             
-            // Render List Akun Sekolah yang sudah dibuat
             const accList = document.getElementById('admin-acc-list');
             if(accList) {
-                accList.innerHTML = (globalConfig.accounts || []).map(a => `
-                    <div class="flex justify-between items-center bg-white p-2 border border-purple-100 rounded text-xs">
-                        <div><span class="font-bold text-purple-700">${a.user}</span> <span class="text-slate-500">(${a.group})</span></div>
-                        <button onclick="hapusAccount('${a.user}')" class="text-red-500 font-bold hover:underline">Hapus</button>
-                    </div>
-                `).join('');
+                accList.innerHTML = (globalConfig.accounts || []).map(a => `<div class="flex justify-between items-center bg-white p-2 border border-purple-100 rounded text-xs"><div><span class="font-bold text-purple-700">${a.user}</span> <span class="text-slate-500">(${a.group})</span></div><button onclick="hapusAccount('${a.user}')" class="text-red-500 font-bold hover:underline">Hapus</button></div>`).join('');
             }
         }
 
-        // --- PENGATURAN UMUM ---
         async function generateNewToken(isInit = false) {
             const chars = 'ABCDEFGHIJKLMNOPQRSTUVWXYZ0123456789'; let newT = ''; for(let i=0; i<6; i++) newT += chars.charAt(Math.floor(Math.random() * chars.length));
             if (window.db) { const settingDocRef = window.doc(window.db, 'artifacts', window.appId, 'public', 'data', 'settings', 'global'); await window.setDoc(settingDocRef, { token: newT }, { merge: true }); }
@@ -542,7 +495,7 @@
             } catch(e) { document.getElementById('view-loading').classList.add('hidden-view'); showModal("Error", "Gagal mereset data. Periksa koneksi Anda."); }
         }
 
-        // --- DASHBOARD ADMIN ---
+        // --- DASHBOARD ADMIN & SEKOLAH (DIPERBARUI) ---
         function startAdminRealtime() {
             if(!window.db) return;
             const scoresCollRef = window.collection(window.db, 'artifacts', window.appId, 'public', 'data', 'scores');
@@ -550,22 +503,25 @@
                 let tempGroups = {};
                 snapshot.forEach(docSnap => {
                     const data = docSnap.data(); if(!tempGroups[data.group]) tempGroups[data.group] = { score: 0, users: [] };
-                    tempGroups[data.group].score += data.score; tempGroups[data.group].users.push(data);
+                    tempGroups[data.group].score += (data.score || 0); tempGroups[data.group].users.push(data);
                 });
                 renderLeaderboard(tempGroups);
             });
         }
+
         function renderLeaderboard(groupsData) {
             const container = document.getElementById('leaderboard-container'); container.innerHTML = '';
             const sorted = Object.entries(groupsData).sort((a,b) => b[1].score - a[1].score);
             if (sorted.length === 0) { container.innerHTML = `<div class="col-span-2 text-center p-10 text-slate-400 font-medium">Belum ada peserta yang mensubmit ujian.</div>`; return; }
             sorted.forEach(([name, data], index) => {
-                let usersHtml = data.users.sort((a,b)=> b.score - a.score).map(u => `<div class="flex justify-between items-center py-1.5 border-b border-slate-100 last:border-0"><span class="text-xs text-slate-600 font-medium">${u.participantName}</span><span class="text-xs font-bold text-slate-800 bg-slate-100 px-2 py-0.5 rounded">${u.score} pt</span></div>`).join('');
+                let usersHtml = data.users.sort((a,b)=> b.score - a.score).map(u => {
+                    let displayScore = u.status === 'ongoing' ? `<span class="text-blue-500 animate-pulse text-[10px] italic">Mengerjakan...</span>` : `${u.score} pt`;
+                    return `<div class="flex justify-between items-center py-1.5 border-b border-slate-100 last:border-0"><span class="text-xs text-slate-600 font-medium">${u.participantName}</span><span class="text-xs font-bold text-slate-800 bg-slate-100 px-2 py-0.5 rounded">${displayScore}</span></div>`;
+                }).join('');
                 container.innerHTML += `<div class="bg-white rounded-lg border border-slate-200 overflow-hidden shadow-sm hover:shadow-md transition-shadow"><div class="flex justify-between items-center p-3 bg-slate-50 border-b border-slate-200"><div class="flex items-center gap-2"><div class="w-6 h-6 rounded-full ${index===0 ? 'bg-yellow-100 text-yellow-700' : 'bg-blue-100 text-blue-700'} font-bold flex items-center justify-center text-xs">${index+1}</div><span class="font-bold text-slate-800 text-sm truncate max-w-[150px]">${name}</span></div><div class="text-lg font-black text-slate-800">${data.score} <span class="text-[10px] font-normal text-slate-500 uppercase">Poin</span></div></div><div class="px-3 py-2 bg-white max-h-32 overflow-y-auto">${usersHtml}</div></div>`;
             });
         }
 
-        // --- DASHBOARD PEMANTAU (SEKOLAH) ---
         function startSekolahRealtime(myGroup) {
             if(!window.db) return;
             const scoresCollRef = window.collection(window.db, 'artifacts', window.appId, 'public', 'data', 'scores');
@@ -573,7 +529,7 @@
                 let tempGroups = {};
                 snapshot.forEach(docSnap => {
                     const data = docSnap.data(); if(!tempGroups[data.group]) tempGroups[data.group] = { score: 0, users: [] };
-                    tempGroups[data.group].score += data.score; tempGroups[data.group].users.push(data);
+                    tempGroups[data.group].score += (data.score || 0); tempGroups[data.group].users.push(data);
                 });
                 renderSekolahDashboard(tempGroups, myGroup);
             });
@@ -587,10 +543,8 @@
                 const rank = index + 1;
                 if (name === myGroup) {
                     myRank = rank; myTotalScore = data.score; myUsers = data.users.sort((a,b)=> b.score - a.score);
-                    // Sorotan Kelompok Sendiri
                     klasemenHtml += `<div class="flex justify-between items-center p-3 bg-purple-100 border border-purple-300 rounded-lg shadow-sm"><div class="flex items-center gap-3"><span class="w-8 h-8 flex items-center justify-center bg-purple-600 text-white font-bold rounded-full">${rank}</span><span class="font-bold text-purple-900">${name} (Kelompok Anda)</span></div><span class="text-lg font-black text-purple-800">${data.score} <span class="text-xs font-normal">pt</span></span></div>`;
                 } else {
-                    // Kelompok Lain
                     klasemenHtml += `<div class="flex justify-between items-center p-3 bg-slate-50 border border-slate-200 rounded-lg"><div class="flex items-center gap-3"><span class="w-8 h-8 flex items-center justify-center bg-slate-200 text-slate-600 font-bold rounded-full">${rank}</span><span class="font-medium text-slate-700">${name}</span></div><span class="font-bold text-slate-600">${data.score} pt</span></div>`;
                 }
             });
@@ -600,18 +554,17 @@
             document.getElementById('sekolah-klasemen-umum').innerHTML = klasemenHtml || '<div class="text-center text-slate-400 py-10">Data ujian belum ada yang masuk.</div>';
 
             if(myUsers.length === 0) {
-                document.getElementById('sekolah-rincian-peserta').innerHTML = '<div class="text-center text-slate-400 text-xs py-8">Peserta Anda belum menyelesaikan ujian.</div>';
+                document.getElementById('sekolah-rincian-peserta').innerHTML = '<div class="text-center text-slate-400 text-xs py-8">Peserta Anda belum ada yang mendaftar masuk.</div>';
             } else {
-                document.getElementById('sekolah-rincian-peserta').innerHTML = myUsers.map((u, i) => `
-                    <div class="flex justify-between items-center p-2.5 bg-slate-50 rounded-lg border border-slate-200">
-                        <span class="text-sm font-medium text-slate-700">${i+1}. ${u.participantName}</span>
-                        <span class="text-sm font-bold text-green-700 bg-green-100 px-2 py-1 rounded">${u.score} pt</span>
-                    </div>
-                `).join('');
+                document.getElementById('sekolah-rincian-peserta').innerHTML = myUsers.map((u, i) => {
+                    let displayScore = u.status === 'ongoing' ? `<span class="text-blue-500 animate-pulse text-xs italic">Sedang Ujian...</span>` : `${u.score} pt`;
+                    let bgClass = u.status === 'ongoing' ? 'bg-blue-50 text-blue-700' : 'bg-green-100 text-green-700';
+                    return `<div class="flex justify-between items-center p-2.5 bg-slate-50 rounded-lg border border-slate-200"><span class="text-sm font-medium text-slate-700">${i+1}. ${u.participantName}</span><span class="text-sm font-bold ${bgClass} px-2 py-1 rounded">${displayScore}</span></div>`;
+                }).join('');
             }
         }
 
-        // --- UJIAN PESERTA ---
+        // --- UJIAN PESERTA (DIPERBARUI DENGAN PRE-PUBLISH LIVE SCORE) ---
         async function handlePesertaLogin() {
             const nama = document.getElementById('peserta-nama').value.trim(); const kel = document.getElementById('peserta-kelompok').value; const token = document.getElementById('peserta-token').value.trim().toUpperCase();
             if(!nama || !kel || !token) return showModal("Peringatan", "Harap isi Nama, pilih Kelompok, dan masukkan Token!");
@@ -621,7 +574,6 @@
 
             const btn = document.getElementById('btn-login-peserta'); btn.innerText = "Memproses..."; btn.disabled = true;
             
-            // Cek Kuota
             try {
                 const partRef = window.collection(window.db, 'artifacts', window.appId, 'public', 'data', 'participants');
                 const qGroup = window.query(partRef, window.where('group', '==', kel)); const snapGroup = await window.getDocs(qGroup);
@@ -635,7 +587,16 @@
             let arr = [...bankSoal]; for (let i = arr.length - 1; i > 0; i--) { const j = Math.floor(Math.random() * (i + 1)); [arr[i], arr[j]] = [arr[j], arr[i]]; }
             activeQuestions = arr; answers = {}; raguStatuses = {}; examEndTime = Date.now() + (60 * 60 * 1000); 
 
-            if (window.db && window.userId) { const userStateRef = window.doc(window.db, 'artifacts', window.appId, 'users', window.userId, 'exam', 'state'); await window.setDoc(userStateRef, { status: 'ongoing', participant: participant, qOrder: activeQuestions.map(q => q.id), endTime: examEndTime, answers: {}, raguStatuses: {}, lastQIndex: 0 }); }
+            if (window.db && window.userId) { 
+                // 1. Amankan Sesi (Anti Refresh)
+                const userStateRef = window.doc(window.db, 'artifacts', window.appId, 'users', window.userId, 'exam', 'state'); 
+                await window.setDoc(userStateRef, { status: 'ongoing', participant: participant, qOrder: activeQuestions.map(q => q.id), endTime: examEndTime, answers: {}, raguStatuses: {}, lastQIndex: 0 }); 
+
+                // 2. Tembakkan nama ke Live Score sebagai "Mengerjakan..." (Nilai Disembunyikan / 0)
+                const scoreDocRef = window.doc(window.db, 'artifacts', window.appId, 'public', 'data', 'scores', window.userId);
+                await window.setDoc(scoreDocRef, { participantName: participant.name, group: participant.group, score: 0, status: 'ongoing', startedAt: Date.now() }, { merge: true });
+            }
+
             document.getElementById('exam-user-info').innerText = `Peserta: ${participant.name} | ${participant.group}`;
             generateNavGrid(); loadQuestion(0); switchView('view-exam'); clearInterval(timerInterval); timerInterval = setInterval(updateTimer, 1000); btn.innerText = "Mulai Ujian"; btn.disabled = false;
         }
@@ -706,8 +667,12 @@
             });
             if (window.db && window.userId) {
                 try {
-                    const scoresCollRef = window.collection(window.db, 'artifacts', window.appId, 'public', 'data', 'scores'); await window.addDoc(scoresCollRef, { participantName: participant.name, group: participant.group, score: finalScore, submittedAt: Date.now() });
-                    const userStateRef = window.doc(window.db, 'artifacts', window.appId, 'users', window.userId, 'exam', 'state'); await window.updateDoc(userStateRef, { status: 'finished', score: finalScore });
+                    // Update Papan Skor Live dengan nilai asli
+                    const scoreDocRef = window.doc(window.db, 'artifacts', window.appId, 'public', 'data', 'scores', window.userId); 
+                    await window.setDoc(scoreDocRef, { participantName: participant.name, group: participant.group, score: finalScore, status: 'finished', submittedAt: Date.now() }, { merge: true });
+                    
+                    const userStateRef = window.doc(window.db, 'artifacts', window.appId, 'users', window.userId, 'exam', 'state'); 
+                    await window.updateDoc(userStateRef, { status: 'finished', score: finalScore });
                 } catch(e) {}
             }
             document.getElementById('view-loading').classList.add('hidden-view'); let title = isAuto ? "Waktu Habis!" : "Ujian Selesai"; let msg = `Jawaban Anda telah terkunci. Skor Anda: <strong class="text-xl text-green-600">${finalScore} Poin</strong>`;
