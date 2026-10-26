@@ -392,9 +392,9 @@
 
         // --- LOGIN LOGIC ---
         function handleAdminLogin() {
-            const u = document.getElementById('admin123').value.trim().toLowerCase();
-            const p = document.getElementById('admin123').value.trim().toLowerCase();
-            if(u === 'admin' && p === 'admin') {
+            const u = document.getElementById('admin-user').value.trim().toLowerCase();
+            const p = document.getElementById('admin-pass').value.trim().toLowerCase();
+            if(u === 'admin123' && p === 'admin123') {
                 sessionStorage.setItem('isAdmin', 'true'); document.getElementById('admin-user').value = ''; document.getElementById('admin-pass').value = '';
                 switchView('view-admin-dash'); try { if (typeof startAdminRealtime === "function") startAdminRealtime(); } catch (err) { }
             } else { showModal("Gagal", "Username atau Password Admin salah!"); }
