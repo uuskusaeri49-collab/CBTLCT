@@ -289,37 +289,380 @@
     <script>
         // --- BANK SOAL ---
         const bankSoal = [
-            { id: 1, type: 'pg', text: "Perhatikan urutan pola bilangan berikut: 4, 9, 14, 19, ... Bilangan selanjutnya dalam urutan ini adalah...", img: null, options: [{ val: 'A', text: '24' }, { val: 'B', text: '22' }, { val: 'C', text: '23' }, { val: 'D', text: '25' }], answer: 'A' },
-            { id: 2, type: 'pg', text: "Diberikan data survei warna kesukaan suatu kelas: Merah (10 orang), Biru (15 orang), dan Hijau (5 orang). Di antara diagram batang di bawah ini, manakah yang berhasil mewakili data tersebut dengan skala grafik yang tepat?", img: null, options: [{ val: 'A', text: 'Diagram Batang D (Merah: 10, Biru: 5, Hijau: 15)' }, { val: 'B', text: 'Diagram Batang B (Merah: 15, Biru: 10, Hijau: 5)' }, { val: 'C', text: 'Diagram Batang C (Merah: 5, Biru: 15, Hijau: 10)' }, { val: 'D', text: 'Diagram Batang A (Merah: 10, Biru: 15, Hijau: 5)' }], answer: 'D' },
-            { id: 3, type: 'pg', text: "Ibu memiliki 1/2 potong kue tart yang besar. Kue tersebut dibagi sama rata kepada 4 orang anaknya. Berapa bagian kue yang akan diterima oleh masing-masing anak?", img: null, options: [{ val: 'A', text: '1/4' }, { val: 'B', text: '1/8' }, { val: 'C', text: '1/2' }, { val: 'D', text: '1/6' }], answer: 'D' },
-            { id: 4, type: 'pg', text: "Sebuah pabrik menghasilkan 40.000 pasang sepatu. Sebanyak 15.000 pasang sepatu telah dikirim kepada pembeli, dan pabrik tersebut kemudian memproduksi tambahan 12.500 pasang sepatu baru. Berapakah jumlah sepatu di pabrik itu sekarang?", img: null, options: [{ val: 'A', text: '67.500' }, { val: 'B', text: '37.500' }, { val: 'C', text: '42.500' }, { val: 'D', text: '27.500' }], answer: 'B' },
-            { id: 5, type: 'pg', text: "Jumlah buku di perpustakaan mini adalah p buah. Setelah guru menyumbangkan 25 buah buku lagi, jumlah total buku kini menjadi 140 buah. Berapakah nilai p?", img: null, options: [{ val: 'A', text: '165' }, { val: 'B', text: '105' }, { val: 'C', text: '115' }, { val: 'D', text: '125' }], answer: 'C' },
-            { id: 6, type: 'pg', text: "Hitunglah hasil dari 45.500 + 32.200 - 15.000 = ...", img: null, options: [{ val: 'A', text: '77.700' }, { val: 'B', text: '62.700' }, { val: 'C', text: '63.700' }, { val: 'D', text: '72.700' }], answer: 'B' },
-            { id: 7, type: 'pg', text: "Hasil dari 3/4 + 0.5 x 2 adalah...", img: null, options: [{ val: 'A', text: '1,25' }, { val: 'B', text: '1,75' }, { val: 'C', text: '2,00' }, { val: 'D', text: '2,50' }], answer: 'B' },
-            { id: 8, type: 'pg', text: "Di antara pilihan jaring-jaring A, B, C, dan D berikut, manakah jaring-jaring yang tepat dan bisa dilipat untuk membentuk dadu beserta posisi titik-titiknya?", img: "no.17.jpg", options: [{ val: 'A', text: 'Jaring-jaring D' }, { val: 'B', text: 'Jaring-jaring A' }, { val: 'C', text: 'Jaring-jaring B' }, { val: 'D', text: 'Jaring-jaring C' }], answer: 'B' },
-            { id: 9, type: 'pg', text: "Sebuah bus ekspres bergerak dari Kota X ke Kota Y yang berjarak 150 km dengan kecepatan rata-rata 50 km/jam. Berapa waktu yang dibutuhkan bus tersebut untuk sampai ke tujuan?", img: null, options: [{ val: 'A', text: '3 jam' }, { val: 'B', text: '5 jam' }, { val: 'C', text: '2 jam' }, { val: 'D', text: '4 jam' }], answer: 'A' },
-            { id: 10, type: 'pg', text: "Rasio siswa laki-laki terhadap siswa perempuan di suatu kelas 6 adalah 2:3. Jika jumlah siswa perempuan di kelas tersebut adalah 15 orang, berapakah jumlah siswa laki-laki?", img: null, options: [{ val: 'A', text: '10 Orang' }, { val: 'B', text: '25 Orang' }, { val: 'C', text: '12 Orang' }, { val: 'D', text: '20 Orang' }], answer: 'A' },
-            { id: 11, type: 'pg', text: "Jarum pada sebuah timbangan menunjukkan angka tepat 3 kg 200 gram. Berapa berat benda tersebut jika diubah ke dalam satuan gram?", img: "gambar-timbangan.jpg", options: [{ val: 'A', text: '320 gram' }, { val: 'B', text: '3.200 gram' }, { val: 'C', text: '3.020 gram' }, { val: 'D', text: '30.200 gram' }], answer: 'B' },
-            { id: 12, type: 'bs', text: "Di dalam sebuah taman umum berukuran 20m 20m akan dibangun sebuah kolam berbentuk lingkaran tepat di tengah-tengahnya. Area tanah berumput di luar kolam tersebut perlu diukur luasnya. Tentukan Benar (B) atau Salah (S):", img: "gambardenah.jpg", statements: [{ id: 's1', text: "Luas area berumput bisa dihitung dengan cara mengurangkan luas persegi taman dengan luas lingkaran kolam.", answer: 'B' }, { id: 's2', text: "Keliling pinggiran kolam murni hanya bergantung pada panjang jari-jari kolam yang dibangun.", answer: 'B' }] },
-            { id: 13, type: 'bs', text: "Panjang sebatang kayu adalah 2,5 meter. Kayu tersebut kemudian dipotong sepanjang 80 cm. Pilih pernyataan yang benar mengenai sisa kayu tersebut! (Pilih semua jawaban yang tepat).", img: "2.jpg", statements: [{ id: 's1', text: "Panjang awal kayu tersebut setara dengan 250 cm.", answer: 'B' }, { id: 's2', text: "Sisa kayu setelah dipotong adalah 170 cm.", answer: 'B' }, { id: 's3', text: "Sisa kayu tersebut berukuran tepat 1 meter 70 cm.", answer: 'B' }, { id: 's4', text: "Panjang sisa kayu tersebut kurang dari 1,5 meter.", answer: 'S' }] },
-            { id: 14, type: 'bs', text: "Tentukan apakah pernyataan berikut Benar (B) atau Salah (S):", img: "3.jpg", statements: [{ id: 's1', text: "Pola ke-4 akan membutuhkan 13 batang korek api.", answer: 'B' }, { id: 's2', text: "Setiap kali pola berubah, susunan batang korek api selalu bertambah sebanyak 4 batang", answer: 'S' }] },
-            { id: 15, type: 'bs', text: "Pilih pernyataan yang mendeskripsikan pandangan bangun 3D tersebut dengan paling akurat. (Pilih semua jawaban yang benar).", img: "no4.jpg", statements: [{ id: 's1', text: "Pandangan lurus dari atas akan terlihat seperti 4 buah kotak persegi yang menyambung.", answer: 'B' }, { id: 's2', text: "Pandangan lurus dari depan membentuk huruf L terbalik.", answer: 'B' }, { id: 's3', text: "Pandangan lurus dari sisi kanan menampilkan 2 kotak persegi yang tersusun secara vertikal.", answer: 'S' }] },
-            { id: 16, type: 'kompleks', text: "Pilih pernyataan yang memberikan penafsiran tabel data ini dengan benar! (Pilih semua jawaban yang tepat).", img: "no5.jpg", options: [{ val: 'A', text: 'Kelompok siswa paling banyak memiliki berat badan 35 kg.' }, { val: 'B', text: 'Total keseluruhan siswa yang ditimbang dalam catatan ini adalah 20 orang.' }, { val: 'C', text: 'Sebanyak 8 orang siswa teridentifikasi memiliki berat badan di bawah 35 kg.' }, { val: 'D', text: 'Terdapat sejumlah 3 orang siswa yang tercatat memiliki berat badan 40 kg.' }], answer: ['A', 'B', 'D'] },
-            { id: 17, type: 'kompleks', text: "Dalam sebuah perlombaan kuis, setiap jawaban yang benar diberi skor 5. Tim Merah telah menjawab sejumlah x pertanyaan dengan benar dan mendapat skor bonus tambahan sebanyak 10 poin. Pilih kalimat matematika yang tepat untuk menghitung total skor (M) Tim Merah!", img: null, options: [{ val: 'A', text: 'M = 5x + 10' }, { val: 'B', text: 'M = 5(x + 10)' }, { val: 'C', text: 'Total skor dihitung dengan mengalikan jumlah jawaban benar dengan 5, kemudian ditambah dengan 10.' }, { val: 'D', text: 'M = 10x + 5' }], answer: ['A', 'C'] },
-            { id: 18, type: 'pg', text: "Perhatikan urutan pola bilangan berikut: 4, 9, 14, 19, ... Bilangan selanjutnya dalam urutan ini adalah... ", img: "gambar-timbangan.jpg", options: [{ val: 'A', text: '24' }, { val: 'B', text: '22' }, { val: 'C', text: '23' }, { val: 'D', text: '25' }], answer: 'A' },
-            { id: 19, type: 'kompleks', text: "Sebuah sekolah menerima sumbangan dana sebesar Rp 543.200. Pilih pernyataan yang menunjukkan dekomposisi (pemisahan nilai tempat) yang benar untuk jumlah uang tersebut! (Pilih semua jawaban yang tepat).", img: null, options: [{ val: 'A', text: '500.000 + 40.000 + 3.000 + 200' }, { val: 'B', text: '5 ratus ribu + 4 puluh ribu + 3 ribu + 2 ratus' }, { val: 'C', text: '540.000 + 30.000 + 200' }, { val: 'D', text: '500.000 + 43.000 + 20' }], answer: ['A', 'B', 'C'] },
-            { id: 20, type: 'kompleks', text: "Ahmad membeli 3 batang pensil dan 1 buah buku dengan menggunakan selembar uang Rp 50.000. Pilih pernyataan yang tepat! (Pilih semua jawaban yang benar).", img: "no.9.jpg", options: [{ val: 'A', text: 'Total harga seluruh barang yang dibeli adalah Rp 21.000.' }, { val: 'B', text: 'Jumlah uang kembalian yang akan diterima Ahmad adalah Rp 29.000.' }, { val: 'C', text: 'Harga untuk 3 batang pensil saja adalah Rp 6.000.' }, { val: 'D', text: 'Uang kembalian Ahmad bernilai kurang dari Rp 20.000.' }], answer: ['A', 'B', 'C'] },
-            { id: 21, type: 'kompleks', text: "Di antara pernyataan berikut, manakah cara memperkirakan ukuran sudut yang paling tepat? (Pilih semua jawaban yang benar).", img: "no.9.jpg", options: [{ val: 'A', text: 'Sudut siku-siku memiliki bukaan tepat 90°.' }, { val: 'B', text: 'Sudut tumpul selalu memiliki ukuran lebih besar dari 180°.' }, { val: 'C', text: 'Sudut lancip adalah sudut yang besarnya kurang dari 90°.' }], answer: ['A', 'C'] },
-            { id: 22, type: 'kompleks', text: "Ali berlatih sepak bola setiap 4 hari sekali, sedangkan Budi berlatih setiap 6 hari sekali di lapangan yang sama. Jika mereka berlatih bersama-sama pada tanggal 2 Mei, pilih pernyataan yang benar. (Bisa memilih lebih dari satu jawaban).", img: "no12.jpg", options: [{ val: 'A', text: 'Mereka akan selalu berlatih bersama-sama setiap 12 hari sekali.' }, { val: 'B', text: 'Mereka akan berlatih bersama-sama untuk kedua kalinya pada tanggal 14 Mei.' }, { val: 'C', text: 'Nilai KPK dari jadwal latihan mereka adalah 24.' }, { val: 'D', text: 'Mereka akan bertemu lagi di lapangan pada tanggal 10 Mei.' }], answer: ['A', 'B'] },
-            { id: 23, type: 'bs', text: "Tentukan Benar (B) atau Salah (S) untuk setiap kesimpulan pernyataan berikut:", img: "no13.jpg", statements: [{ id: 's1', text: "Total penjualan untuk bulan Maret dan bulan April adalah hasil penjumlahan tinggi kedua batang yang kemudian dikalikan dengan skala angka pada sumbu vertikalnya.", answer: 'S' }, { id: 's2', text: "Selisih antara jumlah penjualan tertinggi dan terendah dapat dihitung dengan mencari beda nilai pada batang tertinggi dan batang terendah di dalam grafik.", answer: 'B' }] },
-            { id: 24, type: 'bs', text: "Tentukan Benar (B) atau Salah (S) untuk setiap kesimpulan pernyataan berikut:", img: "no14.jpg", statements: [{ id: 's1', text: "Jumlah keempat sudut di dalam layang-layang adalah 360.", answer: 'B' }, { id: 's2', text: "Sudut di bagian bawah layang-layang tersebut besarnya 40.", answer: 'B' }] },
-            { id: 25, type: 'bs', text: "Berdasarkan bangun datar tersebut, pilih semua ciri-ciri yang tepat! (Pilih semua jawaban yang benar). ", img: "no.18.jpg", statements: [{ id: 's1', text: "Ukuran keliling bangun gabungan ini hanya diperoleh dengan menjumlahkan ukuran semua sisi luarnya saja.", answer: 'B' }, { id: 's2', text: "Luas keseluruhan bangun gabungan ini dihitung dengan mengalikan luas persegi panjang dengan luas segitiga.", answer: 'S' }] },
-            { id: 26, type: 'kompleks', text: "Di antara pernyataan berikut, manakah cara memperkirakan ukuran sudut yang paling tepat? (Pilih semua jawaban yang benar).", img: "No.21.jpg", options: [{ val: 'A', text: 'Memiliki 4 sisi luar yang sama panjang.' }, { val: 'B', text: 'Memiliki 4 sudut siku-siku yang sama besar.' }, { val: 'C', text: 'Sudut-sudut yang saling berhadapan besarnya sama.' }, { val: 'D', text: 'Memiliki 2 garis diagonal yang berpotongan tegak lurus (membentuk sudut 90).' }], answer: ['A', 'C', 'D'] },
-            { id: 27, type: 'bs', text: "Berdasarkan bangun datar tersebut, pilih semua ciri-ciri yang tepat! (Pilih semua jawaban yang benar). ", img: "no24.png", statements: [{ id: 's1', text: "Jika pada hari Selasa terdapat 4 ikon buku penuh, ini berarti ada sebanyak 40 buah buku yang telah dipinjam.", answer: 'B' }, { id: 's2', text: "Jumlah pinjaman pada hari yang memuat gambar 2,5 ikon buku mengartikan total ada 25 buah buku.", answer: 'B' }] },
-            { id: 28, type: 'bs', text: "Ibu Siti ingin membagikan buah-buahan tersebut ke dalam beberapa keranjang dengan jumlah apel dan jeruk yang sama banyak di setiap keranjangnya. Tentukan Benar (B) atau Salah (S) untuk pernyataan di bawah ini:", img: "no25.png", statements: [{ id: 's1', text: "Jumlah keranjang paling banyak yang diperlukan adalah 12 keranjang.", answer: 'B' }, { id: 's2', text: "Setiap keranjang akan berisi 3 buah apel. ", answer: 'S' }, { id: 's3', text: "Setiap keranjang akan berisi 3 buah jeruk", answer: 'B' }] },
-            { id: 29, type: 'bs', text: "Pak Abu memiliki sebuah taman bermain berbentuk persegi panjang dengan panjang 25 meter dan lebar 15 meter. Tentukan Benar (B) atau Salah (S) untuk pernyataan perhitungan di bawah ini:", img: null, statements: [{ id: 's1', text: "Luas keseluruhan taman bermain tersebut adalah 375 meter².", answer: 'B' }, { id: 's2', text: "Jumlah keliling taman tersebut adalah 80 meter.", answer: 'B' }] },
-            { id: 30, type: 'bs', text: "Siti mengerjakan PR sekolahnya selama 1 jam 45 menit. Tentukan apakah pernyataan berikut Benar (B) atau Salah (S): ", img: null, statements: [{ id: 's1', text: "Waktu Siti belajar setara dengan 105 menit.", answer: 'B' }, { id: 's2', text: "Jika Siti mulai belajar pada pukul 14.00 siang, ia akan menyelesaikan tugasnya pada pukul 15.45 sore.", answer: 'B' }] }
-        ];
+  // --- PILIHAN GANDA (10 Soal | @2 Poin = 20 Poin) ---
+  {
+    id: 1,
+    type: 'pg',
+    text: 'Perhatikan urutan pola bilangan berikut: 6, 13, 20, 27, ... Bilangan selanjutnya dalam urutan ini adalah...',
+    img: null,
+    options: [
+      { val: 'A', text: '34' },
+      { val: 'B', text: '32' },
+      { val: 'C', text: '33' },
+      { val: 'D', text: '35' }
+    ],
+    answer: 'A'
+  },
+  {
+    id: 2,
+    type: 'pg',
+    text: 'Diberikan data hasil panen buah: Mangga (20 kg), Jeruk (15 kg), dan Apel (10 kg). Diagram batang mana yang menyajikan data tersebut secara akurat?',
+    img: null, // [ADA GAMBAR: Diagram batang 3 jenis buah]
+    options: [
+      { val: 'A', img: '2-diagram-a.png' },
+      { val: 'B', img: '2-diagram-b.png' },
+      { val: 'C', img: '2-diagram-c.png' },
+      { val: 'D', img: '2-diagram-d.jpg' }
+    ],
+    answer: 'A'
+  },
+  {
+    id: 3,
+    type: 'pg',
+    text: 'Ibu memiliki 3/4 bagian kue bolu. Kue tersebut dibagi rata kepada 3 orang anaknya. Berapa bagian kue yang diterima setiap anak?',
+    img: null,
+    options: [
+      { val: 'A', text: '1/2' },
+      { val: 'B', text: '1/4' },
+      { val: 'C', text: '1/3' },
+      { val: 'D', text: '3/8' }
+    ],
+    answer: 'B'
+  },
+  {
+    id: 4,
+    type: 'pg',
+    text: 'Sebuah gudang menyimpan 50.000 kg beras. Sebanyak 18.500 kg disalurkan ke toko, lalu gudang menerima kiriman baru 14.000 kg. Berapa total beras di gudang sekarang?',
+    img: null,
+    options: [
+      { val: 'A', text: '45.500 kg' },
+      { val: 'B', text: '45.000 kg' },
+      { val: 'C', text: '31.500 kg' },
+      { val: 'D', text: '42.500 kg' }
+    ],
+    answer: 'A'
+  },
+  {
+    id: 5,
+    type: 'pg',
+    text: 'Jumlah kelereng di dalam wadah adalah n butir. Setelah ditambah 35 butir lagi, jumlah total kelereng menjadi 150 butir. Berapakah nilai n?',
+    img: null,
+    options: [
+      { val: 'A', text: '125' },
+      { val: 'B', text: '115' },
+      { val: 'C', text: '105' },
+      { val: 'D', text: '185' }
+    ],
+    answer: 'B'
+  },
+  {
+    id: 6,
+    type: 'pg',
+    text: 'Berapakah hasil dari 52.400 + 28.600 - 18.000?',
+    img: null,
+    options: [
+      { val: 'A', text: '63.000' },
+      { val: 'B', text: '62.000' },
+      { val: 'C', text: '81.000' },
+      { val: 'D', text: '65.000' }
+    ],
+    answer: 'B'
+  },
+  {
+    id: 7,
+    type: 'pg',
+    text: 'Hasil hitung dari 2/5 + 0.4 x 3 adalah...',
+    img: null,
+    options: [
+      { val: 'A', text: '1,2' },
+      { val: 'B', text: '1,6' },
+      { val: 'C', text: '2,4' },
+      { val: 'D', text: '1,8' }
+    ],
+    answer: 'B'
+  },
+  {
+    id: 8,
+    type: 'pg',
+    text: 'Manakah jaring-jaring kubus berikut yang tepat jika dirangkai menjadi sebuah kubus sempurna?',
+    img: null, // [ADA GAMBAR: 4 pilihan pola jaring-jaring kubus A, B, C, D]
+    options: [
+      { val: 'A', img: '8-diagram-a.png' },
+      { val: 'B', img: '8-diagram-b.png' },
+      { val: 'C', img: '8-diagram-c.png' },
+      { val: 'D', img: '8-diagram-d.jpg' }
+    ],
+    answer: 'C'
+  },
+  {
+    id: 9,
+    type: 'pg',
+    text: 'Sebuah mobil melaju dari Kota A ke Kota B sejauh 180 km dengan kecepatan rata-rata 60 km/jam. Berapa jam waktu tempuhnya?',
+    img: null,
+    options: [
+      { val: 'A', text: '3 jam' },
+      { val: 'B', text: '4 jam' },
+      { val: 'C', text: '2,5 jam' },
+      { val: 'D', text: '5 jam' }
+    ],
+    answer: 'A'
+  },
+  {
+    id: 10,
+    type: 'pg',
+    text: 'Rasio jumlah buku cerita terhadap buku pelajaran di perpustakaan adalah 3:5. Jika buku pelajaran berjumlah 25 buah, berapa jumlah buku cerita?',
+    img: null,
+    options: [
+      { val: 'A', text: '15 Buah' },
+      { val: 'B', text: '20 Buah' },
+      { val: 'C', text: '10 Buah' },
+      { val: 'D', text: '30 Buah' }
+    ],
+    answer: 'A'
+  },
+
+  // --- PG KOMPLEKS (12 Soal | @5 Poin = 60 Poin) ---
+  {
+    id: 11,
+    type: 'kompleks',
+    text: 'Berdasarkan tabel distribusi berat badan siswa berikut, pilih semua pernyataan penafsiran data yang benar! (Pilih lebih dari satu)',
+    img: 'gambar-soal-11.jpg', // [ADA GAMBAR: Tabel data berat badan dan frekuensi siswa]
+    options: [
+      { val: 'A', text: 'Siswa terbanyak memiliki berat badan 36 kg.' },
+      { val: 'B', text: 'Total siswa yang ditimbang adalah 25 orang.' },
+      { val: 'C', text: 'Terdapat 6 siswa yang memiliki berat badan di bawah 35 kg.' },
+      { val: 'D', text: 'Siswa dengan berat badan 40 kg berjumlah 4 orang.' }
+    ],
+    answer: ['A', 'B', 'D']
+  },
+  {
+    id: 12,
+    type: 'kompleks',
+    text: 'Dalam kompetisi sains, setiap jawaban benar bernilai 4 poin dan ada poin bonus partisipasi sebesar 15 poin. Jika n adalah jumlah jawaban benar, manakah rumus/kalimat matematika total skor (S) yang tepat?',
+    img: null,
+    options: [
+      { val: 'A', text: 'S = 4n + 15' },
+      { val: 'B', text: 'S = 15n + 4' },
+      { val: 'C', text: 'Total skor diperoleh dari 4 dikali jumlah benar, ditambah 15.' },
+      { val: 'D', text: 'S = 4(n + 15)' }
+    ],
+    answer: ['A', 'C']
+  },
+  {
+    id: 13,
+    type: 'kompleks',
+    text: 'Pemerintah daerah menyalurkan bantuan sebesar Rp 684.300. Manakah dekomposisi nilai tempat angka yang benar dari nominal tersebut?',
+    img: null,
+    options: [
+      { val: 'A', text: '600.000 + 80.000 + 4.000 + 300' },
+      { val: 'B', text: '6 ratus ribu + 8 puluh ribu + 4 ribu + 3 ratus' },
+      { val: 'C', text: '680.000 + 4.000 + 300' },
+      { val: 'D', text: '600.000 + 84.000 + 30' }
+    ],
+    answer: ['A', 'B', 'C']
+  },
+  {
+    id: 14,
+    type: 'kompleks',
+    text: 'Budi membeli 2 buah buku cetak dan 2 batang pensil dengan selembar uang Rp 100.000. Berdasarkan daftar harga pada gambar, pilih pernyataan yang benar!',
+    img: 'gambar-soal-14.jpg', // [ADA GAMBAR: Daftar harga buku Rp 20.000 dan pensil Rp 5.000]
+    options: [
+      { val: 'A', text: 'Total belanjaan Budi adalah Rp 50.000.' },
+      { val: 'B', text: 'Uang kembalian yang diterima Budi adalah Rp 50.000.' },
+      { val: 'C', text: 'Harga 2 batang pensil adalah Rp 10.000.' },
+      { val: 'D', text: 'Sisa uang Budi kurang dari Rp 30.000.' }
+    ],
+    answer: ['A', 'B', 'C']
+  },
+  {
+    id: 15,
+    type: 'kompleks',
+    text: 'Pilih semua pernyataan yang benar mengenai konsep pengukuran sudut di bawah ini!',
+    img: null,
+    options: [
+      { val: 'A', text: 'Sudut siku-siku memiliki besaran tepat 90°.' },
+      { val: 'B', text: 'Sudut tumpul besarnya antara 90° dan 180°.' },
+      { val: 'C', text: 'Sudut lancip besarnya kurang dari 90°.' },
+      { val: 'D', text: 'Sudut lurus besarnya adalah 360°.' }
+    ],
+    answer: ['A', 'B', 'C']
+  },
+  {
+    id: 16,
+    type: 'kompleks',
+    text: 'Rina berenang setiap 3 hari sekali dan Sinta setiap 5 hari sekali. Jika mereka berenang bersama pada tanggal 1 Agustus, pilih pernyataan yang benar!',
+    img: null,
+    options: [
+      { val: 'A', text: 'KPK dari jadwal renang mereka adalah 15.' },
+      { val: 'B', text: 'Mereka akan berenang bersama lagi pada tanggal 16 Agustus.' },
+      { val: 'C', text: 'Mereka bertemu kembali setiap 15 hari sekali.' },
+      { val: 'D', text: 'Pertemuan berikutnya terjadi pada tanggal 10 Agustus.' }
+    ],
+    answer: ['A', 'B', 'C']
+  },
+  {
+    id: 17,
+    type: 'kompleks',
+    text: 'Perhatikan gambar belah ketupat berikut. Pilih semua sifat-sifat yang sesuai dengan bangun datar tersebut!',
+    img: 'gambar-soal-17.jpg', // [ADA GAMBAR: Bangun datar Belah Ketupat]
+    options: [
+      { val: 'A', text: 'Memiliki 4 sisi sama panjang.' },
+      { val: 'B', text: 'Sudut-sudut yang berhadapan sama besar.' },
+      { val: 'C', text: 'Kedua diagonalnya berpotongan tegak lurus (90°).' },
+      { val: 'D', text: 'Memiliki 4 sudut siku-siku.' }
+    ],
+    answer: ['A', 'B', 'C']
+  },
+  {
+    id: 18,
+    type: 'kompleks',
+    text: 'Sebuah tangki air berisi 1.200 liter. Air dialirkan keluar dengan debit 40 liter/menit. Pilih pernyataan yang benar!',
+    img: null,
+    options: [
+      { val: 'A', text: 'Waktu yang dibutuhkan untuk mengosongkan tangki adalah 30 menit.' },
+      { val: 'B', text: 'Dalam waktu 10 menit, air yang keluar sebanyak 400 liter.' },
+      { val: 'C', text: 'Sisa air setelah 15 menit adalah 600 liter.' },
+      { val: 'D', text: 'Tangki akan kosong dalam waktu 1 jam.' }
+    ],
+    answer: ['A', 'B', 'C']
+  },
+  {
+    id: 19,
+    type: 'kompleks',
+    text: 'Perhatikan denah koordinat Cartesius berikut. Manakah pernyataan posisi titik yang benar?',
+    img: 'gambar-soal-19.jpg', // [ADA GAMBAR: Koordinat Cartesius titik A(2,3), B(-4,1), C(0,-2)]
+    options: [
+      { val: 'A', text: 'Titik A berada pada koordinat (2, 3).' },
+      { val: 'B', text: 'Titik B berada di kuadran kedua.' },
+      { val: 'C', text: 'Titik C terletak tepat di sumbu Y.' },
+      { val: 'D', text: 'Titik A berjarak 2 unit dari sumbu X.' }
+    ],
+    answer: ['A', 'B', 'C']
+  },
+  {
+    id: 20,
+    type: 'kompleks',
+    text: 'Sebuah persegi panjang memiliki panjang 12 cm dan lebar 5 cm. Pilih semua pernyataan hitungan yang tepat!',
+    img: null,
+    options: [
+      { val: 'A', text: 'Luas persegi panjang tersebut adalah 60 cm².' },
+      { val: 'B', text: 'Keliling persegi panjang tersebut adalah 34 cm.' },
+      { val: 'C', text: 'Panjang diagonalnya adalah 13 cm.' },
+      { val: 'D', text: 'Kelilingnya bernilai 17 cm.' }
+    ],
+    answer: ['A', 'B', 'C']
+  },
+  {
+    id: 21,
+    type: 'kompleks',
+    text: 'Berdasarkan data piktoform (diagram gambar) peminjaman buku berikut (1 simbol buku melambangkan 10 buku), tentukan pernyataan yang tepat!',
+    img: 'gambar-soal-21.jpg', // [ADA GAMBAR: Piktogram peminjaman buku per hari]
+    options: [
+      { val: 'A', text: '3,5 simbol buku mewakili 35 buah buku.' },
+      { val: 'B', text: 'Hari dengan 5 simbol buku berarti ada 50 buku dipinjam.' },
+      { val: 'C', text: 'Setengah simbol buku bernilai 5 buku.' },
+      { val: 'D', text: '1 simbol buku mewakili 100 buku.' }
+    ],
+    answer: ['A', 'B', 'C']
+  },
+  {
+    id: 22,
+    type: 'kompleks',
+    text: 'Dalam kotak terdapat 4 bola merah dan 6 bola biru. Jika diambil satu bola secara acak, pernyataan mana saja yang benar?',
+    img: 'gambar-soal-22.jpg', // [ADA GAMBAR: Wadah transparan berisi 4 bola merah & 6 bola biru]
+    options: [
+      { val: 'A', text: 'Peluang terambil bola merah adalah 4/10.' },
+      { val: 'B', text: 'Peluang terambil bola biru adalah 3/5.' },
+      { val: 'C', text: 'Bola biru lebih berpeluang terambil daripada bola merah.' },
+      { val: 'D', text: 'Peluang terambil bola merah adalah 50%.' }
+    ],
+    answer: ['A', 'B', 'C']
+  },
+
+  // --- BENAR / SALAH (8 Soal | @2.5 Poin = 20 Poin) ---
+  {
+    id: 23,
+    type: 'bs',
+    text: 'Sebuah kolam lingkaran berdiameter 14 meter berada di dalam lapangan persegi 20m x 20m. Tentukan Benar (B) atau Salah (S) untuk pernyataan berikut:',
+    img: 'gambar-soal-23.jpg', // [ADA GAMBAR: Denah lingkaran di dalam persegi]
+    statements: [
+      { id: 's1', text: 'Luas area rumput di luar kolam dihitung dari luas persegi dikurangi luas lingkaran.', answer: 'B' },
+      { id: 's2', text: 'Keliling kolam murni bergantung pada jari-jari lingkaran.', answer: 'B' }
+    ]
+  },
+  {
+    id: 24,
+    type: 'bs',
+    text: 'Sebatang pipa memiliki panjang 3 meter. Pipa tersebut dipotong sepanjang 120 cm. Tentukan Benar (B) atau Salah (S):',
+    img: null,
+    statements: [
+      { id: 's1', text: 'Panjang awal pipa sama dengan 300 cm.', answer: 'B' },
+      { id: 's2', text: 'Sisa potongan pipa adalah 180 cm (1 meter 80 cm).', answer: 'B' },
+      { id: 's3', text: 'Panjang sisa pipa kurang dari 1,5 meter.', answer: 'S' }
+    ]
+  },
+  {
+    id: 25,
+    type: 'bs',
+    text: 'Perhatikan susunan pola korek api pada gambar. Tentukan Benar (B) atau Salah (S):',
+    img: 'gambar-soal-25.jpg', // [ADA GAMBAR: Pola korek api bertingkat]
+    statements: [
+      { id: 's1', text: 'Setiap tingkat pola bertambah secara konstan bertambah 4 batang.', answer: 'B' },
+      { id: 's2', text: 'Pola ke-5 membutuhkan 16 batang korek api.', answer: 'S' }
+    ]
+  },
+  {
+    id: 26,
+    type: 'bs',
+    text: 'Perhatikan bangun ruang 3D gabungan pada gambar berikut. Tentukan Benar (B) atau Salah (S):',
+    img: 'gambar-soal-26.jpg', // [ADA GAMBAR: Balok 3D susunan kubus]
+    statements: [
+      { id: 's1', text: 'Tampak dari atas menampilkan bentuk 4 persegi sejajar.', answer: 'B' },
+      { id: 's2', text: 'Tampak dari depan membentuk pola huruf L.', answer: 'B' }
+    ]
+  },
+  {
+    id: 27,
+    type: 'bs',
+    text: 'Berdasarkan grafik garis kenaikan suhu harian berikut, tentukan Benar (B) atau Salah (S):',
+    img: 'gambar-soal-27.jpg', // [ADA GAMBAR: Grafik garis suhu udara harian]
+    statements: [
+      { id: 's1', text: 'Selisih suhu tertinggi dan terendah diperoleh dari mengurangi nilai puncak dengan nilai terendah grafik.', answer: 'B' },
+      { id: 's2', text: 'Suhu selalu naik setiap harinya tanpa pernah mengalami penurunan.', answer: 'S' }
+    ]
+  },
+  {
+    id: 28,
+    type: 'bs',
+    text: 'Pak Doni memiliki 36 buah apel dan 48 buah jeruk yang akan dibagi habis ke beberapa kantong plastik secara merata. Tentukan Benar (B) atau Salah (S):',
+    img: null,
+    statements: [
+      { id: 's1', text: 'Jumlah kantong plastik terbanyak yang dibutuhkan adalah 12 buah (KPK).', answer: 'S' }, // Salah, seharusnya FPB = 12
+      { id: 's2', text: 'Jumlah kantong terbanyak menggunakan konsep FPB yaitu 12 kantong.', answer: 'B' },
+      { id: 's3', text: 'Setiap kantong plastik berisi 3 buah apel dan 4 buah jeruk.', answer: 'B' }
+    ]
+  },
+  {
+    id: 29,
+    type: 'bs',
+    text: 'Sebuah kebun berbentuk persegi panjang berukuran panjang 30 meter dan lebar 20 meter. Tentukan Benar (B) atau Salah (S):',
+    img: null,
+    statements: [
+      { id: 's1', text: 'Luas keseluruhan kebun tersebut adalah 600 m².', answer: 'B' },
+      { id: 's2', text: 'Keliling kebun tersebut adalah 100 meter.', answer: 'B' }
+    ]
+  },
+  {
+    id: 30,
+    type: 'bs',
+    text: 'Dito belajar kelompok selama 2 jam 15 menit. Tentukan Benar (B) atau Salah (S):',
+    img: null,
+    statements: [
+      { id: 's1', text: 'Durasi Dito belajar sama dengan 135 menit.', answer: 'B' },
+      { id: 's2', text: 'Jika Dito mulai belajar pukul 13.30, maka ia selesai pada pukul 15.45.', answer: 'B' }
+    ]
+  }
+];
 
         let globalConfig = { token: '----', jadwalMulai: null, groups: [], accounts: [] };
         let activeQuestions = []; let currentQIndex = 0; let answers = {}; let raguStatuses = {};
