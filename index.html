@@ -221,7 +221,6 @@
         <div class="flex-1 p-4 md:p-6 flex flex-col md:flex-row gap-6 overflow-hidden">
             <div class="w-full md:w-1/3 flex flex-col gap-4">
                 
-                <!-- TAMBAHAN: KOTAK TOKEN UNTUK PEMANTAU -->
                 <div class="bg-blue-50 p-4 rounded-xl shadow-sm border border-blue-200 flex justify-between items-center shrink-0">
                     <div>
                         <h3 class="text-xs font-bold text-blue-700 uppercase tracking-wider">Token Ujian</h3>
@@ -289,380 +288,393 @@
     <script>
         // --- BANK SOAL ---
         const bankSoal = [
-  // --- PILIHAN GANDA (10 Soal | @2 Poin = 20 Poin) ---
+  // ==========================================
+  // BENTUK SOAL: PG BIASA (12 SOAL)
+  // ==========================================
+
   {
-    id: 1,
-    type: 'pg',
-    text: 'Perhatikan urutan pola bilangan berikut: 6, 13, 20, 27, ... Bilangan selanjutnya dalam urutan ini adalah...',
-    img: null,
-    options: [
-      { val: 'A', text: '34' },
-      { val: 'B', text: '32' },
-      { val: 'C', text: '33' },
-      { val: 'D', text: '35' }
+    "id": 1,
+    "type": "pg",
+    "text": "Perhatikan urutan pola bilangan berikut: 6, 13, 20, 27, ... Bilangan selanjutnya dalam urutan ini adalah...",
+    "img": null,
+    "options": [
+      {"val": "A", "text": "34"},
+      {"val": "B", "text": "32"},
+      {"val": "C", "text": "33"},
+      {"val": "D", "text": "35"}
     ],
-    answer: 'A'
+    "answer": "A"
   },
   {
-    id: 2,
-    type: 'pg',
-    text: 'Diberikan data hasil panen buah: Mangga (20 kg), Jeruk (15 kg), dan Apel (10 kg). Diagram batang mana yang menyajikan data tersebut secara akurat?',
-    img: 'diagram_panenbuah.jpg', // [ADA GAMBAR: Diagram batang 3 jenis buah]
-    options: [
-      { val: 'A', text: 'Diagram A' },
-      { val: 'B', text: 'Diagram B' },
-      { val: 'C', text: 'Diagram C' },
-      { val: 'D', text: 'Diagram D' }
+    "id": 2,
+    "type": "pg",
+    "text": "Sebuah bak air berbentuk balok berukuran panjang 80 cm, lebar 50 cm, dan tinggi 60 cm. Jika bak tersebut hanya terisi tiga perempat bagian, berapa liter volume air yang ada di dalam bak tersebut?",
+    "img": "stimulus_2.jpg", // Bak air sebagian terisi (Gambar Bangun Ruang)
+    "options": [
+      {"val": "A", "text": "180 liter"},
+      {"val": "B", "text": "240 liter"},
+      {"val": "C", "text": "360 liter"},
+      {"val": "D", "text": "120 liter"}
     ],
-    answer: 'A'
+    "answer": "A"
   },
   {
-    id: 3,
-    type: 'pg',
-    text: 'Ibu memiliki 3/4 bagian kue bolu. Kue tersebut dibagi rata kepada 3 orang anaknya. Berapa bagian kue yang diterima setiap anak?',
-    img: null,
-    options: [
-      { val: 'A', text: '1/2' },
-      { val: 'B', text: '1/4' },
-      { val: 'C', text: '1/3' },
-      { val: 'D', text: '3/8' }
+    "id": 3,
+    "type": "pg",
+    "text": "Bu Aminah membeli 3 kg telur dan 2 kg terigu dengan total harga Rp72.000,00. Jika harga 1 kg telur adalah Rp16.000,00, berapakah harga untuk 1 kg terigu?",
+    "img": "stimulus_3.jpg", // Ibu-ibu belanja di warung (Ilustrasi Cerita & Gambar)
+    "options": [
+      {"val": "A", "text": "Rp12.000,00"},
+      {"val": "B", "text": "Rp14.000,00"},
+      {"val": "C", "text": "Rp10.000,00"},
+      {"val": "D", "text": "Rp8.000,00"}
     ],
-    answer: 'B'
+    "answer": "A"
   },
   {
-    id: 4,
-    type: 'pg',
-    text: 'Sebuah gudang menyimpan 50.000 kg beras. Sebanyak 18.500 kg disalurkan ke toko, lalu gudang menerima kiriman baru 14.000 kg. Berapa total beras di gudang sekarang?',
-    img: null,
-    options: [
-      { val: 'A', text: '45.500 kg' },
-      { val: 'B', text: '45.000 kg' },
-      { val: 'C', text: '31.500 kg' },
-      { val: 'D', text: '42.500 kg' }
+    "id": 4,
+    "type": "pg",
+    "text": "Di sebuah pelabuhan, kapal A berangkat setiap 12 hari sekali, sedangkan kapal B berangkat setiap 18 hari sekali. Jika pada tanggal 1 Maret kedua kapal berangkat bersamaan, pada tanggal berapa mereka akan berangkat bersama-sama lagi untuk kedua kalinya?",
+    "img": null,
+    "options": [
+      {"val": "A", "text": "6 April"},
+      {"val": "B", "text": "5 April"},
+      {"val": "C", "text": "7 April"},
+      {"val": "D", "text": "8 April"}
     ],
-    answer: 'A'
+    "answer": "A"
   },
   {
-    id: 5,
-    type: 'pg',
-    text: 'Jumlah kelereng di dalam wadah adalah n butir. Setelah ditambah 35 butir lagi, jumlah total kelereng menjadi 150 butir. Berapakah nilai n?',
-    img: null,
-    options: [
-      { val: 'A', text: '125' },
-      { val: 'B', text: '115' },
-      { val: 'C', text: '105' },
-      { val: 'D', text: '185' }
+    "id": 5,
+    "type": "pg",
+    "text": "Perhatikan denah berikut. Jarak antara rumah Bayu dan sekolah pada denah adalah 8 cm. Jika skala yang digunakan pada denah tersebut adalah 1 : 15.000, berapakah jarak sebenarnya antara rumah Bayu dan sekolah dalam satuan kilometer?",
+    "img": "stimulus_5.jpg", // Denah rumah ke sekolah (Gambar)
+    "options": [
+      {"val": "A", "text": "1,2 km"},
+      {"val": "B", "text": "12 km"},
+      {"val": "C", "text": "0,12 km"},
+      {"val": "D", "text": "120 km"}
     ],
-    answer: 'B'
+    "answer": "A"
   },
   {
-    id: 6,
-    type: 'pg',
-    text: 'Berapakah hasil dari 52.400 + 28.600 - 18.000?',
-    img: null,
-    options: [
-      { val: 'A', text: '63.000' },
-      { val: 'B', text: '62.000' },
-      { val: 'C', text: '81.000' },
-      { val: 'D', text: '65.000' }
+    "id": 6,
+    "type": "pg",
+    "text": "Rina memiliki selembar kertas berbentuk persegi panjang dengan ukuran panjang 24 cm dan lebar 18 cm. Ia ingin memotong kertas tersebut menjadi beberapa persegi kecil yang berukuran sama tanpa ada sisa kertas. Berapakah panjang sisi terbesar dari persegi kecil yang dapat dibuat Rina?",
+    "img": "stimulus_6.jpg", // Ilustrasi kertas dipotong (Ilustrasi Cerita & Gambar)
+    "options": [
+      {"val": "A", "text": "6 cm"},
+      {"val": "B", "text": "3 cm"},
+      {"val": "C", "text": "4 cm"},
+      {"val": "D", "text": "8 cm"}
     ],
-    answer: 'B'
+    "answer": "A"
   },
   {
-    id: 7,
-    type: 'pg',
-    text: 'Hasil hitung dari 2/5 + 0.4 x 3 adalah...',
-    img: null,
-    options: [
-      { val: 'A', text: '1,2' },
-      { val: 'B', text: '1,6' },
-      { val: 'C', text: '2,4' },
-      { val: 'D', text: '1,8' }
+    "id": 7,
+    "type": "pg",
+    "text": "Pak Anton mengendarai sepeda motor dari kota P ke kota Q dengan kecepatan rata-rata 60 km/jam. Ia berangkat pukul 08.15 dan tiba di kota Q pukul 10.45. Berapakah jarak antara kota P dan kota Q?",
+    "img": null,
+    "options": [
+      {"val": "A", "text": "150 km"},
+      {"val": "B", "text": "120 km"},
+      {"val": "C", "text": "135 km"},
+      {"val": "D", "text": "180 km"}
     ],
-    answer: 'B'
+    "answer": "A"
   },
   {
-    id: 8,
-    type: 'pg',
-    text: 'Manakah jaring-jaring kubus berikut yang tepat jika dirangkai menjadi sebuah kubus sempurna?',
-    img: 'gambar_soal-8.jpg', // [ADA GAMBAR: 4 pilihan pola jaring-jaring kubus A, B, C, D]
-    options: [
-        { val: 'A', text: 'Jaring-jaring A' },
-        { val: 'B', text: 'Jaring-jaring B' },
-        { val: 'C', text: 'Jaring-jaring C' },
-        { val: 'D', text: 'Jaring-jaring D' }
+    "id": 8,
+    "type": "pg",
+    "text": "Dalam suatu kelas, terdapat 32 siswa. Dari jumlah tersebut, 18 siswa menyukai matematika, 15 siswa menyukai IPA, dan 7 siswa menyukai kedua-duanya. Banyaknya siswa yang tidak menyukai matematika maupun IPA adalah...",
+    "img": null,
+    "options": [
+      {"val": "A", "text": "6 siswa"},
+      {"val": "B", "text": "4 siswa"},
+      {"val": "C", "text": "5 siswa"},
+      {"val": "D", "text": "7 siswa"}
     ],
-    answer: 'C'
+    "answer": "A"
   },
   {
-    id: 9,
-    type: 'pg',
-    text: 'Sebuah mobil melaju dari Kota A ke Kota B sejauh 180 km dengan kecepatan rata-rata 60 km/jam. Berapa jam waktu tempuhnya?',
-    img: null,
-    options: [
-      { val: 'A', text: '3 jam' },
-      { val: 'B', text: '4 jam' },
-      { val: 'C', text: '2,5 jam' },
-      { val: 'D', text: '5 jam' }
+    "id": 9,
+    "type": "pg",
+    "text": "Hasil panen padi di sebuah desa selama 5 bulan berturut-turut adalah sebagai berikut: Januari 45 ton, Februari 50 ton, Maret 40 ton, April 55 ton, dan Mei 60 ton. Berapakah rata-rata hasil panen padi desa tersebut setiap bulannya?",
+    "img": "stimulus_9.jpg", // Tabel data panen bulanan (Tabel Data)
+    "options": [
+      {"val": "A", "text": "50 ton"},
+      {"val": "B", "text": "48 ton"},
+      {"val": "C", "text": "52 ton"},
+      {"val": "D", "text": "45 ton"}
     ],
-    answer: 'A'
+    "answer": "A"
   },
   {
-    id: 10,
-    type: 'pg',
-    text: 'Rasio jumlah buku cerita terhadap buku pelajaran di perpustakaan adalah 3:5. Jika buku pelajaran berjumlah 25 buah, berapa jumlah buku cerita?',
-    img: null,
-    options: [
-      { val: 'A', text: '15 Buah' },
-      { val: 'B', text: '20 Buah' },
-      { val: 'C', text: '10 Buah' },
-      { val: 'D', text: '30 Buah' }
+    "id": 10,
+    "type": "pg",
+    "text": "Perhatikan grafik batang penjualan buku di Toko 'Maju' berikut! Selisih penjualan buku paling banyak dan paling sedikit yang terjadi selama lima hari tersebut adalah...",
+    "img": "stimulus_10.jpg", // Grafik batang penjualan buku (Diagram Batang)
+    "options": [
+      {"val": "A", "text": "50 eksemplar"},
+      {"val": "B", "text": "40 eksemplar"},
+      {"val": "C", "text": "45 eksemplar"},
+      {"val": "D", "text": "60 eksemplar"}
     ],
-    answer: 'A'
+    "answer": "A"
+  },
+  {
+    "id": 11,
+    "type": "pg",
+    "text": "Seorang pedagang membeli 2 lusin pensil dengan harga Rp48.000,00. Jika pedagang tersebut ingin mendapatkan keuntungan sebesar Rp12.000,00 dari penjualan seluruh pensil tersebut, berapakah harga jual eceran untuk setiap batang pensilnya?",
+    "img": "stimulus_11.jpg", // Ilustrasi transaksi atau pensil (Ilustrasi Cerita & Gambar)
+    "options": [
+      {"val": "A", "text": "Rp2.500,00"},
+      {"val": "B", "text": "Rp2.000,00"},
+      {"val": "C", "text": "Rp2.200,00"},
+      {"val": "D", "text": "Rp2.700,00"}
+    ],
+    "answer": "A"
+  },
+  {
+    "id": 12,
+    "type": "pg",
+    "text": "Sebuah taman berbentuk lingkaran dengan diameter 28 meter. Di sekeliling taman tersebut akan ditanami pohon palem dengan jarak antar pohon adalah 4 meter. Banyaknya pohon palem yang dibutuhkan adalah...",
+    "img": "stimulus_12.jpg", // Taman lingkaran dan pohon (Gambar)
+    "options": [
+      {"val": "A", "text": "22 pohon"},
+      {"val": "B", "text": "44 pohon"},
+      {"val": "C", "text": "11 pohon"},
+      {"val": "D", "text": "88 pohon"}
+    ],
+    "answer": "A"
   },
 
-  // --- PG KOMPLEKS (12 Soal | @5 Poin = 60 Poin) ---
+  // ==========================================
+  // BENTUK SOAL: PGK MULTI JAWABAN (9 SOAL)
+  // ==========================================
+
   {
-    id: 11,
-    type: 'kompleks',
-    text: 'Berdasarkan tabel distribusi berat badan siswa berikut, pilih semua pernyataan penafsiran data yang benar! (Pilih lebih dari satu)',
-    img: 'gambar-soal-11.jpg', // [ADA GAMBAR: Tabel data berat badan dan frekuensi siswa]
-    options: [
-      { val: 'A', text: 'Siswa terbanyak memiliki berat badan 36 kg.' },
-      { val: 'B', text: 'Total siswa yang ditimbang adalah 25 orang.' },
-      { val: 'C', text: 'Terdapat 6 siswa yang memiliki berat badan di bawah 35 kg.' },
-      { val: 'D', text: 'Siswa dengan berat badan 40 kg berjumlah 4 orang.' }
+    "id": 13,
+    "type": "kompleks",
+    "text": "Perhatikan sekelompok bilangan berikut: 12, 15, 18, 21, 24, 27, 30. Dari bilangan-bilangan tersebut, manakah pernyataan yang BENAR mengenai sifat-sifatnya? (Pilihlah dua jawaban yang benar!)",
+    "img": null,
+    "options": [
+      {"val": "A", "text": "Semua bilangan tersebut merupakan bilangan ganjil"},
+      {"val": "B", "text": "Setiap bilangan di dalam kelompok tersebut habis dibagi oleh 3"},
+      {"val": "C", "text": "Ada 4 bilangan genap di dalam kelompok tersebut"},
+      {"val": "D", "text": "Selisih antara bilangan terbesar dan terkecil adalah 18"}
     ],
-    answer: ['A', 'B', 'D']
+    "answer": ["B", "D"]
   },
   {
-    id: 12,
-    type: 'kompleks',
-    text: 'Dalam kompetisi sains, setiap jawaban benar bernilai 4 poin dan ada poin bonus partisipasi sebesar 15 poin. Jika n adalah jumlah jawaban benar, manakah rumus/kalimat matematika total skor (S) yang tepat?',
-    img: null,
-    options: [
-      { val: 'A', text: 'S = 4n + 15' },
-      { val: 'B', text: 'S = 15n + 4' },
-      { val: 'C', text: 'Total skor diperoleh dari 4 dikali jumlah benar, ditambah 15.' },
-      { val: 'D', text: 'S = 4(n + 15)' }
+    "id": 14,
+    "type": "kompleks",
+    "text": "Sebuah toko pakaian memberikan diskon ganda '50% + 20%' untuk semua jenis jaket. Harga awal sebuah jaket adalah Rp200.000,00. Manakah di antara pernyataan berikut yang benar mengenai transaksi tersebut? (Pilihlah dua jawaban yang benar!)",
+    "img": "stimulus_14.jpg", // Gantungan baju berlabel diskon (Ilustrasi Cerita & Gambar)
+    "options": [
+      {"val": "A", "text": "Potongan harga pertama (50%) membuat harga jaket menjadi Rp100.000,00"},
+      {"val": "B", "text": "Harga akhir yang harus dibayar pembeli untuk jaket tersebut adalah Rp60.000,00"},
+      {"val": "C", "text": "Potongan harga kedua (20%) dihitung dari harga awal Rp200.000,00"},
+      {"val": "D", "text": "Total potongan harga secara keseluruhan adalah Rp120.000,00"}
     ],
-    answer: ['A', 'C']
+    "answer": ["A", "D"]
   },
   {
-    id: 13,
-    type: 'kompleks',
-    text: 'Pemerintah daerah menyalurkan bantuan sebesar Rp 684.300. Manakah dekomposisi nilai tempat angka yang benar dari nominal tersebut?',
-    img: null,
-    options: [
-      { val: 'A', text: '600.000 + 84.000 + 30' },
-      { val: 'B', text: '6 ratus ribu + 8 puluh ribu + 4 ribu + 3 ratus' },
-      { val: 'C', text: '680.000 + 4.000 + 300' },
-      { val: 'D', text: '600.000 + 80.000 + 4.000 + 300' }
+    "id": 15,
+    "type": "kompleks",
+    "text": "Pak Tono memiliki tanah berbentuk persegi panjang dengan panjang 30 meter dan lebar 20 meter. Di dalam tanah tersebut, ia membuat sebuah kolam ikan berbentuk kuadrat (persegi) dengan panjang sisi 10 meter. Manakah dari pernyataan berikut yang sesuai? (Pilihlah dua jawaban yang benar!)",
+    "img": "stimulus_15.jpg", // Denah tanah dan kolam (Gambar)
+    "options": [
+      {"val": "A", "text": "Luas seluruh tanah Pak Tono sebelum dibuat kolam adalah 600 meter persegi"},
+      {"val": "B", "text": "Luas kolam ikan yang dibuat adalah 40 meter persegi"},
+      {"val": "C", "text": "Luas sisa tanah Pak Tono yang tidak dijadikan kolam adalah 500 meter persegi"},
+      {"val": "D", "text": "Keliling kolam ikan tersebut sama dengan keliling sisa tanah"}
     ],
-    answer: ['B', 'C', 'D']
+    "answer": ["A", "C"]
   },
   {
-    id: 14,
-    type: 'kompleks',
-    text: 'Budi membeli 2 buah buku cetak dan 2 batang pensil dengan selembar uang Rp 100.000. Berdasarkan daftar harga pada gambar, pilih pernyataan yang benar!',
-    img: 'gambar-soal-14.jpg', // [ADA GAMBAR: Daftar harga buku Rp 20.000 dan pensil Rp 5.000]
-    options: [
-      { val: 'A', text: 'Total belanjaan Budi adalah Rp 50.000.' },
-      { val: 'B', text: 'Sisa uang Budi kurang dari Rp 30.000.' },
-      { val: 'C', text: 'Harga 2 batang pensil adalah Rp 10.000.' },
-      { val: 'D', text: 'Uang kembalian yang diterima Budi adalah Rp 50.000.' }
+    "id": 16,
+    "type": "kompleks",
+    "text": "Ibu membeli 3 kg apel dan 5 kg jeruk. Harga 1 kg apel adalah Rp25.000,00 dan harga 1 kg jeruk adalah Rp15.000,00. Ibu membayar dengan dua lembar uang seratus ribuan. Manakah dari pernyataan berikut yang benar mengenai transaksi belanja Ibu? (Pilihlah dua jawaban yang benar!)",
+    "img": null,
+    "options": [
+      {"val": "A", "text": "Total belanjaan Ibu untuk membeli apel dan jeruk adalah Rp150.000,00"},
+      {"val": "B", "text": "Kembalian yang diterima Ibu adalah Rp50.000,00"},
+      {"val": "C", "text": "Harga total jeruk yang dibeli lebih mahal daripada harga total apel"},
+      {"val": "D", "text": "Jika Ibu ingin membeli tambahan 1 kg apel lagi, sisa uangnya masih cukup"}
     ],
-    answer: ['A', 'C', 'D']
+    "answer": ["A", "B"]
   },
   {
-    id: 15,
-    type: 'kompleks',
-    text: 'Pilih semua pernyataan yang benar mengenai konsep pengukuran sudut di bawah ini!',
-    img: null,
-    options: [
-      { val: 'A', text: 'Sudut siku-siku memiliki besaran tepat 90°.' },
-      { val: 'B', text: 'Sudut tumpul besarnya antara 90° dan 180°.' },
-      { val: 'C', text: 'Sudut lancip besarnya kurang dari 90°.' },
-      { val: 'D', text: 'Sudut lurus besarnya adalah 360°.' }
+    "id": 17,
+    "type": "kompleks",
+    "text": "Perhatikan gambar berikut yang menunjukkan beberapa bangun datar: jajar genjang, persegi panjang, belah ketupat, dan trapesium sama kaki. Manakah pernyataan yang merupakan sifat dari jajar genjang dan persegi panjang? (Pilihlah dua jawaban yang benar!)",
+    "img": "stimulus_17.jpg", // Beberapa bangun datar (Gambar)
+    "options": [
+      {"val": "A", "text": "Kedua bangun tersebut memiliki dua pasang sisi yang sejajar dan sama panjang"},
+      {"val": "B", "text": "Kedua bangun tersebut memiliki empat sudut siku-siku (90 derajat)"},
+      {"val": "C", "text": "Kedua bangun tersebut memiliki sudut-sudut berhadapan yang sama besar"},
+      {"val": "D", "text": "Kedua bangun tersebut memiliki dua simetri lipat"}
     ],
-    answer: ['A', 'B', 'C']
+    "answer": ["A", "C"]
   },
   {
-    id: 16,
-    type: 'kompleks',
-    text: 'Rina berenang setiap 3 hari sekali dan Sinta setiap 5 hari sekali. Jika mereka berenang bersama pada tanggal 1 Agustus, pilih pernyataan yang benar!',
-    img: null,
-    options: [
-      { val: 'A', text: 'KPK dari jadwal renang mereka adalah 15.' },
-      { val: 'B', text: 'Mereka akan berenang bersama lagi pada tanggal 16 Agustus.' },
-      { val: 'C', text: 'Mereka bertemu kembali setiap 15 hari sekali.' },
-      { val: 'D', text: 'Pertemuan berikutnya terjadi pada tanggal 10 Agustus.' }
+    "id": 18,
+    "type": "kompleks",
+    "text": "Pada sebuah peta dengan skala 1 : 250.000, terdapat beberapa kota yang saling terhubung. Jarak kota A ke kota B pada peta adalah 6 cm, sedangkan jarak kota B ke kota C pada peta adalah 4 cm. Manakah pernyataan berikut yang bernilai benar? (Pilihlah dua jawaban yang benar!)",
+    "img": "stimulus_18.jpg", // Peta sederhana dengan jarak antar titik (Gambar)
+    "options": [
+      {"val": "A", "text": "Jarak sebenarnya dari kota A ke kota B adalah 15 km"},
+      {"val": "B", "text": "Jarak sebenarnya dari kota B ke kota C adalah 10 km"},
+      {"val": "C", "text": "Jarak sebenarnya dari kota A ke kota C jika melalui B adalah 25 km"},
+      {"val": "D", "text": "Selisih jarak sebenarnya antara (A ke B) dan (B ke C) adalah 50 km"}
     ],
-    answer: ['A', 'B', 'C']
+    "answer": ["A", "B"]
   },
   {
-    id: 17,
-    type: 'kompleks',
-    text: 'Perhatikan gambar belah ketupat berikut. Pilih semua sifat-sifat yang sesuai dengan bangun datar tersebut!',
-    img: 'gambar-soal-17.jpg', // [ADA GAMBAR: Bangun datar Belah Ketupat]
-    options: [
-      { val: 'A', text: 'Memiliki 4 sisi sama panjang.' },
-      { val: 'B', text: 'Sudut-sudut yang berhadapan sama besar.' },
-      { val: 'C', text: 'Kedua diagonalnya berpotongan tegak lurus (90°).' },
-      { val: 'D', text: 'Memiliki 4 sudut siku-siku.' }
+    "id": 19,
+    "type": "kompleks",
+    "text": "Sebuah bak penampungan air yang kosong berbentuk kubus dengan panjang rusuk 1 meter. Bak tersebut diisi air dari sebuah keran dengan debit 20 liter per menit. Manakah dari pernyataan berikut yang benar? (Pilihlah dua jawaban yang benar!)",
+    "img": null,
+    "options": [
+      {"val": "A", "text": "Volume penuh bak penampungan air tersebut adalah 1.000 liter"},
+      {"val": "B", "text": "Waktu yang dibutuhkan untuk mengisi bak hingga penuh adalah 50 menit"},
+      {"val": "C", "text": "Dalam waktu 15 menit, bak tersebut akan terisi sebanyak 350 liter air"},
+      {"val": "D", "text": "Debit air tersebut setara dengan 2 liter per detik"}
     ],
-    answer: ['A', 'B', 'C']
+    "answer": ["A", "B"]
   },
   {
-    id: 18,
-    type: 'kompleks',
-    text: 'Sebuah tangki air berisi 1.200 liter. Air dialirkan keluar dengan debit 40 liter/menit. Pilih pernyataan yang benar!',
-    img: null,
-    options: [
-      { val: 'A', text: 'Waktu yang dibutuhkan untuk mengosongkan tangki adalah 30 menit.' },
-      { val: 'B', text: 'Dalam waktu 10 menit, air yang keluar sebanyak 400 liter.' },
-      { val: 'C', text: 'Tangki akan kosong dalam waktu 1 jam.' },
-      { val: 'D', text: 'Sisa air setelah 15 menit adalah 600 liter.' }
+    "id": 20,
+    "type": "kompleks",
+    "text": "Perhatikan grafik lingkaran berikut yang menunjukkan kegemaran olah raga dari 120 siswa kelas 6 SD Harapan: Sepak Bola 40%, Bulu Tangkis 25%, Basket 20%, dan Sisanya Gemar Voli. Manakah pernyataan yang sesuai dengan data tersebut? (Pilihlah dua jawaban yang benar!)",
+    "img": "stimulus_20.jpg", // Diagram lingkaran (Piktogram/Diagram Data)
+    "options": [
+      {"val": "A", "text": "Jumlah siswa kelas 6 yang gemar sepak bola adalah 48 anak"},
+      {"val": "B", "text": "Siswa yang gemar bermain voli adalah sebanyak 15% dari total siswa"},
+      {"val": "C", "text": "Jumlah siswa yang menyukai basket adalah 30 anak"},
+      {"val": "D", "text": "Siswa yang gemar bulu tangkis lebih banyak 10 anak daripada yang gemar basket"}
     ],
-    answer: ['A', 'B', 'D']
+    "answer": ["A", "B"]
   },
   {
-    id: 19,
-    type: 'kompleks',
-    text: 'Perhatikan denah koordinat Cartesius berikut. Manakah pernyataan posisi titik yang benar?',
-    img: 'gambar-soal-19.jpg', // [ADA GAMBAR: Koordinat Cartesius titik A(2,3), B(-4,1), C(0,-2)]
-    options: [
-      { val: 'A', text: 'Titik A berada pada koordinat (2, 3).' },
-      { val: 'B', text: 'Titik A berjarak 2 unit dari sumbu X.' },
-      { val: 'C', text: 'Titik C terletak tepat di sumbu Y.' },
-      { val: 'D', text: 'Titik B berada di kuadran kedua.' }
+    "id": 21,
+    "type": "kompleks",
+    "text": "Berikut ini adalah data nilai ulangan matematika dari 10 siswa: 70, 80, 75, 90, 85, 80, 70, 95, 80, 85. Berdasarkan data tersebut, manakah pernyataan yang benar? (Pilihlah dua jawaban yang benar!)",
+    "img": null,
+    "options": [
+      {"val": "A", "text": "Nilai rata-rata (mean) dari ulangan matematika 10 siswa tersebut adalah 82"},
+      {"val": "B", "text": "Modus atau nilai yang paling sering muncul dari data tersebut adalah 80"},
+      {"val": "C", "text": "Nilai tengah (median) setelah data diurutkan adalah 80"},
+      {"val": "D", "text": "Selisih antara nilai tertinggi dan terendah adalah 20"}
     ],
-    answer: ['A', 'C', 'D']
-  },
-  {
-    id: 20,
-    type: 'kompleks',
-    text: 'Sebuah persegi panjang memiliki panjang 12 cm dan lebar 5 cm. Pilih semua pernyataan hitungan yang tepat!',
-    img: null,
-    options: [
-      { val: 'A', text: 'Luas persegi panjang tersebut adalah 60 cm².' },
-      { val: 'B', text: 'Keliling persegi panjang tersebut adalah 34 cm.' },
-      { val: 'C', text: 'Panjang diagonalnya adalah 13 cm.' },
-      { val: 'D', text: 'Kelilingnya bernilai 17 cm.' }
-    ],
-    answer: ['A', 'B', 'C']
-  },
-  {
-    id: 21,
-    type: 'kompleks',
-    text: 'Berdasarkan data piktoform (diagram gambar) peminjaman buku berikut (1 simbol buku melambangkan 10 buku), tentukan pernyataan yang tepat!',
-    img: 'gambar-soal-21.jpg', // [ADA GAMBAR: Piktogram peminjaman buku per hari]
-    options: [
-      { val: 'A', text: '3,5 simbol buku mewakili 35 buah buku.' },
-      { val: 'B', text: 'Hari dengan 5 simbol buku berarti ada 50 buku dipinjam.' },
-      { val: 'C', text: 'Setengah simbol buku bernilai 5 buku.' },
-      { val: 'D', text: '1 simbol buku mewakili 100 buku.' }
-    ],
-    answer: ['A', 'B', 'C']
-  },
-  {
-    id: 22,
-    type: 'kompleks',
-    text: 'Dalam kotak terdapat 4 bola merah dan 6 bola biru. Jika diambil satu bola secara acak, pernyataan mana saja yang benar?',
-    img: 'gambar-soal-22.jpg', // [ADA GAMBAR: Wadah transparan berisi 4 bola merah & 6 bola biru]
-    options: [
-      { val: 'A', text: 'Peluang terambil bola merah adalah 4/10.' },
-      { val: 'B', text: 'Peluang terambil bola biru adalah 3/5.' },
-      { val: 'C', text: 'Bola biru lebih berpeluang terambil daripada bola merah.' },
-      { val: 'D', text: 'Peluang terambil bola merah adalah 50%.' }
-    ],
-    answer: ['A', 'B', 'C']
+    "answer": ["A", "B"]
   },
 
-  // --- BENAR / SALAH (8 Soal | @2.5 Poin = 20 Poin) ---
+  // ==========================================
+  // BENTUK SOAL: BENAR / SALAH (9 SOAL)
+  // ==========================================
+
   {
-    id: 23,
-    type: 'bs',
-    text: 'Sebuah kolam lingkaran berdiameter 14 meter berada di dalam lapangan persegi 20m x 20m. Tentukan Benar (B) atau Salah (S) untuk pernyataan berikut:',
-    img: 'gambar-soal-23.jpg', // [ADA GAMBAR: Denah lingkaran di dalam persegi]
-    statements: [
-      { id: 's1', text: 'Luas area rumput di luar kolam dihitung dari luas persegi dikurangi luas lingkaran.', answer: 'B' },
-      { id: 's2', text: 'Keliling kolam murni bergantung pada jari-jari lingkaran.', answer: 'B' }
+    "id": 22,
+    "type": "bs",
+    "text": "Perhatikan pernyataan matematika mengenai operasi hitung pecahan berikut. Tentukan apakah pernyataan berikut BENAR atau SALAH!",
+    "img": null,
+    "options": [
+      {"val": "A", "statement": "Hasil dari 3/4 + 1/2 adalah 5/4 atau 1 1/4", "answer": "B"},
+      {"val": "B", "statement": "Hasil dari 2/3 x 3/5 adalah 2/5", "answer": "B"},
+      {"val": "C", "statement": "Nilai dari 1/2 : 1/4 adalah 1/8", "answer": "S"}
     ]
   },
   {
-    id: 24,
-    type: 'bs',
-    text: 'Sebatang pipa memiliki panjang 3 meter. Pipa tersebut dipotong sepanjang 120 cm. Tentukan Benar (B) atau Salah (S):',
-    img: null,
-    statements: [
-      { id: 's1', text: 'Panjang awal pipa sama dengan 300 cm.', answer: 'B' },
-      { id: 's2', text: 'Sisa potongan pipa adalah 180 cm (1 meter 80 cm).', answer: 'B' },
-      { id: 's3', text: 'Panjang sisa pipa kurang dari 1,5 meter.', answer: 'S' }
+    "id": 23,
+    "type": "bs",
+    "text": "Pak Hari memiliki sebidang tanah berbentuk persegi dengan keliling 80 meter. Di sekeliling tanah tersebut akan dipasang pagar kawat. Tentukan apakah pernyataan berikut BENAR atau SALAH!",
+    "img": "stimulus_23.jpg", // Ilustrasi lahan persegi (Ilustrasi Cerita & Gambar)
+    "options": [
+      {"val": "A", "statement": "Panjang sisi tanah persegi Pak Hari adalah 20 meter", "answer": "B"},
+      {"val": "B", "statement": "Luas tanah yang dimiliki Pak Hari adalah 160 meter persegi", "answer": "S"},
+      {"val": "C", "statement": "Jika biaya pembuatan pagar adalah Rp50.000,00 per meter, maka total biaya adalah Rp4.000.000,00", "answer": "S"}
     ]
   },
   {
-    id: 25,
-    type: 'bs',
-    text: 'Perhatikan susunan pola korek api pada gambar. Tentukan Benar (B) atau Salah (S):',
-    img: 'gambar-soal-25.jpg', // [ADA GAMBAR: Pola korek api bertingkat]
-    statements: [
-      { id: 's1', text: 'Setiap tingkat pola bertambah secara konstan bertambah 4 batang.', answer: 'B' },
-      { id: 's2', text: 'Pola ke-5 membutuhkan 16 batang korek api.', answer: 'S' }
+    "id": 24,
+    "type": "bs",
+    "text": "Seorang anak bersepeda dari rumahnya menuju ke rumah nenek dengan kecepatan rata-rata 12 km/jam. Jarak rumah anak tersebut ke rumah nenek adalah 6 km. Tentukan apakah pernyataan berikut BENAR atau SALAH!",
+    "img": null,
+    "options": [
+      {"val": "A", "statement": "Waktu yang dibutuhkan anak tersebut untuk sampai ke rumah nenek adalah 30 menit", "answer": "B"},
+      {"val": "B", "statement": "Jika ia berangkat pukul 08.00, maka ia akan tiba di rumah nenek pukul 08.30", "answer": "B"},
+      {"val": "C", "statement": "Jika kecepatannya naik menjadi 18 km/jam, waktu tempuhnya menjadi 45 menit", "answer": "S"}
     ]
   },
   {
-    id: 26,
-    type: 'bs',
-    text: 'Perhatikan bangun ruang 3D gabungan pada gambar berikut. Tentukan Benar (B) atau Salah (S):',
-    img: 'gambar-soal-26.jpg', // [ADA GAMBAR: Balok 3D susunan kubus]
-    statements: [
-      { id: 's1', text: 'Tampak dari atas menampilkan bentuk 4 persegi sejajar.', answer: 'B' },
-      { id: 's2', text: 'Tampak dari depan membentuk pola huruf L.', answer: 'B' }
+    "id": 25,
+    "type": "bs",
+    "text": "Berikut adalah tabel tinggi badan lima orang siswa dalam satuan cm: Adi 140, Budi 145, Cici 138, Doni 142, dan Eko 135. Tentukan apakah pernyataan tentang tinggi badan siswa tersebut BENAR atau SALAH!",
+    "img": "stimulus_25.jpg", // Tabel tinggi badan (Tabel Data)
+    "options": [
+      {"val": "A", "statement": "Siswa yang memiliki tinggi badan paling tinggi di antara mereka adalah Budi", "answer": "B"},
+      {"val": "B", "statement": "Rata-rata tinggi badan dari kelima siswa tersebut adalah 140 cm", "answer": "B"},
+      {"val": "C", "statement": "Selisih tinggi badan antara Adi (tertinggi kedua) dan Eko (terpendek) adalah 7 cm", "answer": "S"}
     ]
   },
   {
-    id: 27,
-    type: 'bs',
-    text: 'Berdasarkan grafik garis kenaikan suhu harian berikut, tentukan Benar (B) atau Salah (S):',
-    img: 'gambar-soal-27.jpg', // [ADA GAMBAR: Grafik garis suhu udara harian]
-    statements: [
-      { id: 's1', text: 'Selisih suhu tertinggi dan terendah diperoleh dari mengurangi nilai puncak dengan nilai terendah grafik.', answer: 'B' },
-      { id: 's2', text: 'Suhu selalu naik setiap harinya tanpa pernah mengalami penurunan.', answer: 'S' }
+    "id": 26,
+    "type": "bs",
+    "text": "Sebuah toples berbentuk tabung memiliki diameter alas 14 cm dan tinggi 20 cm. Tentukan apakah pernyataan berikut mengenai tabung tersebut BENAR atau SALAH! (Gunakan pi = 22/7)",
+    "img": "stimulus_26.jpg", // Bangun ruang tabung (Gambar Bangun Ruang)
+    "options": [
+      {"val": "A", "statement": "Jari-jari alas toples tersebut adalah 7 cm", "answer": "B"},
+      {"val": "B", "statement": "Luas alas dari toples tersebut adalah 154 cm persegi", "answer": "B"},
+      {"val": "C", "statement": "Volume maksimal yang dapat ditampung oleh toples tersebut adalah 3.080 cm kubik", "answer": "B"}
     ]
   },
   {
-    id: 28,
-    type: 'bs',
-    text: 'Pak Doni memiliki 36 buah apel dan 48 buah jeruk yang akan dibagi habis ke beberapa kantong plastik secara merata. Tentukan Benar (B) atau Salah (S):',
-    img: null,
-    statements: [
-      { id: 's1', text: 'Jumlah kantong plastik terbanyak yang dibutuhkan adalah 12 buah (KPK).', answer: 'S' }, // Salah, seharusnya FPB = 12
-      { id: 's2', text: 'Jumlah kantong terbanyak menggunakan konsep FPB yaitu 12 kantong.', answer: 'B' },
-      { id: 's3', text: 'Setiap kantong plastik berisi 3 buah apel dan 4 buah jeruk.', answer: 'B' }
+    "id": 27,
+    "type": "bs",
+    "text": "Perhatikan grafik garis suhu udara di kota Malang selama 5 hari (Senin-Jumat) berikut: Senin 22°C, Selasa 24°C, Rabu 23°C, Kamis 25°C, Jumat 21°C. Tentukan apakah pernyataan berikut BENAR atau SALAH!",
+    "img": "stimulus_27.jpg", // Grafik suhu (Grafik/Diagram Data)
+    "options": [
+      {"val": "A", "statement": "Suhu udara paling rendah terjadi pada hari Jumat yaitu 21°C", "answer": "B"},
+      {"val": "B", "statement": "Suhu udara mengalami kenaikan yang paling tinggi dari hari Selasa ke Rabu", "answer": "S"},
+      {"val": "C", "statement": "Rata-rata suhu udara di kota Malang selama lima hari tersebut adalah 23°C", "answer": "B"}
     ]
   },
   {
-    id: 29,
-    type: 'bs',
-    text: 'Sebuah kebun berbentuk persegi panjang berukuran panjang 30 meter dan lebar 20 meter. Tentukan Benar (B) atau Salah (S):',
-    img: null,
-    statements: [
-      { id: 's1', text: 'Luas keseluruhan kebun tersebut adalah 600 m².', answer: 'B' },
-      { id: 's2', text: 'Keliling kebun tersebut adalah 100 meter.', answer: 'B' }
+    "id": 28,
+    "type": "bs",
+    "text": "Dalam sebuah kotak terdapat 5 bola merah, 3 bola kuning, dan 2 bola hijau. Dari kotak tersebut akan diambil satu bola secara acak. Tentukan apakah pernyataan berikut mengenai peluang tersebut BENAR atau SALAH!",
+    "img": null,
+    "options": [
+      {"val": "A", "statement": "Peluang terambilnya bola berwarna merah adalah 1/2", "answer": "B"},
+      {"val": "B", "statement": "Peluang terambilnya bola kuning lebih besar daripada peluang terambilnya bola hijau", "answer": "B"},
+      {"val": "C", "statement": "Jumlah seluruh kejadian yang mungkin (seluruh bola dalam kotak) adalah 10", "answer": "B"}
     ]
   },
   {
-    id: 30,
-    type: 'bs',
-    text: 'Dito belajar kelompok selama 2 jam 15 menit. Tentukan Benar (B) atau Salah (S):',
-    img: null,
-    statements: [
-      { id: 's1', text: 'Durasi Dito belajar sama dengan 135 menit.', answer: 'B' },
-      { id: 's2', text: 'Jika Dito mulai belajar pukul 13.30, maka ia selesai pada pukul 15.45.', answer: 'B' }
+    "id": 29,
+    "type": "bs",
+    "text": "Sebuah toko elektronik memberikan potongan harga (diskon) sebesar 15% untuk pembelian sebuah kipas angin seharga Rp200.000,00. Tentukan apakah pernyataan berikut BENAR atau SALAH!",
+    "img": "stimulus_29.jpg", // Foto kipas dengan tulisan diskon (Ilustrasi Cerita & Gambar)
+    "options": [
+      {"val": "A", "statement": "Besar potongan harga (diskon) yang didapatkan pembeli adalah Rp30.000,00", "answer": "B"},
+      {"val": "B", "statement": "Harga yang harus dibayar pembeli setelah mendapatkan diskon adalah Rp170.000,00", "answer": "B"},
+      {"val": "C", "statement": "Jika pembeli membayar dengan dua lembar uang seratus ribuan, ia akan menerima kembalian Rp40.000,00", "answer": "S"}
+    ]
+  },
+  {
+    "id": 30,
+    "type": "bs",
+    "text": "Rani ingin membuat beberapa segitiga dari kawat. Ia memiliki kawat sepanjang 60 cm. Rani ingin membuat segitiga sama sisi yang panjang setiap sisinya adalah 5 cm. Tentukan apakah pernyataan berikut BENAR atau SALAH!",
+    "img": null,
+    "options": [
+      {"val": "A", "statement": "Keliling dari satu buah segitiga sama sisi yang dibuat Rani adalah 15 cm", "answer": "B"},
+      {"val": "B", "statement": "Dengan kawat yang dimilikinya, Rani dapat membuat paling banyak 4 buah segitiga sama sisi", "answer": "S"},
+      {"val": "C", "statement": "Jika Rani hanya membuat 3 buah segitiga sama sisi, sisa kawat yang ia miliki adalah 15 cm", "answer": "B"}
     ]
   }
-];
+]
 
         let globalConfig = { token: '----', jadwalMulai: null, groups: [], accounts: [] };
         let activeQuestions = []; let currentQIndex = 0; let answers = {}; let raguStatuses = {};
@@ -689,14 +701,10 @@
                     if (snapshot.exists()) {
                         globalConfig = snapshot.data();
                         
-                        // Update Token di Admin
                         document.getElementById('display-token').innerText = globalConfig.token || 'TKA123';
-                        
-                        // --- UPDATE TOKEN DI DASHBOARD PEMANTAU SECARA REAL-TIME ---
                         const tokenSekolahEl = document.getElementById('sekolah-display-token');
                         if(tokenSekolahEl) tokenSekolahEl.innerText = globalConfig.token || '------';
-                        // ------------------------------------------------------------
-
+                        
                         if(globalConfig.jadwalMulai) {
                             const tzoffset = (new Date()).getTimezoneOffset() * 60000;
                             document.getElementById('admin-waktu-mulai').value = (new Date(globalConfig.jadwalMulai - tzoffset)).toISOString().slice(0, 16);
@@ -737,7 +745,7 @@
         function handleAdminLogin() {
             const u = document.getElementById('admin-user').value.trim().toLowerCase();
             const p = document.getElementById('admin-pass').value.trim().toLowerCase();
-            if(u === 'admin123' && p === 'admin123') {
+            if(u === 'admin' && p === 'admin') {
                 sessionStorage.setItem('isAdmin', 'true'); document.getElementById('admin-user').value = ''; document.getElementById('admin-pass').value = '';
                 switchView('view-admin-dash'); try { if (typeof startAdminRealtime === "function") startAdminRealtime(); } catch (err) { }
             } else { showModal("Gagal", "Username atau Password Admin salah!"); }
@@ -757,7 +765,7 @@
         }
         window.logoutSekolah = function() { sessionStorage.removeItem('isSekolah'); sessionStorage.removeItem('sekolahGroup'); switchView('view-portal'); }
 
-        // --- MANAJEMEN KELOMPOK (ADMIN) ---
+        // --- MANAJEMEN KELOMPOK & AKUN ---
         async function addGroup() {
             const inp = document.getElementById('input-new-group'); const val = inp.value.trim();
             if(!val) return; if(!globalConfig.groups) globalConfig.groups = [];
@@ -784,21 +792,19 @@
             const settingDocRef = window.doc(window.db, 'artifacts', window.appId, 'public', 'data', 'settings', 'global');
             await window.setDoc(settingDocRef, { groups: globalConfig.groups }, { merge: true });
         }
-
-        // --- MANAJEMEN AKUN PEMANTAU (ADMIN) ---
         window.addSchoolAccount = async function() {
             const u = document.getElementById('input-acc-user').value.trim(); const p = document.getElementById('input-acc-pass').value.trim(); const g = document.getElementById('input-acc-group').value;
-            if(!u || !p || !g) return showModal("Perhatian", "Lengkapi Username, Password, dan pilih Kelompok yang akan dihubungkan.");
+            if(!u || !p || !g) return showModal("Perhatian", "Lengkapi Username, Password, dan pilih Kelompok.");
             if(!globalConfig.accounts) globalConfig.accounts = [];
-            if(globalConfig.accounts.find(x => x.user.toLowerCase() === u.toLowerCase())) return showModal("Gagal", "Username tersebut sudah dipakai sekolah lain.");
+            if(globalConfig.accounts.find(x => x.user.toLowerCase() === u.toLowerCase())) return showModal("Gagal", "Username tersebut sudah dipakai.");
             globalConfig.accounts.push({user: u, pass: p, group: g});
             const settingDocRef = window.doc(window.db, 'artifacts', window.appId, 'public', 'data', 'settings', 'global');
             await window.setDoc(settingDocRef, { accounts: globalConfig.accounts }, { merge: true });
             document.getElementById('input-acc-user').value = ''; document.getElementById('input-acc-pass').value = '';
-            showModal("Sukses", `Akun untuk kelompok <b>${g}</b> berhasil dibuat!<br>Username: <b>${u}</b><br>Password: <b>${p}</b>`);
+            showModal("Sukses", `Akun untuk kelompok <b>${g}</b> berhasil dibuat!`);
         }
         window.hapusAccount = async function(u) {
-            if(!confirm(`Yakin ingin mencabut akses akun pemantau "${u}"?`)) return;
+            if(!confirm(`Yakin mencabut akses akun pemantau "${u}"?`)) return;
             globalConfig.accounts = globalConfig.accounts.filter(x => x.user !== u);
             const settingDocRef = window.doc(window.db, 'artifacts', window.appId, 'public', 'data', 'settings', 'global');
             await window.setDoc(settingDocRef, { accounts: globalConfig.accounts }, { merge: true });
@@ -806,27 +812,13 @@
 
         function updateGroupListUI() {
             const list = document.getElementById('admin-group-list');
-            if(list) list.innerHTML = (globalConfig.groups || []).map(g => {
-                const safeG = g.replace(/'/g, "\\'");
-                return `<div class="inline-flex items-center bg-white border border-slate-200 rounded-full shadow-sm text-sm overflow-hidden group"><span class="px-3 py-1 font-medium text-slate-700">${g}</span><button onclick="editGroup('${safeG}')" class="px-2 py-1 bg-slate-50 text-blue-600 hover:bg-blue-100 hover:text-blue-700 border-l border-slate-200" title="Edit">✎</button><button onclick="hapusGroup('${safeG}')" class="px-2 py-1 bg-slate-50 text-red-500 hover:bg-red-100 border-l border-slate-200" title="Hapus">✕</button></div>`;
-            }).join('');
-            
+            if(list) list.innerHTML = (globalConfig.groups || []).map(g => `<div class="inline-flex items-center bg-white border border-slate-200 rounded-full shadow-sm text-sm overflow-hidden group"><span class="px-3 py-1 font-medium text-slate-700">${g}</span><button onclick="editGroup('${g.replace(/'/g, "\\'")}')" class="px-2 py-1 bg-slate-50 text-blue-600 hover:bg-blue-100 hover:text-blue-700 border-l border-slate-200" title="Edit">✎</button><button onclick="hapusGroup('${g.replace(/'/g, "\\'")}')" class="px-2 py-1 bg-slate-50 text-red-500 hover:bg-red-100 border-l border-slate-200" title="Hapus">✕</button></div>`).join('');
             const select = document.getElementById('peserta-kelompok');
-            if(select) {
-                if(!globalConfig.groups || globalConfig.groups.length === 0) select.innerHTML = '<option value="">-- Admin Belum Membuat Kelompok --</option>';
-                else select.innerHTML = '<option value="">-- Pilih Kelompok Anda --</option>' + globalConfig.groups.map(g => `<option value="${g}">${g}</option>`).join('');
-            }
-            
+            if(select) select.innerHTML = (!globalConfig.groups || globalConfig.groups.length === 0) ? '<option value="">-- Admin Belum Membuat Kelompok --</option>' : '<option value="">-- Pilih Kelompok Anda --</option>' + globalConfig.groups.map(g => `<option value="${g}">${g}</option>`).join('');
             const accSelect = document.getElementById('input-acc-group');
-            if(accSelect) {
-                if(!globalConfig.groups || globalConfig.groups.length === 0) accSelect.innerHTML = '<option value="">-- Buat Kelompok Dulu --</option>';
-                else accSelect.innerHTML = '<option value="">-- Sambungkan ke Kelompok --</option>' + globalConfig.groups.map(g => `<option value="${g}">${g}</option>`).join('');
-            }
-            
+            if(accSelect) accSelect.innerHTML = (!globalConfig.groups || globalConfig.groups.length === 0) ? '<option value="">-- Buat Kelompok Dulu --</option>' : '<option value="">-- Sambungkan ke Kelompok --</option>' + globalConfig.groups.map(g => `<option value="${g}">${g}</option>`).join('');
             const accList = document.getElementById('admin-acc-list');
-            if(accList) {
-                accList.innerHTML = (globalConfig.accounts || []).map(a => `<div class="flex justify-between items-center bg-white p-2 border border-purple-100 rounded text-xs"><div><span class="font-bold text-purple-700">${a.user}</span> <span class="text-slate-500">(${a.group})</span></div><button onclick="hapusAccount('${a.user}')" class="text-red-500 font-bold hover:underline">Hapus</button></div>`).join('');
-            }
+            if(accList) accList.innerHTML = (globalConfig.accounts || []).map(a => `<div class="flex justify-between items-center bg-white p-2 border border-purple-100 rounded text-xs"><div><span class="font-bold text-purple-700">${a.user}</span> <span class="text-slate-500">(${a.group})</span></div><button onclick="hapusAccount('${a.user}')" class="text-red-500 font-bold hover:underline">Hapus</button></div>`).join('');
         }
 
         async function generateNewToken(isInit = false) {
@@ -843,22 +835,20 @@
         }
 
         window.konfirmasiReset = function() {
-            showModal("Peringatan Keras", "Yakin ingin menghapus <b>SEMUA NILAI & KUOTA PESERTA</b>?<br><br>Catatan: Akun Pemantau Sekolah TIDAK akan terhapus.", `<button onclick="closeModal()" class="px-4 py-2 bg-slate-300 text-slate-800 rounded font-medium hover:bg-slate-400">Batal</button><button onclick="eksekusiReset()" class="px-4 py-2 bg-red-600 text-white rounded font-medium hover:bg-red-700">Ya, Hapus Semua!</button>`);
+            showModal("Peringatan Keras", "Yakin menghapus <b>SEMUA NILAI & KUOTA PESERTA</b>?<br>Catatan: Akun Pemantau Sekolah TIDAK akan terhapus.", `<button onclick="closeModal()" class="px-4 py-2 bg-slate-300 text-slate-800 rounded font-medium hover:bg-slate-400">Batal</button><button onclick="eksekusiReset()" class="px-4 py-2 bg-red-600 text-white rounded font-medium hover:bg-red-700">Ya, Hapus Semua!</button>`);
         }
 
         window.eksekusiReset = async function() {
-            closeModal(); if(!window.db) return;
-            document.getElementById('view-loading').classList.remove('hidden-view'); document.getElementById('loading-text').innerText = "Menghapus semua riwayat peserta...";
+            closeModal(); if(!window.db) return; document.getElementById('view-loading').classList.remove('hidden-view'); document.getElementById('loading-text').innerText = "Menghapus riwayat peserta...";
             try {
                 const deletePromises = [];
                 const scoresCollRef = window.collection(window.db, 'artifacts', window.appId, 'public', 'data', 'scores'); const snapshotScores = await window.getDocs(scoresCollRef); snapshotScores.forEach(docSnap => deletePromises.push(window.deleteDoc(docSnap.ref)));
                 const partCollRef = window.collection(window.db, 'artifacts', window.appId, 'public', 'data', 'participants'); const snapshotPart = await window.getDocs(partCollRef); snapshotPart.forEach(docSnap => deletePromises.push(window.deleteDoc(docSnap.ref)));
-                await Promise.all(deletePromises);
-                document.getElementById('view-loading').classList.add('hidden-view'); showModal("Berhasil", "Semua data nilai dan riwayat kuota peserta berhasil direset menjadi kosong.");
+                await Promise.all(deletePromises); document.getElementById('view-loading').classList.add('hidden-view'); showModal("Berhasil", "Semua data nilai dan riwayat peserta berhasil direset.");
             } catch(e) { document.getElementById('view-loading').classList.add('hidden-view'); showModal("Error", "Gagal mereset data. Periksa koneksi Anda."); }
         }
 
-        // --- DASHBOARD ADMIN & SEKOLAH ---
+        // --- REALTIME DASHBOARD LOGIC (DENGAN PEMBULATAN JS AMAN) ---
         function startAdminRealtime() {
             if(!window.db) return;
             const scoresCollRef = window.collection(window.db, 'artifacts', window.appId, 'public', 'data', 'scores');
@@ -874,8 +864,12 @@
 
         function renderLeaderboard(groupsData) {
             const container = document.getElementById('leaderboard-container'); container.innerHTML = '';
+            
+            // Format score dan urutkan
+            Object.keys(groupsData).forEach(k => { groupsData[k].score = Math.round(groupsData[k].score * 100) / 100; });
             const sorted = Object.entries(groupsData).sort((a,b) => b[1].score - a[1].score);
-            if (sorted.length === 0) { container.innerHTML = `<div class="col-span-2 text-center p-10 text-slate-400 font-medium">Belum ada peserta yang mensubmit ujian.</div>`; return; }
+            
+            if (sorted.length === 0) { container.innerHTML = `<div class="col-span-2 text-center p-10 text-slate-400 font-medium">Belum ada peserta.</div>`; return; }
             sorted.forEach(([name, data], index) => {
                 let usersHtml = data.users.sort((a,b)=> b.score - a.score).map(u => {
                     let displayScore = u.status === 'ongoing' ? `<span class="text-blue-500 animate-pulse text-[10px] italic">Mengerjakan...</span>` : `${u.score} pt`;
@@ -899,6 +893,7 @@
         }
         
         function renderSekolahDashboard(groupsData, myGroup) {
+            Object.keys(groupsData).forEach(k => { groupsData[k].score = Math.round(groupsData[k].score * 100) / 100; });
             const sorted = Object.entries(groupsData).sort((a,b) => b[1].score - a[1].score);
             let myRank = "-"; let myTotalScore = 0; let myUsers = []; let klasemenHtml = "";
 
@@ -912,12 +907,11 @@
                 }
             });
 
-            document.getElementById('sekolah-peringkat').innerText = myRank;
-            document.getElementById('sekolah-total-skor').innerText = myTotalScore;
-            document.getElementById('sekolah-klasemen-umum').innerHTML = klasemenHtml || '<div class="text-center text-slate-400 py-10">Data ujian belum ada yang masuk.</div>';
+            document.getElementById('sekolah-peringkat').innerText = myRank; document.getElementById('sekolah-total-skor').innerText = myTotalScore;
+            document.getElementById('sekolah-klasemen-umum').innerHTML = klasemenHtml || '<div class="text-center text-slate-400 py-10">Belum ada data.</div>';
 
             if(myUsers.length === 0) {
-                document.getElementById('sekolah-rincian-peserta').innerHTML = '<div class="text-center text-slate-400 text-xs py-8">Peserta Anda belum ada yang mendaftar masuk.</div>';
+                document.getElementById('sekolah-rincian-peserta').innerHTML = '<div class="text-center text-slate-400 text-xs py-8">Peserta Anda belum mendaftar.</div>';
             } else {
                 document.getElementById('sekolah-rincian-peserta').innerHTML = myUsers.map((u, i) => {
                     let displayScore = u.status === 'ongoing' ? `<span class="text-blue-500 animate-pulse text-xs italic">Sedang Ujian...</span>` : `${u.score} pt`;
@@ -930,21 +924,19 @@
         // --- UJIAN PESERTA ---
         async function handlePesertaLogin() {
             const nama = document.getElementById('peserta-nama').value.trim(); const kel = document.getElementById('peserta-kelompok').value; const token = document.getElementById('peserta-token').value.trim().toUpperCase();
-            if(!nama || !kel || !token) return showModal("Peringatan", "Harap isi Nama, pilih Kelompok, dan masukkan Token!");
-            if(token !== globalConfig.token) return showModal("Akses Ditolak", "Token ujian tidak valid/salah!");
-            if (!globalConfig.jadwalMulai) return showModal("Ujian Belum Dibuka", "Panitia belum mengatur jadwal ujian.<br>Silakan tunggu instruksi Panitia.");
-            if (globalConfig.jadwalMulai && Date.now() < globalConfig.jadwalMulai) { const formatWaktu = new Date(globalConfig.jadwalMulai).toLocaleString('id-ID', { dateStyle: 'full', timeStyle: 'short' }); return showModal("Ujian Belum Mulai", `Jadwal ujian Anda baru akan dibuka pada:<br><strong>${formatWaktu}</strong><br><br>Mohon tunggu.`); }
+            if(!nama || !kel || !token) return showModal("Peringatan", "Harap isi Nama, Kelompok, dan Token!");
+            if(token !== globalConfig.token) return showModal("Akses Ditolak", "Token ujian salah!");
+            if (!globalConfig.jadwalMulai) return showModal("Ujian Belum Dibuka", "Panitia belum mengatur jadwal ujian.");
+            if (globalConfig.jadwalMulai && Date.now() < globalConfig.jadwalMulai) { const fw = new Date(globalConfig.jadwalMulai).toLocaleString('id-ID', { dateStyle: 'full', timeStyle: 'short' }); return showModal("Ujian Belum Mulai", `Ujian dibuka pada:<br><strong>${fw}</strong>`); }
 
             const btn = document.getElementById('btn-login-peserta'); btn.innerText = "Memproses..."; btn.disabled = true;
-            
             try {
                 const partRef = window.collection(window.db, 'artifacts', window.appId, 'public', 'data', 'participants');
                 const qGroup = window.query(partRef, window.where('group', '==', kel)); const snapGroup = await window.getDocs(qGroup);
-                let alreadyRegistered = false; snapGroup.forEach(d => { if(d.id === window.userId) alreadyRegistered = true; });
-                
-                if(!alreadyRegistered && snapGroup.size >= 5) { btn.innerText = "Mulai Ujian"; btn.disabled = false; return showModal("Kelompok Penuh 🛑", `Mohon maaf, kuota untuk kelompok <b>${kel}</b> sudah penuh (Maksimal 5 Orang).`); }
-                if(!alreadyRegistered) { await window.setDoc(window.doc(partRef, window.userId), { group: kel, name: nama }); }
-            } catch(e) { btn.innerText = "Mulai Ujian"; btn.disabled = false; return showModal("Error", "Gagal menghubungi server untuk mengecek kuota."); }
+                let alreadyReg = false; snapGroup.forEach(d => { if(d.id === window.userId) alreadyReg = true; });
+                if(!alreadyReg && snapGroup.size >= 5) { btn.innerText = "Mulai Ujian"; btn.disabled = false; return showModal("Kelompok Penuh 🛑", `Kuota kelompok <b>${kel}</b> penuh (Maks. 5 Orang).`); }
+                if(!alreadyReg) { await window.setDoc(window.doc(partRef, window.userId), { group: kel, name: nama }); }
+            } catch(e) { btn.innerText = "Mulai Ujian"; btn.disabled = false; return showModal("Error", "Gagal menghubungi server."); }
 
             participant = { name: nama, group: kel };
             let arr = [...bankSoal]; for (let i = arr.length - 1; i > 0; i--) { const j = Math.floor(Math.random() * (i + 1)); [arr[i], arr[j]] = [arr[j], arr[i]]; }
@@ -953,7 +945,6 @@
             if (window.db && window.userId) { 
                 const userStateRef = window.doc(window.db, 'artifacts', window.appId, 'users', window.userId, 'exam', 'state'); 
                 await window.setDoc(userStateRef, { status: 'ongoing', participant: participant, qOrder: activeQuestions.map(q => q.id), endTime: examEndTime, answers: {}, raguStatuses: {}, lastQIndex: 0 }); 
-
                 const scoreDocRef = window.doc(window.db, 'artifacts', window.appId, 'public', 'data', 'scores', window.userId);
                 await window.setDoc(scoreDocRef, { participantName: participant.name, group: participant.group, score: 0, status: 'ongoing', startedAt: Date.now() }, { merge: true });
             }
@@ -965,19 +956,7 @@
         function backupStateToCloud() { if (window.db && window.userId) { const userStateRef = window.doc(window.db, 'artifacts', window.appId, 'users', window.userId, 'exam', 'state'); window.updateDoc(userStateRef, { answers, raguStatuses, lastQIndex: currentQIndex }).catch(()=>{}); } }
         function updateTimer() { const now = Date.now(); const timeLeft = Math.floor((examEndTime - now) / 1000); if(timeLeft <= 0) { clearInterval(timerInterval); finishExam(true); return; } const m = Math.floor(timeLeft / 60); const s = Math.floor(timeLeft % 60); document.getElementById('exam-timer').innerText = `${m.toString().padStart(2, '0')}:${s.toString().padStart(2, '0')}`; }
         function generateNavGrid() { const grid = document.getElementById('nav-grid'); grid.innerHTML = activeQuestions.map((q, index) => `<button class="nav-btn w-full py-2 border border-slate-300 rounded font-medium text-sm transition-all bg-white text-slate-700" id="nav-btn-${index}" onclick="loadQuestion(${index})">${index + 1}</button>`).join(''); }
-
-        function updateNavStyles() {
-            activeQuestions.forEach((q, index) => {
-                const btn = document.getElementById(`nav-btn-${index}`); if(!btn) return;
-                btn.className = `nav-btn w-full py-2 border border-slate-300 rounded font-medium text-sm transition-all`;
-                let isAnswered = false;
-                if(q.type === 'kompleks') isAnswered = Array.isArray(answers[q.id]) && answers[q.id].length > 0;
-                else if (q.type === 'bs') isAnswered = answers[q.id] && Object.keys(answers[q.id]).length === q.statements.length;
-                else isAnswered = !!answers[q.id];
-                if (raguStatuses[q.id]) btn.classList.add('ragu'); else if (isAnswered) btn.classList.add('dijawab'); else btn.classList.add('text-slate-700', 'bg-white');
-                if (index === currentQIndex) btn.classList.add('aktif');
-            });
-        }
+        function updateNavStyles() { activeQuestions.forEach((q, index) => { const btn = document.getElementById(`nav-btn-${index}`); if(!btn) return; btn.className = `nav-btn w-full py-2 border border-slate-300 rounded font-medium text-sm transition-all`; let isAnswered = false; if(q.type === 'kompleks') isAnswered = Array.isArray(answers[q.id]) && answers[q.id].length > 0; else if (q.type === 'bs') isAnswered = answers[q.id] && Object.keys(answers[q.id]).length === q.statements.length; else isAnswered = !!answers[q.id]; if (raguStatuses[q.id]) btn.classList.add('ragu'); else if (isAnswered) btn.classList.add('dijawab'); else btn.classList.add('text-slate-700', 'bg-white'); if (index === currentQIndex) btn.classList.add('aktif'); }); }
 
         function loadQuestion(index) {
             currentQIndex = index; const q = activeQuestions[index]; document.getElementById('q-number').innerText = index + 1;
@@ -985,6 +964,7 @@
             document.getElementById('q-type-badge').innerText = typeLabel;
             let html = ``; if(q.img) html += `<div class="text-center mb-6"><img src="${q.img}" class="max-h-56 max-w-full object-contain inline-block rounded-lg border border-slate-200 shadow-sm"></div>`; html += `<p class="mb-6 font-medium text-slate-800">${q.text}</p>`;
             const currentAns = answers[q.id];
+            
             if(q.type === 'bs') {
                 html += `<div class="overflow-x-auto"><table class="w-full border-collapse border border-slate-200 mb-4 bg-white text-sm md:text-base"><thead class="bg-slate-50 border-b border-slate-300"><tr><th class="border border-slate-200 p-3 text-left">Pernyataan</th><th class="border border-slate-200 p-3 text-center w-20">Benar</th><th class="border border-slate-200 p-3 text-center w-20">Salah</th></tr></thead><tbody>`;
                 const bsAnswers = answers[q.id] || {};
@@ -1010,33 +990,68 @@
         window.confirmFinishExam = function() {
             let answeredCount = 0;
             activeQuestions.forEach(q => { if(q.type === 'kompleks') answeredCount += (Array.isArray(answers[q.id]) && answers[q.id].length > 0) ? 1 : 0; else if (q.type === 'bs') answeredCount += (answers[q.id] && Object.keys(answers[q.id]).length === q.statements.length) ? 1 : 0; else answeredCount += !!answers[q.id] ? 1 : 0; });
-            const unans = activeQuestions.length - answeredCount; let msg = `Anda sudah menjawab secara penuh ${answeredCount} dari ${activeQuestions.length} soal.`;
-            if(unans > 0) msg += ` Terdapat <strong>${unans} soal BELUM dijawab</strong>.`; msg += `<br><br>Yakin ingin mengakhiri ujian?`;
-            showModal("Konfirmasi Selesai", msg, `<button onclick="closeModal()" class="px-4 py-2 bg-slate-300 text-slate-800 rounded font-medium hover:bg-slate-400">Batal</button><button onclick="finishExam()" class="px-4 py-2 bg-red-600 text-white rounded font-medium hover:bg-red-700">Ya, Selesai</button>`);
+            const unans = activeQuestions.length - answeredCount; let msg = `Anda sudah menjawab ${answeredCount} dari ${activeQuestions.length} soal.`;
+            if(unans > 0) msg += ` <strong>(${unans} soal BELUM dijawab / belum lengkap)</strong>.`; msg += `<br><br>Yakin mengakhiri ujian?`;
+            showModal("Konfirmasi", msg, `<button onclick="closeModal()" class="px-4 py-2 bg-slate-300 text-slate-800 rounded font-medium hover:bg-slate-400">Batal</button><button onclick="finishExam()" class="px-4 py-2 bg-red-600 text-white rounded font-medium hover:bg-red-700">Ya, Selesai</button>`);
         }
 
         async function autoSubmitExpiredExam(data) { activeQuestions = data.qOrder.map(id => bankSoal.find(q => q.id === id)); answers = data.answers || {}; participant = data.participant; await finishExam(true, true); }
 
+        // --- UPDATE LOGIKA PENILAIAN AKM (SKALA 100 DINAMIS) ---
         window.finishExam = async function(isAuto = false, isBackground = false) {
-            clearInterval(timerInterval); if(!isBackground) closeModal(); document.getElementById('view-loading').classList.remove('hidden-view'); document.getElementById('loading-text').innerText = "Menghitung & Menyimpan Skor...";
-            let finalScore = 0;
+            clearInterval(timerInterval); if(!isBackground) closeModal(); document.getElementById('view-loading').classList.remove('hidden-view'); document.getElementById('loading-text').innerText = "Menghitung Skor Skala 100...";
+            
+            let rawScore = 0;
+            let maxRawScore = 0;
+
             activeQuestions.forEach(q => {
+                let bobotSoal = (q.type === 'pg') ? 1 : 2; // PG = 1 Poin | PGK & BS = 2 Poin
+                maxRawScore += bobotSoal;
+
                 const usrAns = answers[q.id];
-                if(q.type === 'kompleks' && Array.isArray(usrAns) && Array.isArray(q.answer)) { if(usrAns.length === q.answer.length && usrAns.every(v => q.answer.includes(v))) finalScore += 5; } 
-                else if (q.type === 'bs' && typeof usrAns === 'object') { q.statements.forEach(stmt => { if(usrAns[stmt.id] === stmt.answer) finalScore += 1; }); }
-                else if (usrAns === q.answer) { finalScore += 2; }
+                
+                if (q.type === 'kompleks') {
+                    // Harus benar semua opsi baru dapat 2 poin
+                    if (Array.isArray(usrAns) && Array.isArray(q.answer) && usrAns.length === q.answer.length && usrAns.every(v => q.answer.includes(v))) {
+                        rawScore += bobotSoal;
+                    }
+                } else if (q.type === 'bs') {
+                    // Harus benar semua baris pernyataan baru dapat 2 poin
+                    if (typeof usrAns === 'object') {
+                        let allCorrect = true;
+                        let ansCount = 0;
+                        q.statements.forEach(stmt => {
+                            if (usrAns[stmt.id] === stmt.answer) { ansCount++; } else { allCorrect = false; }
+                        });
+                        if (allCorrect && ansCount === q.statements.length) {
+                            rawScore += bobotSoal;
+                        }
+                    }
+                } else {
+                    // PG Biasa
+                    if (usrAns === q.answer) {
+                        rawScore += bobotSoal;
+                    }
+                }
             });
+
+            // Konversi ke skala 100 & bulatkan maksimal 2 desimal
+            let finalScoreScale100 = (rawScore / maxRawScore) * 100;
+            finalScoreScale100 = Math.round(finalScoreScale100 * 100) / 100;
+
             if (window.db && window.userId) {
                 try {
                     const scoreDocRef = window.doc(window.db, 'artifacts', window.appId, 'public', 'data', 'scores', window.userId); 
-                    await window.setDoc(scoreDocRef, { participantName: participant.name, group: participant.group, score: finalScore, status: 'finished', submittedAt: Date.now() }, { merge: true });
+                    await window.setDoc(scoreDocRef, { participantName: participant.name, group: participant.group, score: finalScoreScale100, status: 'finished', submittedAt: Date.now() }, { merge: true });
                     
                     const userStateRef = window.doc(window.db, 'artifacts', window.appId, 'users', window.userId, 'exam', 'state'); 
-                    await window.updateDoc(userStateRef, { status: 'finished', score: finalScore });
+                    await window.updateDoc(userStateRef, { status: 'finished', score: finalScoreScale100 });
                 } catch(e) {}
             }
-            document.getElementById('view-loading').classList.add('hidden-view'); let title = isAuto ? "Waktu Habis!" : "Ujian Selesai"; let msg = `Jawaban Anda telah terkunci. Skor Anda: <strong class="text-xl text-green-600">${finalScore} Poin</strong>`;
-            showModal(title, msg, `<button onclick="switchBackToPortal()" class="px-4 py-2 bg-blue-600 text-white rounded font-medium hover:bg-blue-700">Kembali ke Beranda</button>`);
+            document.getElementById('view-loading').classList.add('hidden-view'); 
+            let title = isAuto ? "Waktu Habis!" : "Ujian Selesai"; 
+            let msg = `Terkunci! Nilai Akhir Anda: <strong class="text-xl text-green-600">${finalScoreScale100}</strong>`;
+            showModal(title, msg, `<button onclick="switchBackToPortal()" class="px-4 py-2 bg-blue-600 text-white rounded font-medium hover:bg-blue-700">Beranda</button>`);
         }
         window.switchBackToPortal = function() { closeModal(); document.getElementById('peserta-nama').value = ''; document.getElementById('peserta-token').value = ''; switchView('view-portal'); }
     </script>
