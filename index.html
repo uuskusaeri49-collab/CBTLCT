@@ -26,7 +26,7 @@
         import { getFirestore, collection, doc, setDoc, updateDoc, onSnapshot, addDoc, getDoc, getDocs, deleteDoc, query, where } from "https://www.gstatic.com/firebasejs/10.8.1/firebase-firestore.js";
         import { getAuth, signInAnonymously, signInWithCustomToken } from "https://www.gstatic.com/firebasejs/10.8.1/firebase-auth.js";
 
-        // ⚠️ FIREBASE CONFIG MILIK BOS ⚠️
+        // ⚠️ FIREBASE CONFIG ⚠️
         const firebaseConfig = {
             apiKey: "AIzaSyBFW85Dnj5hCe2nTVhPBLFuSjrA6mKcNy8",
             authDomain: "cbt-lct-fa5ff.firebaseapp.com",
@@ -66,6 +66,7 @@
 </head>
 <body class="text-slate-800 h-screen flex flex-col">
 
+    <!-- Fullscreen Loading -->
     <div id="view-loading" class="fixed inset-0 bg-white z-[60] flex flex-col items-center justify-center">
         <div class="loader mb-4"></div><p id="loading-text" class="text-slate-600 font-medium">Memeriksa sesi Anda...</p>
     </div>
@@ -190,9 +191,12 @@
 
                 <div class="border-t pt-4 mt-auto">
                     <label class="text-xs font-bold text-slate-500 uppercase tracking-wider block mb-2">4. Waktu Mulai Ujian</label>
-                    <input type="datetime-local" id="admin-waktu-mulai" class="w-full px-3 py-2 border border-slate-300 rounded text-sm outline-none mb-2">
+                    <div class="flex gap-2 mb-2">
+                        <input type="datetime-local" id="admin-waktu-mulai" class="flex-1 px-3 py-2 border border-slate-300 rounded text-sm outline-none focus:border-blue-500">
+                        <button onclick="resetJadwal()" class="px-3 py-2 bg-red-100 text-red-600 rounded text-sm font-bold hover:bg-red-200 transition-colors" title="Kosongkan Jadwal">✕</button>
+                    </div>
                     <button onclick="simpanJadwal()" class="w-full py-2 bg-green-600 text-white rounded text-sm font-medium hover:bg-green-700">Terapkan Jadwal</button>
-                    <p class="text-xs text-green-600 mt-2 hidden text-center" id="jadwal-success-msg">Pengaturan tersimpan!</p>
+                    <p class="text-xs text-green-600 mt-2 hidden text-center font-medium" id="jadwal-success-msg">Pengaturan tersimpan!</p>
                 </div>
 
                 <div class="border-t border-red-200 pt-4 mt-5">
@@ -202,11 +206,11 @@
             </div>
 
             <div class="w-full md:w-2/3 bg-white rounded-xl shadow-sm border border-slate-200 p-5 flex flex-col">
-                <div class="flex justify-between items-center border-b pb-2 mb-4 shrink-0">
-                    <h2 class="text-base font-bold text-slate-800">Live Score Kumulatif (Panitia)</h2>
-                    <span class="flex items-center gap-1.5 text-[10px] font-bold text-green-700 bg-green-100 px-2 py-1 rounded-full uppercase tracking-wider"><span class="w-2 h-2 rounded-full bg-green-500 animate-pulse"></span> Live</span>
+                <div class="flex justify-between items-center border-b pb-4 mb-4 shrink-0">
+                    <h2 class="text-lg font-black text-slate-800 uppercase tracking-wide">🏆 Live Score Kumulatif</h2>
+                    <span class="flex items-center gap-1.5 text-xs font-bold text-green-700 bg-green-100 px-3 py-1.5 rounded-full uppercase tracking-wider shadow-sm"><span class="w-2.5 h-2.5 rounded-full bg-green-500 animate-pulse"></span> Live Sync</span>
                 </div>
-                <div class="flex-1 overflow-y-auto pr-2 grid grid-cols-1 md:grid-cols-2 gap-4 items-start content-start" id="leaderboard-container"></div>
+                <div class="flex-1 overflow-y-auto pr-2 grid grid-cols-1 lg:grid-cols-2 gap-5 items-start content-start" id="leaderboard-container"></div>
             </div>
         </div>
     </div>
@@ -220,7 +224,6 @@
 
         <div class="flex-1 p-4 md:p-6 flex flex-col md:flex-row gap-6 overflow-hidden">
             <div class="w-full md:w-1/3 flex flex-col gap-4">
-                
                 <div class="bg-blue-50 p-4 rounded-xl shadow-sm border border-blue-200 flex justify-between items-center shrink-0">
                     <div>
                         <h3 class="text-xs font-bold text-blue-700 uppercase tracking-wider">Token Ujian</h3>
@@ -248,7 +251,7 @@
             
             <div class="w-full md:w-2/3 bg-white p-5 rounded-xl shadow-sm border border-slate-200 flex flex-col">
                 <h3 class="text-base font-bold text-slate-800 border-b pb-2 mb-4 shrink-0 flex items-center gap-2">Klasemen Seluruh Peserta <span class="text-[10px] bg-red-100 text-red-600 px-2 py-0.5 rounded-full uppercase animate-pulse">Live</span></h3>
-                <div id="sekolah-klasemen-umum" class="flex-1 overflow-y-auto space-y-3 pr-2"></div>
+                <div id="sekolah-klasemen-umum" class="flex-1 overflow-y-auto space-y-4 pr-2"></div>
             </div>
         </div>
     </div>
@@ -260,30 +263,30 @@
             <div class="flex items-center gap-4"><div class="bg-slate-900 px-3 md:px-4 py-1.5 md:py-2 rounded font-mono text-xl font-bold border border-slate-700 shadow-inner tracking-widest text-red-400" id="exam-timer">--:--</div></div>
         </header>
 
-        <div class="flex-1 flex flex-col md:flex-row p-4 gap-4 overflow-hidden h-full">
-            <div class="flex-1 bg-white rounded-lg shadow-sm border border-slate-200 flex flex-col relative h-full min-h-[50vh]">
-                <div class="bg-slate-50 border-b px-5 py-3 flex justify-between items-center rounded-t-lg shrink-0">
-                    <span class="font-bold text-slate-700">SOAL NO. <span id="q-number" class="text-blue-600 text-xl ml-1">1</span></span>
-                    <span class="text-[10px] md:text-xs font-bold uppercase tracking-wider px-2 py-1 bg-blue-100 text-blue-700 rounded" id="q-type-badge">Tipe</span>
+        <div class="flex-1 overflow-y-auto md:overflow-hidden p-2 md:p-4 relative" id="exam-container">
+            <div class="flex flex-col md:flex-row gap-4 h-full md:h-auto md:absolute md:inset-4 lg:inset-8">
+                <!-- Kiri: Soal -->
+                <div class="flex-1 bg-white rounded-lg shadow-sm border border-slate-200 flex flex-col relative md:h-full min-h-[65vh]">
+                    <div class="bg-slate-50 border-b px-4 md:px-5 py-3 flex justify-between items-center rounded-t-lg shrink-0">
+                        <span class="font-bold text-slate-700">SOAL NO. <span id="q-number" class="text-blue-600 text-xl ml-1">1</span></span>
+                        <span class="text-[10px] md:text-xs font-bold uppercase tracking-wider px-2 py-1 bg-blue-100 text-blue-700 rounded" id="q-type-badge">Tipe</span>
+                    </div>
+                    
+                    <div class="p-4 md:p-8 flex-1 text-slate-800 text-base md:text-lg leading-relaxed md:overflow-y-auto pb-24 md:pb-8" id="q-content"></div>
+                    
+                    <!-- Navigasi Bawah (Sticky di HP) -->
+                    <div class="bg-white border-t px-2 md:px-5 py-3 flex justify-between items-center rounded-b-lg mt-auto shrink-0 sticky bottom-0 z-30 shadow-[0_-10px_15px_-3px_rgba(0,0,0,0.08)] md:shadow-none md:bg-slate-50 md:static">
+                        <button onclick="navSoal(-1)" class="px-3 md:px-4 py-2.5 bg-slate-500 text-white rounded font-bold hover:bg-slate-600 text-xs md:text-sm disabled:opacity-50 transition-colors shadow-sm" id="btn-prev">&laquo; <span class="hidden sm:inline">SEBELUMNYA</span></button>
+                        <label class="flex items-center gap-1.5 cursor-pointer bg-yellow-400 hover:bg-yellow-500 text-yellow-900 px-3 md:px-4 py-2.5 rounded font-bold text-xs md:text-sm shadow-sm transition-colors"><input type="checkbox" id="checkbox-ragu" onchange="toggleRagu()" class="w-4 h-4 accent-yellow-700 cursor-pointer"> RAGU</label>
+                        <button onclick="navSoal(1)" class="px-3 md:px-4 py-2.5 bg-blue-600 text-white rounded font-bold hover:bg-blue-700 text-xs md:text-sm disabled:opacity-50 transition-colors shadow-sm" id="btn-next"><span class="hidden sm:inline">SELANJUTNYA</span> &raquo;</button>
+                    </div>
                 </div>
-                <div class="p-5 md:p-8 overflow-y-auto flex-1 text-slate-800 text-base md:text-lg leading-relaxed" id="q-content"></div>
-                <div class="bg-slate-50 border-t px-5 py-3 flex justify-between items-center rounded-b-lg mt-auto shrink-0">
-                    <button onclick="navSoal(-1)" class="px-4 py-2 bg-slate-500 text-white rounded font-medium hover:bg-slate-600 text-sm disabled:opacity-50" id="btn-prev">&laquo; SEBELUMNYA</button>
-                    <label class="flex items-center gap-2 cursor-pointer bg-yellow-400 hover:bg-yellow-500 text-yellow-900 px-4 py-2 rounded font-medium text-sm shadow-sm"><input type="checkbox" id="checkbox-ragu" onchange="toggleRagu()" class="w-4 h-4 accent-yellow-600 cursor-pointer"> RAGU-RAGU</label>
-                    <button onclick="navSoal(1)" class="px-4 py-2 bg-blue-600 text-white rounded font-medium hover:bg-blue-700 text-sm disabled:opacity-50" id="btn-next">SELANJUTNYA &raquo;</button>
-                </div>
-            </div>
 
-            <div class="w-full md:w-80 bg-white rounded-lg shadow-sm border border-slate-200 flex flex-col shrink-0 md:h-full">
-                <div class="bg-slate-800 text-white text-center py-2.5 rounded-t-lg font-bold text-sm tracking-wider">NAVIGASI NOMOR</div>
-                <div class="p-4 flex-1 overflow-y-auto max-h-[30vh] md:max-h-none"><div class="grid grid-cols-5 gap-2" id="nav-grid"></div></div>
-                <div class="p-4 border-t bg-slate-50 shrink-0">
-                    <div class="flex flex-col gap-1.5 mb-4 text-xs font-medium text-slate-600"><div class="flex items-center gap-2"><span class="w-3 h-3 bg-green-500 rounded-sm border border-green-600"></span> Sudah Dijawab</div><div class="flex items-center gap-2"><span class="w-3 h-3 bg-yellow-400 rounded-sm border border-yellow-500"></span> Ragu-ragu</div><div class="flex items-center gap-2"><span class="w-3 h-3 bg-white rounded-sm border border-slate-300"></span> Belum Dijawab</div></div>
-                    <button onclick="confirmFinishExam()" class="w-full py-2.5 bg-red-600 text-white rounded-lg font-bold hover:bg-red-700 shadow-sm">SELESAI UJIAN</button>
-                </div>
-            </div>
-        </div>
-    </div>
+                <!-- Kanan: Grid Navigasi -->
+                <div class="w-full md:w-80 bg-white rounded-lg shadow-sm border border-slate-200 flex flex-col shrink-0 md:h-full mb-6 md:mb-0">
+                    <div class="bg-slate-800 text-white text-center py-2.5 rounded-t-lg font-bold text-sm tracking-wider">NAVIGASI NOMOR</div>
+                    <div class="p-4 flex-1 md:overflow-y-auto"><div class="grid grid-cols-5 md:grid-cols-5 gap-2" id="nav-grid"></div></div>
+                    <div class="p-4 border-t bg-slate-50 shrink-0">
 
     <script>
         // --- BANK SOAL ---
@@ -708,6 +711,8 @@
                         if(globalConfig.jadwalMulai) {
                             const tzoffset = (new Date()).getTimezoneOffset() * 60000;
                             document.getElementById('admin-waktu-mulai').value = (new Date(globalConfig.jadwalMulai - tzoffset)).toISOString().slice(0, 16);
+                        } else {
+                            document.getElementById('admin-waktu-mulai').value = '';
                         }
                         updateGroupListUI();
                     } else { generateNewToken(true); }
@@ -831,7 +836,19 @@
             if(!inputVal) return showModal("Perhatian", "Pilih waktu terlebih dahulu!");
             const ts = new Date(inputVal).getTime(); const settingDocRef = window.doc(window.db, 'artifacts', window.appId, 'public', 'data', 'settings', 'global');
             await window.setDoc(settingDocRef, { jadwalMulai: ts }, { merge: true });
-            document.getElementById('jadwal-success-msg').classList.remove('hidden'); setTimeout(() => document.getElementById('jadwal-success-msg').classList.add('hidden'), 3000);
+            document.getElementById('jadwal-success-msg').innerText = "Pengaturan tersimpan!";
+            document.getElementById('jadwal-success-msg').classList.remove('hidden', 'text-red-600'); document.getElementById('jadwal-success-msg').classList.add('text-green-600');
+            setTimeout(() => document.getElementById('jadwal-success-msg').classList.add('hidden'), 3000);
+        }
+
+        window.resetJadwal = async function() {
+            document.getElementById('admin-waktu-mulai').value = '';
+            if(!window.db) return;
+            const settingDocRef = window.doc(window.db, 'artifacts', window.appId, 'public', 'data', 'settings', 'global');
+            await window.setDoc(settingDocRef, { jadwalMulai: null }, { merge: true });
+            document.getElementById('jadwal-success-msg').innerText = "Waktu Ujian Dikosongkan!";
+            document.getElementById('jadwal-success-msg').classList.remove('hidden', 'text-green-600'); document.getElementById('jadwal-success-msg').classList.add('text-red-600');
+            setTimeout(() => document.getElementById('jadwal-success-msg').classList.add('hidden'), 3000);
         }
 
         window.konfirmasiReset = function() {
@@ -848,7 +865,7 @@
             } catch(e) { document.getElementById('view-loading').classList.add('hidden-view'); showModal("Error", "Gagal mereset data. Periksa koneksi Anda."); }
         }
 
-        // --- REALTIME DASHBOARD LOGIC (DENGAN PEMBULATAN JS AMAN) ---
+        // --- REALTIME DASHBOARD LOGIC ---
         function startAdminRealtime() {
             if(!window.db) return;
             const scoresCollRef = window.collection(window.db, 'artifacts', window.appId, 'public', 'data', 'scores');
@@ -865,17 +882,32 @@
         function renderLeaderboard(groupsData) {
             const container = document.getElementById('leaderboard-container'); container.innerHTML = '';
             
-            // Format score dan urutkan
             Object.keys(groupsData).forEach(k => { groupsData[k].score = Math.round(groupsData[k].score * 100) / 100; });
             const sorted = Object.entries(groupsData).sort((a,b) => b[1].score - a[1].score);
             
-            if (sorted.length === 0) { container.innerHTML = `<div class="col-span-2 text-center p-10 text-slate-400 font-medium">Belum ada peserta.</div>`; return; }
+            if (sorted.length === 0) { container.innerHTML = `<div class="col-span-2 text-center p-12 bg-white rounded-xl border border-slate-200 border-dashed text-slate-400 font-bold text-lg">Belum ada peserta yang mensubmit ujian.</div>`; return; }
             sorted.forEach(([name, data], index) => {
+                let rankClass = index === 0 ? 'bg-gradient-to-br from-yellow-300 to-yellow-600 text-white shadow-lg border-yellow-300' :
+                                index === 1 ? 'bg-gradient-to-br from-slate-300 to-slate-500 text-white shadow-md' :
+                                index === 2 ? 'bg-gradient-to-br from-orange-500 to-amber-700 text-white shadow-md' :
+                                'bg-slate-200 text-slate-600 border-slate-300';
+                                
                 let usersHtml = data.users.sort((a,b)=> b.score - a.score).map(u => {
-                    let displayScore = u.status === 'ongoing' ? `<span class="text-blue-500 animate-pulse text-[10px] italic">Mengerjakan...</span>` : `${u.score} pt`;
-                    return `<div class="flex justify-between items-center py-1.5 border-b border-slate-100 last:border-0"><span class="text-xs text-slate-600 font-medium">${u.participantName}</span><span class="text-xs font-bold text-slate-800 bg-slate-100 px-2 py-0.5 rounded">${displayScore}</span></div>`;
+                    let displayScore = u.status === 'ongoing' ? `<span class="text-blue-500 animate-pulse text-[10px] italic font-medium">Mengerjakan...</span>` : `<span class="text-green-700">${u.score} pt</span>`;
+                    return `<div class="flex justify-between items-center py-2.5 border-b border-slate-200 last:border-0 hover:bg-slate-100 transition-colors px-2 rounded"><span class="text-sm font-semibold text-slate-700">${u.participantName}</span><span class="text-sm font-black bg-white px-3 py-1 rounded shadow-sm border border-slate-200">${displayScore}</span></div>`;
                 }).join('');
-                container.innerHTML += `<div class="bg-white rounded-lg border border-slate-200 overflow-hidden shadow-sm hover:shadow-md transition-shadow"><div class="flex justify-between items-center p-3 bg-slate-50 border-b border-slate-200"><div class="flex items-center gap-2"><div class="w-6 h-6 rounded-full ${index===0 ? 'bg-yellow-100 text-yellow-700' : 'bg-blue-100 text-blue-700'} font-bold flex items-center justify-center text-xs">${index+1}</div><span class="font-bold text-slate-800 text-sm truncate max-w-[150px]">${name}</span></div><div class="text-lg font-black text-slate-800">${data.score} <span class="text-[10px] font-normal text-slate-500 uppercase">Poin</span></div></div><div class="px-3 py-2 bg-white max-h-32 overflow-y-auto">${usersHtml}</div></div>`;
+                
+                container.innerHTML += `
+                    <div class="bg-white rounded-2xl border border-slate-200 overflow-hidden shadow-md hover:shadow-xl transition-all duration-300 transform hover:-translate-y-1 flex flex-col">
+                        <div class="flex justify-between items-center p-4 bg-gradient-to-r from-slate-800 to-slate-900 border-b-4 border-slate-900">
+                            <div class="flex items-center gap-3">
+                                <div class="w-10 h-10 rounded-full ${rankClass} font-black flex items-center justify-center text-lg border-2">${index+1}</div>
+                                <span class="font-black text-white text-base tracking-wide uppercase truncate max-w-[160px] drop-shadow-sm">${name}</span>
+                            </div>
+                            <div class="text-3xl font-black text-yellow-400 drop-shadow-md">${data.score} <span class="text-[10px] font-bold text-slate-300 uppercase block text-right -mt-1 tracking-widest">POIN</span></div>
+                        </div>
+                        <div class="p-3 bg-slate-50 flex-1 min-h-[120px] max-h-64 overflow-y-auto">${usersHtml}</div>
+                    </div>`;
             });
         }
 
@@ -899,24 +931,27 @@
 
             sorted.forEach(([name, data], index) => {
                 const rank = index + 1;
+                let rankTrophy = rank === 1 ? '🥇' : rank === 2 ? '🥈' : rank === 3 ? '🥉' : rank;
+                let rankBg = rank <= 3 ? 'bg-yellow-100 text-yellow-800 font-bold border-yellow-300' : 'bg-slate-200 text-slate-600 font-bold';
+                
                 if (name === myGroup) {
                     myRank = rank; myTotalScore = data.score; myUsers = data.users.sort((a,b)=> b.score - a.score);
-                    klasemenHtml += `<div class="flex justify-between items-center p-3 bg-purple-100 border border-purple-300 rounded-lg shadow-sm"><div class="flex items-center gap-3"><span class="w-8 h-8 flex items-center justify-center bg-purple-600 text-white font-bold rounded-full">${rank}</span><span class="font-bold text-purple-900">${name} (Kelompok Anda)</span></div><span class="text-lg font-black text-purple-800">${data.score} <span class="text-xs font-normal">pt</span></span></div>`;
+                    klasemenHtml += `<div class="flex justify-between items-center p-4 bg-gradient-to-r from-purple-100 to-purple-50 border-2 border-purple-400 rounded-xl shadow-md transform scale-[1.02] transition-transform"><div class="flex items-center gap-4"><span class="w-10 h-10 flex items-center justify-center bg-purple-600 text-white font-black text-lg rounded-full shadow-inner">${rankTrophy}</span><span class="font-black text-purple-900 text-base uppercase tracking-wide">${name} <span class="block text-[10px] text-purple-600 font-medium normal-case">(Kelompok Anda)</span></span></div><span class="text-2xl font-black text-purple-800 drop-shadow-sm">${data.score} <span class="text-xs font-bold text-purple-600">pt</span></span></div>`;
                 } else {
-                    klasemenHtml += `<div class="flex justify-between items-center p-3 bg-slate-50 border border-slate-200 rounded-lg"><div class="flex items-center gap-3"><span class="w-8 h-8 flex items-center justify-center bg-slate-200 text-slate-600 font-bold rounded-full">${rank}</span><span class="font-medium text-slate-700">${name}</span></div><span class="font-bold text-slate-600">${data.score} pt</span></div>`;
+                    klasemenHtml += `<div class="flex justify-between items-center p-3.5 bg-white border border-slate-200 rounded-xl hover:bg-slate-50 transition-colors"><div class="flex items-center gap-4"><span class="w-10 h-10 flex items-center justify-center ${rankBg} text-lg rounded-full border shadow-sm">${rankTrophy}</span><span class="font-bold text-slate-700 text-sm uppercase">${name}</span></div><span class="font-black text-slate-700 text-lg">${data.score} <span class="text-xs font-semibold text-slate-400">pt</span></span></div>`;
                 }
             });
 
             document.getElementById('sekolah-peringkat').innerText = myRank; document.getElementById('sekolah-total-skor').innerText = myTotalScore;
-            document.getElementById('sekolah-klasemen-umum').innerHTML = klasemenHtml || '<div class="text-center text-slate-400 py-10">Belum ada data.</div>';
+            document.getElementById('sekolah-klasemen-umum').innerHTML = klasemenHtml || '<div class="text-center text-slate-400 py-10 font-medium">Belum ada data.</div>';
 
             if(myUsers.length === 0) {
-                document.getElementById('sekolah-rincian-peserta').innerHTML = '<div class="text-center text-slate-400 text-xs py-8">Peserta Anda belum mendaftar.</div>';
+                document.getElementById('sekolah-rincian-peserta').innerHTML = '<div class="text-center text-slate-400 text-sm py-10 border-2 border-dashed border-slate-200 rounded-xl">Peserta Anda belum mendaftar.</div>';
             } else {
                 document.getElementById('sekolah-rincian-peserta').innerHTML = myUsers.map((u, i) => {
-                    let displayScore = u.status === 'ongoing' ? `<span class="text-blue-500 animate-pulse text-xs italic">Sedang Ujian...</span>` : `${u.score} pt`;
-                    let bgClass = u.status === 'ongoing' ? 'bg-blue-50 text-blue-700' : 'bg-green-100 text-green-700';
-                    return `<div class="flex justify-between items-center p-2.5 bg-slate-50 rounded-lg border border-slate-200"><span class="text-sm font-medium text-slate-700">${i+1}. ${u.participantName}</span><span class="text-sm font-bold ${bgClass} px-2 py-1 rounded">${displayScore}</span></div>`;
+                    let displayScore = u.status === 'ongoing' ? `<span class="text-blue-500 animate-pulse text-xs italic font-medium">Mengerjakan...</span>` : `${u.score} pt`;
+                    let bgClass = u.status === 'ongoing' ? 'bg-blue-50 text-blue-700 border-blue-200' : 'bg-green-100 text-green-800 border-green-300 shadow-sm';
+                    return `<div class="flex justify-between items-center p-3 bg-white rounded-lg border border-slate-200 hover:border-purple-300 transition-colors"><span class="text-sm font-bold text-slate-700">${i+1}. ${u.participantName}</span><span class="text-sm font-black ${bgClass} border px-3 py-1.5 rounded-md">${displayScore}</span></div>`;
                 }).join('');
             }
         }
@@ -927,7 +962,10 @@
             if(!nama || !kel || !token) return showModal("Peringatan", "Harap isi Nama, Kelompok, dan Token!");
             if(token !== globalConfig.token) return showModal("Akses Ditolak", "Token ujian salah!");
             if (!globalConfig.jadwalMulai) return showModal("Ujian Belum Dibuka", "Panitia belum mengatur jadwal ujian.");
-            if (globalConfig.jadwalMulai && Date.now() < globalConfig.jadwalMulai) { const fw = new Date(globalConfig.jadwalMulai).toLocaleString('id-ID', { dateStyle: 'full', timeStyle: 'short' }); return showModal("Ujian Belum Mulai", `Ujian dibuka pada:<br><strong>${fw}</strong>`); }
+            if (globalConfig.jadwalMulai && Date.now() < globalConfig.jadwalMulai) { 
+                const fw = new Date(globalConfig.jadwalMulai).toLocaleString('id-ID', { dateStyle: 'full', timeStyle: 'short', hour12: false }); 
+                return showModal("Ujian Belum Mulai", `Ujian dibuka pada:<br><strong>${fw} WIB</strong>`); 
+            }
 
             const btn = document.getElementById('btn-login-peserta'); btn.innerText = "Memproses..."; btn.disabled = true;
             try {
@@ -997,7 +1035,7 @@
 
         async function autoSubmitExpiredExam(data) { activeQuestions = data.qOrder.map(id => bankSoal.find(q => q.id === id)); answers = data.answers || {}; participant = data.participant; await finishExam(true, true); }
 
-        // --- UPDATE LOGIKA PENILAIAN AKM (SKALA 100 DINAMIS) ---
+        // --- PENILAIAN AKM SKALA 100 DINAMIS ---
         window.finishExam = async function(isAuto = false, isBackground = false) {
             clearInterval(timerInterval); if(!isBackground) closeModal(); document.getElementById('view-loading').classList.remove('hidden-view'); document.getElementById('loading-text').innerText = "Menghitung Skor Skala 100...";
             
@@ -1011,12 +1049,10 @@
                 const usrAns = answers[q.id];
                 
                 if (q.type === 'kompleks') {
-                    // Harus benar semua opsi baru dapat 2 poin
                     if (Array.isArray(usrAns) && Array.isArray(q.answer) && usrAns.length === q.answer.length && usrAns.every(v => q.answer.includes(v))) {
                         rawScore += bobotSoal;
                     }
                 } else if (q.type === 'bs') {
-                    // Harus benar semua baris pernyataan baru dapat 2 poin
                     if (typeof usrAns === 'object') {
                         let allCorrect = true;
                         let ansCount = 0;
@@ -1028,14 +1064,12 @@
                         }
                     }
                 } else {
-                    // PG Biasa
                     if (usrAns === q.answer) {
                         rawScore += bobotSoal;
                     }
                 }
             });
 
-            // Konversi ke skala 100 & bulatkan maksimal 2 desimal
             let finalScoreScale100 = (rawScore / maxRawScore) * 100;
             finalScoreScale100 = Math.round(finalScoreScale100 * 100) / 100;
 
