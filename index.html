@@ -287,6 +287,18 @@
                     <div class="bg-slate-800 text-white text-center py-2.5 rounded-t-lg font-bold text-sm tracking-wider">NAVIGASI NOMOR</div>
                     <div class="p-4 flex-1 md:overflow-y-auto"><div class="grid grid-cols-5 md:grid-cols-5 gap-2" id="nav-grid"></div></div>
                     <div class="p-4 border-t bg-slate-50 shrink-0">
+                        <div class="flex flex-col gap-1.5 mb-4 text-xs font-medium text-slate-600">
+                            <div class="flex items-center gap-2"><span class="w-3 h-3 bg-green-500 rounded-sm border border-green-600"></span> Sudah Dijawab</div>
+                            <div class="flex items-center gap-2"><span class="w-3 h-3 bg-yellow-400 rounded-sm border border-yellow-500"></span> Ragu-ragu</div>
+                            <div class="flex items-center gap-2"><span class="w-3 h-3 bg-white rounded-sm border border-slate-300"></span> Belum Dijawab</div>
+                        </div>
+                        <button onclick="confirmFinishExam()" class="w-full py-2.5 bg-red-600 text-white rounded-lg font-bold hover:bg-red-700 transition-colors shadow-sm">
+                            SELESAI UJIAN
+                        </button>
+                    </div>
+                </div>
+            </div>
+        </div>
 
     <script>
         // --- BANK SOAL ---
