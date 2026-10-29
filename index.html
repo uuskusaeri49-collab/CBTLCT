@@ -85,6 +85,9 @@
     <!-- VIEW 1: Portal Selection -->
     <div id="view-portal" class="hidden-view flex-1 flex flex-col items-center justify-center p-4">
         <div class="text-center mb-10">
+            <!-- Tambahan Gambar Banner/Logo untuk Portal -->
+            <img src="bander_lct.jpg" alt="Banner Portal" class="max-w-full h-auto mx-auto mb-6 rounded-2xl shadow-sm border border-slate-200" style="max-height: 120px; object-fit: cover;">
+            
             <h1 class="text-4xl font-extrabold text-blue-900 mb-4 tracking-tight">CBT Cerdas Cermat</h1>
             <p class="text-slate-500 text-lg">Pilih portal untuk masuk ke dalam sistem.</p>
         </div>
@@ -107,7 +110,7 @@
 
             <button onclick="switchView('view-login-peserta')" class="group bg-white p-8 rounded-2xl shadow-sm border border-slate-200 hover:shadow-md hover:border-green-400 transition-all flex flex-col items-center">
                 <div class="w-16 h-16 bg-green-100 text-green-600 rounded-full flex items-center justify-center mb-4 group-hover:bg-green-600 group-hover:text-white transition-colors">
-                    <svg class="w-8 h-8" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 6.253v13m0-13C10.832 5.477 9.246 5 7.5 5S4.168 5.477 3 6.253v13C4.168 18.477 5.754 18 7.5 18s3.332.477 4.5 1.253m0-13C13.168 5.477 14.754 5 16.5 5c1.747 0 3.332.477 4.5 1.253v13C19.832 18.477 18.247 18 16.5 18c-1.746 0-3.332.477-4.5 1.253"></path></svg>
+                    <svg class="w-8 h-8" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 6.253v13m0-13C10.832 5.477 9.246 5 7.5 5S4.168 5.477 3 6.253v13C4.168 18.477 5.754 18 7.5 18s3.332.477 4.5 1.253m0-13C13.168 5.477 14.754 5 16.5 5c1.747 0 3.332.477-4.5 1.253v13C19.832 18.477 18.247 18 16.5 18c-1.746 0-3.332.477-4.5 1.253"></path></svg>
                 </div>
                 <h2 class="text-xl font-bold text-slate-800 mb-2">Portal Peserta</h2>
                 <p class="text-slate-500 text-xs">Masuk & Kerjakan Ujian</p>
@@ -210,6 +213,10 @@
                     <h2 class="text-lg font-black text-slate-800 uppercase tracking-wide">🏆 Live Score Kumulatif</h2>
                     <span class="flex items-center gap-1.5 text-xs font-bold text-green-700 bg-green-100 px-3 py-1.5 rounded-full uppercase tracking-wider shadow-sm"><span class="w-2.5 h-2.5 rounded-full bg-green-500 animate-pulse"></span> Live Sync</span>
                 </div>
+                
+                <!-- PENGHARGAAN TOP 3 INDIVIDU (PANITIA) -->
+                <div id="admin-top-individuals" class="mb-5 bg-gradient-to-br from-slate-900 to-slate-800 rounded-xl p-4 shadow-md hidden shrink-0"></div>
+
                 <div class="flex-1 overflow-y-auto pr-2 grid grid-cols-1 lg:grid-cols-2 gap-5 items-start content-start" id="leaderboard-container"></div>
             </div>
         </div>
@@ -251,6 +258,10 @@
             
             <div class="w-full md:w-2/3 bg-white p-5 rounded-xl shadow-sm border border-slate-200 flex flex-col">
                 <h3 class="text-base font-bold text-slate-800 border-b pb-2 mb-4 shrink-0 flex items-center gap-2">Klasemen Seluruh Peserta <span class="text-[10px] bg-red-100 text-red-600 px-2 py-0.5 rounded-full uppercase animate-pulse">Live</span></h3>
+                
+                <!-- PENGHARGAAN TOP 3 INDIVIDU (SEKOLAH) -->
+                <div id="sekolah-top-individuals" class="mb-4 bg-gradient-to-br from-slate-900 to-slate-800 rounded-xl p-4 shadow-md hidden shrink-0"></div>
+
                 <div id="sekolah-klasemen-umum" class="flex-1 overflow-y-auto space-y-4 pr-2"></div>
             </div>
         </div>
@@ -891,17 +902,59 @@
             });
         }
 
+        // FUNGSI RENDER PENGHARGAAN INDIVIDU (Dipakai bersama oleh Panitia & Sekolah)
+        function generateTop3Html(top3) {
+            let html = `<h3 class="text-sm font-bold text-slate-300 uppercase tracking-wider mb-3 border-b border-slate-700/50 pb-2">🌟 Top 3 Individu Terbaik</h3><div class="grid grid-cols-1 sm:grid-cols-3 gap-3">`;
+            const medals = ['🥇', '🥈', '🥉'];
+            const colors = ['from-yellow-400 to-yellow-600', 'from-slate-300 to-slate-500', 'from-orange-400 to-orange-700'];
+            const borders = ['border-yellow-400', 'border-slate-400', 'border-orange-500'];
+            const textColors = ['text-yellow-400', 'text-slate-300', 'text-orange-400'];
+            
+            top3.forEach((u, i) => {
+                html += `
+                <div class="bg-slate-800/80 rounded-lg p-3 border-l-4 ${borders[i]} flex items-center gap-3 relative overflow-hidden shadow-sm">
+                    <div class="absolute -right-4 -top-4 w-12 h-12 bg-gradient-to-br ${colors[i]} opacity-10 rounded-full"></div>
+                    <div class="text-2xl drop-shadow-md shrink-0">${medals[i]}</div>
+                    <div class="flex-1 min-w-0">
+                        <div class="font-bold text-white truncate text-sm" title="${u.participantName}">${u.participantName}</div>
+                        <div class="text-[10px] text-slate-400 truncate uppercase tracking-wider">${u.group}</div>
+                    </div>
+                    <div class="font-black ${textColors[i]} text-base shrink-0">${u.score}</div>
+                </div>`;
+            });
+            html += `</div>`;
+            return html;
+        }
+
         function renderLeaderboard(groupsData) {
             const container = document.getElementById('leaderboard-container'); container.innerHTML = '';
+            const topIndoContainer = document.getElementById('admin-top-individuals');
             
-            Object.keys(groupsData).forEach(k => { groupsData[k].score = Math.round(groupsData[k].score * 100) / 100; });
+            let allUsers = [];
+            Object.keys(groupsData).forEach(k => { 
+                groupsData[k].score = Math.round(groupsData[k].score * 100) / 100; 
+                allUsers = allUsers.concat(groupsData[k].users);
+            });
             const sorted = Object.entries(groupsData).sort((a,b) => b[1].score - a[1].score);
             
+            // --- Tampilkan Penghargaan Individu (Jika ada data) ---
+            allUsers.sort((a, b) => b.score - a.score);
+            const top3 = allUsers.slice(0, 3);
+            if(top3.length > 0) {
+                topIndoContainer.classList.remove('hidden');
+                topIndoContainer.innerHTML = generateTop3Html(top3);
+            } else {
+                topIndoContainer.classList.add('hidden');
+            }
+            
             if (sorted.length === 0) { container.innerHTML = `<div class="col-span-2 text-center p-12 bg-white rounded-xl border border-slate-200 border-dashed text-slate-400 font-bold text-lg">Belum ada peserta yang mensubmit ujian.</div>`; return; }
+            
             sorted.forEach(([name, data], index) => {
-                let rankClass = index === 0 ? 'bg-gradient-to-br from-yellow-300 to-yellow-600 text-white shadow-lg border-yellow-300' :
-                                index === 1 ? 'bg-gradient-to-br from-slate-300 to-slate-500 text-white shadow-md' :
-                                index === 2 ? 'bg-gradient-to-br from-orange-500 to-amber-700 text-white shadow-md' :
+                const rank = index + 1;
+                let rankTrophy = rank === 1 ? '🥇' : rank === 2 ? '🥈' : rank === 3 ? '🥉' : rank;
+                let rankClass = rank === 1 ? 'bg-gradient-to-br from-yellow-300 to-yellow-600 text-white shadow-lg border-yellow-300' :
+                                rank === 2 ? 'bg-gradient-to-br from-slate-300 to-slate-500 text-white shadow-md border-slate-300' :
+                                rank === 3 ? 'bg-gradient-to-br from-orange-400 to-orange-700 text-white shadow-md border-orange-400' :
                                 'bg-slate-200 text-slate-600 border-slate-300';
                                 
                 let usersHtml = data.users.sort((a,b)=> b.score - a.score).map(u => {
@@ -913,7 +966,7 @@
                     <div class="bg-white rounded-2xl border border-slate-200 overflow-hidden shadow-md hover:shadow-xl transition-all duration-300 transform hover:-translate-y-1 flex flex-col">
                         <div class="flex justify-between items-center p-4 bg-gradient-to-r from-slate-800 to-slate-900 border-b-4 border-slate-900 gap-3">
                             <div class="flex items-center gap-3 min-w-0 flex-1">
-                                <div class="w-10 h-10 rounded-full ${rankClass} font-black flex items-center justify-center text-lg border-2 shrink-0">${index+1}</div>
+                                <div class="w-10 h-10 rounded-full ${rankClass} font-black flex items-center justify-center text-lg border-2 shrink-0">${rankTrophy}</div>
                                 <span class="font-black text-white text-sm md:text-base tracking-wide uppercase whitespace-normal break-words leading-tight drop-shadow-sm flex-1">${name}</span>
                             </div>
                             <div class="text-3xl font-black text-yellow-400 drop-shadow-md shrink-0 text-right">${data.score} <span class="text-[10px] font-bold text-slate-300 uppercase block text-right -mt-1 tracking-widest">POIN</span></div>
@@ -937,20 +990,39 @@
         }
         
         function renderSekolahDashboard(groupsData, myGroup) {
-            Object.keys(groupsData).forEach(k => { groupsData[k].score = Math.round(groupsData[k].score * 100) / 100; });
+            const topIndoContainer = document.getElementById('sekolah-top-individuals');
+            let allUsers = [];
+            Object.keys(groupsData).forEach(k => { 
+                groupsData[k].score = Math.round(groupsData[k].score * 100) / 100; 
+                allUsers = allUsers.concat(groupsData[k].users);
+            });
             const sorted = Object.entries(groupsData).sort((a,b) => b[1].score - a[1].score);
+            
+            // --- Tampilkan Penghargaan Individu ---
+            allUsers.sort((a, b) => b.score - a.score);
+            const top3 = allUsers.slice(0, 3);
+            if(top3.length > 0) {
+                topIndoContainer.classList.remove('hidden');
+                topIndoContainer.innerHTML = generateTop3Html(top3);
+            } else {
+                topIndoContainer.classList.add('hidden');
+            }
+
             let myRank = "-"; let myTotalScore = 0; let myUsers = []; let klasemenHtml = "";
 
             sorted.forEach(([name, data], index) => {
                 const rank = index + 1;
                 let rankTrophy = rank === 1 ? '🥇' : rank === 2 ? '🥈' : rank === 3 ? '🥉' : rank;
-                let rankBg = rank <= 3 ? 'bg-yellow-100 text-yellow-800 font-bold border-yellow-300' : 'bg-slate-200 text-slate-600 font-bold';
+                let rankBg = rank === 1 ? 'bg-gradient-to-br from-yellow-300 to-yellow-600 text-white border-yellow-300 shadow-md' : 
+                             rank === 2 ? 'bg-gradient-to-br from-slate-300 to-slate-500 text-white border-slate-300 shadow-md' : 
+                             rank === 3 ? 'bg-gradient-to-br from-orange-400 to-orange-700 text-white border-orange-400 shadow-md' : 
+                             'bg-slate-200 text-slate-600 font-bold border-slate-300';
                 
                 if (name === myGroup) {
-                    myRank = rank; myTotalScore = data.score; myUsers = data.users.sort((a,b)=> b.score - a.score);
-                    klasemenHtml += `<div class="flex justify-between items-center p-4 bg-gradient-to-r from-purple-100 to-purple-50 border-2 border-purple-400 rounded-xl shadow-md transform scale-[1.02] transition-transform"><div class="flex items-center gap-4"><span class="w-10 h-10 flex items-center justify-center bg-purple-600 text-white font-black text-lg rounded-full shadow-inner">${rankTrophy}</span><span class="font-black text-purple-900 text-base uppercase tracking-wide">${name} <span class="block text-[10px] text-purple-600 font-medium normal-case">(Kelompok Anda)</span></span></div><span class="text-2xl font-black text-purple-800 drop-shadow-sm">${data.score} <span class="text-xs font-bold text-purple-600">pt</span></span></div>`;
+                    myRank = rankTrophy; myTotalScore = data.score; myUsers = data.users.sort((a,b)=> b.score - a.score);
+                    klasemenHtml += `<div class="flex justify-between items-center p-4 bg-gradient-to-r from-purple-100 to-purple-50 border-2 border-purple-400 rounded-xl shadow-md transform scale-[1.02] transition-transform"><div class="flex items-center gap-4"><span class="w-10 h-10 flex items-center justify-center ${rank <= 3 ? rankBg : 'bg-purple-600 text-white border-purple-700'} font-black text-lg rounded-full shadow-inner border-2">${rankTrophy}</span><span class="font-black text-purple-900 text-base uppercase tracking-wide">${name} <span class="block text-[10px] text-purple-600 font-medium normal-case">(Kelompok Anda)</span></span></div><span class="text-2xl font-black text-purple-800 drop-shadow-sm">${data.score} <span class="text-xs font-bold text-purple-600">pt</span></span></div>`;
                 } else {
-                    klasemenHtml += `<div class="flex justify-between items-center p-3.5 bg-white border border-slate-200 rounded-xl hover:bg-slate-50 transition-colors"><div class="flex items-center gap-4"><span class="w-10 h-10 flex items-center justify-center ${rankBg} text-lg rounded-full border shadow-sm">${rankTrophy}</span><span class="font-bold text-slate-700 text-sm uppercase">${name}</span></div><span class="font-black text-slate-700 text-lg">${data.score} <span class="text-xs font-semibold text-slate-400">pt</span></span></div>`;
+                    klasemenHtml += `<div class="flex justify-between items-center p-3.5 bg-white border border-slate-200 rounded-xl hover:bg-slate-50 transition-colors"><div class="flex items-center gap-4"><span class="w-10 h-10 flex items-center justify-center ${rankBg} text-lg rounded-full border-2 shadow-sm">${rankTrophy}</span><span class="font-bold text-slate-700 text-sm uppercase">${name}</span></div><span class="font-black text-slate-700 text-lg">${data.score} <span class="text-xs font-semibold text-slate-400">pt</span></span></div>`;
                 }
             });
 
