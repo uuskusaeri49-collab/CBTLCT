@@ -902,7 +902,7 @@
                         <div class="flex justify-between items-center p-4 bg-gradient-to-r from-slate-800 to-slate-900 border-b-4 border-slate-900 gap-3">
                             <div class="flex items-center gap-3 min-w-0 flex-1">
                                 <div class="w-10 h-10 rounded-full ${rankClass} font-black flex items-center justify-center text-lg border-2 shrink-0">${index+1}</div>
-                                <span class="font-black text-white text-base tracking-wide uppercase break-words leading-tight drop-shadow-sm flex-1">${name}</span>
+                                <span class="font-black text-white text-sm md:text-base tracking-wide uppercase whitespace-normal break-words leading-tight drop-shadow-sm flex-1">${name}</span>
                             </div>
                             <div class="text-3xl font-black text-yellow-400 drop-shadow-md shrink-0 text-right">${data.score} <span class="text-[10px] font-bold text-slate-300 uppercase block text-right -mt-1 tracking-widest">POIN</span></div>
                         </div>
@@ -966,32 +966,76 @@
                 const fw = new Date(globalConfig.jadwalMulai).toLocaleString('id-ID', { dateStyle: 'full', timeStyle: 'short', hour12: false }); 
                 return showModal("Ujian Belum Mulai", `Ujian dibuka pada:<br><strong>${fw} WIB</strong>`); 
             }
+            
+            const btn = document.getElementById('btn-login-peserta');
+            btn.innerText = "Memproses..."; btn.disabled = true;
+
+            participant = { name: nama, group: kel };
+            
+            let arr = [...bankSoal];
+            for (let i = arr.length - 1; i > 0; i--) { const j = Math.floor(Math.random() * (i + 1)); [arr[i], arr[j]] = [arr[j], arr[i]]; }
+            activeQuestions = arr; answers = {}; raguStatuses = {}; examEndTime = Date.now() + (60 * 60 * 1000); 
+
+            if (window.db && window.userId) {
+                const userStateRef = window.doc(window.db, 'artifacts', window.appId, 'users', window.userId, 'exam', 'state');
+                await window.setDoc(userStateRef, { status: 'ongoing', participant: participant, qOrder: activeQuestions.map(q => q.id), endTime: examEndTime, answers: {}, raguStatuses: {}, lastQIndex: 0 });
+            }
+
+            document.getElementById('exam-user-info').innerText = `Peserta: ${participant.name} | ${participant.group}`;
+            generateNavGrid(); loadQuestion(0); switchView('view-exam');
+            clearInterval(timerInterval); timerInterval = setInterval(updateTimer, 1000);
+            btn.innerText = "Mulai Ujian"; btn.disabled = false;
+        }
+
+        function updateTimer() {
+            const now = Date.now(); const timeLeft = Math.floor((examEndTime - now) / 1000);
+            if(timeLeft <= 0) { clearInterval(timerInterval); finishExam(true); return; }
+            const m = Math.floor(timeLeft / 60); const s = Math.floor(timeLeft % 60);
+            document.getElementById('exam-timer').innerText = `${m.toString().padStart(2, '0')}:${s.toString().padStart(2, '0')}`;
+        }
+
+        function backupStateToCloud() {
+            if (window.db && window.userId) {
+                const userStateRef = window.doc(window.db, 'artifacts', window.appId, 'users', window.userId, 'exam', 'state');
+                window.updateDoc(userStateRef, { answers, raguStatuses, lastQIndex: currentQIndex }).catch(()=>{});
+            }
+        }
+
+        function generateNavGrid() {
+            const grid = document.getElementById('nav-grid');
+            grid.innerHTML = activeQuestions.map((q, index) => 
+                `<button class="w-full py-2 border rounded font-medium text-sm transition-all" id="nav-btn-${index}" onclick="loadQuestion(${index})">${index + 1}</button>`
+            ).join('');
+        }
+
         function updateNavStyles() { 
             activeQuestions.forEach((q, index) => { 
                 const btn = document.getElementById(`nav-btn-${index}`); 
                 if(!btn) return; 
-                
-                // Reset class dasar
-                btn.className = `nav-btn w-full py-2 border border-slate-300 rounded font-medium text-sm transition-all`; 
                 
                 let isAnswered = false; 
                 if(q.type === 'kompleks') isAnswered = Array.isArray(answers[q.id]) && answers[q.id].length > 0; 
                 else if (q.type === 'bs') isAnswered = answers[q.id] && Object.keys(answers[q.id]).length === q.statements.length; 
                 else isAnswered = !!answers[q.id]; 
                 
+                // Base classes
+                btn.className = 'w-full py-2 border rounded font-bold text-sm transition-all duration-200';
+                
+                // Status colors
                 if (raguStatuses[q.id]) {
-                    btn.classList.add('ragu'); 
+                    btn.classList.add('bg-yellow-400', 'text-yellow-900', 'border-yellow-500', 'shadow-sm'); 
                 } else if (isAnswered) { 
-                    btn.classList.add('dijawab'); 
+                    btn.classList.add('bg-green-500', 'text-white', 'border-green-600', 'shadow-sm'); 
                 } else { 
-                    btn.classList.add('text-slate-700', 'bg-white'); 
+                    btn.classList.add('bg-white', 'text-slate-600', 'border-slate-300'); 
                 } 
                 
-                // Indikator aktif mutlak untuk nomor soal yang sedang dibuka
+                // Active indicator (Cincin outline tebal tanpa merusak border dasar)
                 if (index === currentQIndex) { 
-                    btn.classList.add('aktif'); 
-                } else {
-                    btn.classList.remove('aktif');
+                    btn.classList.add('ring-4', 'ring-blue-300', 'border-blue-700', 'text-blue-900', 'scale-105', 'z-10'); 
+                    if (!raguStatuses[q.id] && !isAnswered) {
+                        btn.classList.replace('bg-white', 'bg-blue-50');
+                    }
                 }
             }); 
         }
@@ -1000,23 +1044,53 @@
             currentQIndex = index; const q = activeQuestions[index]; document.getElementById('q-number').innerText = index + 1;
             let typeLabel = "Pilihan Ganda"; if(q.type === 'bs') typeLabel = "Benar / Salah (Matriks)"; if(q.type === 'kompleks') typeLabel = "Pilihan Ganda Kompleks";
             document.getElementById('q-type-badge').innerText = typeLabel;
-            let html = ``; if(q.img) html += `<div class="text-center mb-6"><img src="${q.img}" class="max-h-56 max-w-full object-contain inline-block rounded-lg border border-slate-200 shadow-sm"></div>`; html += `<p class="mb-6 font-medium text-slate-800">${q.text}</p>`;
+            
+            let html = ``; 
+            if(q.img) html += `<div class="text-center mb-6"><img src="${q.img}" class="max-h-64 max-w-full object-contain inline-block rounded-xl border border-slate-200 shadow-sm"></div>`; 
+            html += `<p class="mb-6 font-semibold text-slate-800 text-lg leading-relaxed">${q.text}</p>`;
+            
             const currentAns = answers[q.id];
             
             if(q.type === 'bs') {
-                html += `<div class="overflow-x-auto"><table class="w-full border-collapse border border-slate-200 mb-4 bg-white text-sm md:text-base"><thead class="bg-slate-50 border-b border-slate-300"><tr><th class="border border-slate-200 p-3 text-left">Pernyataan</th><th class="border border-slate-200 p-3 text-center w-20">Benar</th><th class="border border-slate-200 p-3 text-center w-20">Salah</th></tr></thead><tbody>`;
+                html += `<div class="overflow-x-auto rounded-xl border border-slate-200 mb-4 shadow-sm">
+                            <table class="w-full text-sm md:text-base text-left">
+                                <thead class="bg-slate-100 border-b border-slate-200 text-slate-700">
+                                    <tr>
+                                        <th class="p-4 font-bold tracking-wide">Pernyataan</th>
+                                        <th class="p-4 text-center font-bold tracking-wide w-24">Benar</th>
+                                        <th class="p-4 text-center font-bold tracking-wide w-24">Salah</th>
+                                    </tr>
+                                </thead>
+                                <tbody class="divide-y divide-slate-200">`;
                 const bsAnswers = answers[q.id] || {};
-                q.statements.forEach((stmt) => { html += `<tr class="hover:bg-blue-50 transition-colors"><td class="border border-slate-200 p-3 text-slate-800">${stmt.text}</td><td class="border border-slate-200 p-3 text-center cursor-pointer" onclick="document.getElementById('rb-${stmt.id}-B').click()"><input type="radio" id="rb-${stmt.id}-B" name="q-${stmt.id}" value="B" ${bsAnswers[stmt.id] === 'B' ? 'checked' : ''} onchange="saveAnswerBS(${q.id}, '${stmt.id}', 'B')" class="w-5 h-5 accent-blue-600 cursor-pointer"></td><td class="border border-slate-200 p-3 text-center cursor-pointer" onclick="document.getElementById('rb-${stmt.id}-S').click()"><input type="radio" id="rb-${stmt.id}-S" name="q-${stmt.id}" value="S" ${bsAnswers[stmt.id] === 'S' ? 'checked' : ''} onchange="saveAnswerBS(${q.id}, '${stmt.id}', 'S')" class="w-5 h-5 accent-blue-600 cursor-pointer"></td></tr>`; });
+                q.statements.forEach((stmt) => { 
+                    html += `<tr class="bg-white hover:bg-blue-50 transition-colors">
+                                <td class="p-4 text-slate-800 font-medium leading-relaxed">${stmt.text}</td>
+                                <td class="p-4 text-center align-middle cursor-pointer" onclick="document.getElementById('rb-${stmt.id}-B').click()">
+                                    <input type="radio" id="rb-${stmt.id}-B" name="q-${stmt.id}" value="B" ${bsAnswers[stmt.id] === 'B' ? 'checked' : ''} onchange="saveAnswerBS(${q.id}, '${stmt.id}', 'B')" class="w-6 h-6 accent-blue-600 cursor-pointer">
+                                </td>
+                                <td class="p-4 text-center align-middle cursor-pointer" onclick="document.getElementById('rb-${stmt.id}-S').click()">
+                                    <input type="radio" id="rb-${stmt.id}-S" name="q-${stmt.id}" value="S" ${bsAnswers[stmt.id] === 'S' ? 'checked' : ''} onchange="saveAnswerBS(${q.id}, '${stmt.id}', 'S')" class="w-6 h-6 accent-blue-600 cursor-pointer">
+                                </td>
+                             </tr>`; 
+                });
                 html += `</tbody></table></div>`;
             } else {
                 html += `<div class="space-y-3">`;
                 q.options.forEach(opt => {
-                    let isChecked = (q.type === 'kompleks') ? (Array.isArray(currentAns) && currentAns.includes(opt.val)) : (currentAns === opt.val); let inputType = q.type === 'kompleks' ? 'checkbox' : 'radio';
-                    html += `<label class="flex items-center p-3 md:p-4 border border-slate-200 rounded-lg hover:bg-blue-50 cursor-pointer transition-colors exam-option bg-white"><input type="${inputType}" name="q-${q.id}" value="${opt.val}" ${isChecked ? 'checked' : ''} onchange="saveAnswer('${q.type}', ${q.id})"><span class="text-sm md:text-base"><strong class="mr-2">${opt.val}.</strong> ${opt.text}</span></label>`;
-                }); html += `</div>`;
+                    let isChecked = (q.type === 'kompleks') ? (Array.isArray(currentAns) && currentAns.includes(opt.val)) : (currentAns === opt.val); 
+                    let inputType = q.type === 'kompleks' ? 'checkbox' : 'radio';
+                    html += `<label class="flex items-center p-4 border border-slate-200 rounded-xl hover:bg-blue-50 hover:border-blue-300 cursor-pointer transition-all exam-option bg-white shadow-sm">
+                                <input type="${inputType}" name="q-${q.id}" value="${opt.val}" ${isChecked ? 'checked' : ''} onchange="saveAnswer('${q.type}', ${q.id})">
+                                <span class="text-sm md:text-base text-slate-700 font-medium"><strong class="mr-3 bg-slate-100 text-slate-700 px-2 py-1 rounded border border-slate-200">${opt.val}</strong> ${opt.text}</span>
+                             </label>`;
+                }); 
+                html += `</div>`;
             }
-            document.getElementById('q-content').innerHTML = html; document.getElementById('checkbox-ragu').checked = !!raguStatuses[q.id];
-            document.getElementById('btn-prev').disabled = (index === 0); document.getElementById('btn-next').disabled = (index === activeQuestions.length - 1);
+            document.getElementById('q-content').innerHTML = html; 
+            document.getElementById('checkbox-ragu').checked = !!raguStatuses[q.id];
+            document.getElementById('btn-prev').disabled = (index === 0); 
+            document.getElementById('btn-next').disabled = (index === activeQuestions.length - 1);
             updateNavStyles(); backupStateToCloud();
         }
 
