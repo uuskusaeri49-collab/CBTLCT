@@ -12,7 +12,7 @@
         .exam-option input[type="radio"], .exam-option input[type="checkbox"] { width: 1.25rem; height: 1.25rem; margin-right: 0.75rem; accent-color: #2563eb; cursor: pointer; }
         .nav-btn.dijawab { background-color: #22c55e; color: white; border-color: #16a34a; }
         .nav-btn.ragu { background-color: #eab308; color: white; border-color: #ca8a04; }
-        .nav-btn.aktif { border: 2px solid #2563eb; outline: 2px solid #bfdbfe; font-weight: bold; }
+        .nav-btn.aktif { border: 3px solid #1d4ed8 !important; outline: 3px solid #bfdbfe !important; font-weight: 900 !important; z-index: 10; }
         ::-webkit-scrollbar { width: 8px; height: 8px; }
         ::-webkit-scrollbar-track { background: #f1f1f1; border-radius: 4px; }
         ::-webkit-scrollbar-thumb { background: #cbd5e1; border-radius: 4px; }
@@ -677,7 +677,7 @@
       {"val": "C", "statement": "Jika Rani hanya membuat 3 buah segitiga sama sisi, sisa kawat yang ia miliki adalah 15 cm", "answer": "B"}
     ]
   }
-]
+];
 
         let globalConfig = { token: '----', jadwalMulai: null, groups: [], accounts: [] };
         let activeQuestions = []; let currentQIndex = 0; let answers = {}; let raguStatuses = {};
@@ -899,12 +899,12 @@
                 
                 container.innerHTML += `
                     <div class="bg-white rounded-2xl border border-slate-200 overflow-hidden shadow-md hover:shadow-xl transition-all duration-300 transform hover:-translate-y-1 flex flex-col">
-                        <div class="flex justify-between items-center p-4 bg-gradient-to-r from-slate-800 to-slate-900 border-b-4 border-slate-900">
-                            <div class="flex items-center gap-3">
-                                <div class="w-10 h-10 rounded-full ${rankClass} font-black flex items-center justify-center text-lg border-2">${index+1}</div>
-                                <span class="font-black text-white text-base tracking-wide uppercase truncate max-w-[160px] drop-shadow-sm">${name}</span>
+                        <div class="flex justify-between items-center p-4 bg-gradient-to-r from-slate-800 to-slate-900 border-b-4 border-slate-900 gap-3">
+                            <div class="flex items-center gap-3 min-w-0 flex-1">
+                                <div class="w-10 h-10 rounded-full ${rankClass} font-black flex items-center justify-center text-lg border-2 shrink-0">${index+1}</div>
+                                <span class="font-black text-white text-base tracking-wide uppercase break-words leading-tight drop-shadow-sm flex-1">${name}</span>
                             </div>
-                            <div class="text-3xl font-black text-yellow-400 drop-shadow-md">${data.score} <span class="text-[10px] font-bold text-slate-300 uppercase block text-right -mt-1 tracking-widest">POIN</span></div>
+                            <div class="text-3xl font-black text-yellow-400 drop-shadow-md shrink-0 text-right">${data.score} <span class="text-[10px] font-bold text-slate-300 uppercase block text-right -mt-1 tracking-widest">POIN</span></div>
                         </div>
                         <div class="p-3 bg-slate-50 flex-1 min-h-[120px] max-h-64 overflow-y-auto">${usersHtml}</div>
                     </div>`;
@@ -966,35 +966,35 @@
                 const fw = new Date(globalConfig.jadwalMulai).toLocaleString('id-ID', { dateStyle: 'full', timeStyle: 'short', hour12: false }); 
                 return showModal("Ujian Belum Mulai", `Ujian dibuka pada:<br><strong>${fw} WIB</strong>`); 
             }
-
-            const btn = document.getElementById('btn-login-peserta'); btn.innerText = "Memproses..."; btn.disabled = true;
-            try {
-                const partRef = window.collection(window.db, 'artifacts', window.appId, 'public', 'data', 'participants');
-                const qGroup = window.query(partRef, window.where('group', '==', kel)); const snapGroup = await window.getDocs(qGroup);
-                let alreadyReg = false; snapGroup.forEach(d => { if(d.id === window.userId) alreadyReg = true; });
-                if(!alreadyReg && snapGroup.size >= 5) { btn.innerText = "Mulai Ujian"; btn.disabled = false; return showModal("Kelompok Penuh 🛑", `Kuota kelompok <b>${kel}</b> penuh (Maks. 5 Orang).`); }
-                if(!alreadyReg) { await window.setDoc(window.doc(partRef, window.userId), { group: kel, name: nama }); }
-            } catch(e) { btn.innerText = "Mulai Ujian"; btn.disabled = false; return showModal("Error", "Gagal menghubungi server."); }
-
-            participant = { name: nama, group: kel };
-            let arr = [...bankSoal]; for (let i = arr.length - 1; i > 0; i--) { const j = Math.floor(Math.random() * (i + 1)); [arr[i], arr[j]] = [arr[j], arr[i]]; }
-            activeQuestions = arr; answers = {}; raguStatuses = {}; examEndTime = Date.now() + (60 * 60 * 1000); 
-
-            if (window.db && window.userId) { 
-                const userStateRef = window.doc(window.db, 'artifacts', window.appId, 'users', window.userId, 'exam', 'state'); 
-                await window.setDoc(userStateRef, { status: 'ongoing', participant: participant, qOrder: activeQuestions.map(q => q.id), endTime: examEndTime, answers: {}, raguStatuses: {}, lastQIndex: 0 }); 
-                const scoreDocRef = window.doc(window.db, 'artifacts', window.appId, 'public', 'data', 'scores', window.userId);
-                await window.setDoc(scoreDocRef, { participantName: participant.name, group: participant.group, score: 0, status: 'ongoing', startedAt: Date.now() }, { merge: true });
-            }
-
-            document.getElementById('exam-user-info').innerText = `Peserta: ${participant.name} | ${participant.group}`;
-            generateNavGrid(); loadQuestion(0); switchView('view-exam'); clearInterval(timerInterval); timerInterval = setInterval(updateTimer, 1000); btn.innerText = "Mulai Ujian"; btn.disabled = false;
+        function updateNavStyles() { 
+            activeQuestions.forEach((q, index) => { 
+                const btn = document.getElementById(`nav-btn-${index}`); 
+                if(!btn) return; 
+                
+                // Reset class dasar
+                btn.className = `nav-btn w-full py-2 border border-slate-300 rounded font-medium text-sm transition-all`; 
+                
+                let isAnswered = false; 
+                if(q.type === 'kompleks') isAnswered = Array.isArray(answers[q.id]) && answers[q.id].length > 0; 
+                else if (q.type === 'bs') isAnswered = answers[q.id] && Object.keys(answers[q.id]).length === q.statements.length; 
+                else isAnswered = !!answers[q.id]; 
+                
+                if (raguStatuses[q.id]) {
+                    btn.classList.add('ragu'); 
+                } else if (isAnswered) { 
+                    btn.classList.add('dijawab'); 
+                } else { 
+                    btn.classList.add('text-slate-700', 'bg-white'); 
+                } 
+                
+                // Indikator aktif mutlak untuk nomor soal yang sedang dibuka
+                if (index === currentQIndex) { 
+                    btn.classList.add('aktif'); 
+                } else {
+                    btn.classList.remove('aktif');
+                }
+            }); 
         }
-
-        function backupStateToCloud() { if (window.db && window.userId) { const userStateRef = window.doc(window.db, 'artifacts', window.appId, 'users', window.userId, 'exam', 'state'); window.updateDoc(userStateRef, { answers, raguStatuses, lastQIndex: currentQIndex }).catch(()=>{}); } }
-        function updateTimer() { const now = Date.now(); const timeLeft = Math.floor((examEndTime - now) / 1000); if(timeLeft <= 0) { clearInterval(timerInterval); finishExam(true); return; } const m = Math.floor(timeLeft / 60); const s = Math.floor(timeLeft % 60); document.getElementById('exam-timer').innerText = `${m.toString().padStart(2, '0')}:${s.toString().padStart(2, '0')}`; }
-        function generateNavGrid() { const grid = document.getElementById('nav-grid'); grid.innerHTML = activeQuestions.map((q, index) => `<button class="nav-btn w-full py-2 border border-slate-300 rounded font-medium text-sm transition-all bg-white text-slate-700" id="nav-btn-${index}" onclick="loadQuestion(${index})">${index + 1}</button>`).join(''); }
-        function updateNavStyles() { activeQuestions.forEach((q, index) => { const btn = document.getElementById(`nav-btn-${index}`); if(!btn) return; btn.className = `nav-btn w-full py-2 border border-slate-300 rounded font-medium text-sm transition-all`; let isAnswered = false; if(q.type === 'kompleks') isAnswered = Array.isArray(answers[q.id]) && answers[q.id].length > 0; else if (q.type === 'bs') isAnswered = answers[q.id] && Object.keys(answers[q.id]).length === q.statements.length; else isAnswered = !!answers[q.id]; if (raguStatuses[q.id]) btn.classList.add('ragu'); else if (isAnswered) btn.classList.add('dijawab'); else btn.classList.add('text-slate-700', 'bg-white'); if (index === currentQIndex) btn.classList.add('aktif'); }); }
 
         function loadQuestion(index) {
             currentQIndex = index; const q = activeQuestions[index]; document.getElementById('q-number').innerText = index + 1;
