@@ -90,8 +90,8 @@
             
             <div>
                 <div class="flex items-center gap-3 mb-8">
-                    <div class="w-12 h-12 bg-white/10 rounded-xl flex items-center justify-center backdrop-blur-md border border-white/20 shadow-inner">
-                        <svg class="w-6 h-6 text-white" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 6.253v13m0-13C10.832 5.477 9.246 5 7.5 5S4.168 5.477 3 6.253v13C4.168 18.477 5.754 18 7.5 18s3.332.477 4.5 1.253m0-13C13.168 5.477 14.754 5 16.5 5c1.747 0 3.332.477 4.5 1.253v13C19.832 18.477 18.247 18 16.5 18c-1.746 0-3.332.477-4.5 1.253"></path></svg>
+                    <div class="w-12 h-12 bg-white/10 rounded-xl flex items-center justify-center backdrop-blur-md border border-white/20 shadow-inner overflow-hidden">
+                        <img src="bander_lct.jpg" alt="Logo" class="w-full h-full object-contain">
                     </div>
                     <div>
                         <h2 class="font-extrabold text-lg text-white tracking-wide">CBT Cerdas Cermat</h2>
@@ -174,41 +174,98 @@
     </div>
 
     <!-- VIEW: Login Admin -->
-    <div id="view-login-admin" class="hidden-view flex-1 flex flex-col items-center justify-center p-4">
-        <div class="bg-white p-8 rounded-2xl shadow-lg border border-slate-100 max-w-md w-full relative">
-            <button onclick="switchView('view-portal')" class="absolute top-4 left-4 text-slate-400 hover:text-slate-700"><svg class="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M10 19l-7-7m0 0l7-7m-7 7h18"></path></svg></button>
-            <div class="text-center mb-8 mt-2"><h2 class="text-2xl font-bold text-slate-800">Login Panitia</h2></div>
-            <div class="space-y-4">
-                <div><label class="block text-sm font-medium text-slate-700 mb-1">Username</label><input type="text" id="admin-user" class="w-full px-4 py-2 border rounded-lg outline-none"></div>
-                <div><label class="block text-sm font-medium text-slate-700 mb-1">Password</label><input type="password" id="admin-pass" class="w-full px-4 py-2 border rounded-lg outline-none" onkeypress="if(event.key==='Enter') handleAdminLogin()"></div>
-                <button onclick="handleAdminLogin()" class="w-full py-3 bg-blue-600 text-white rounded-lg font-bold hover:bg-blue-700 mt-4">Masuk Dashboard</button>
+    <div id="view-login-admin" class="hidden-view flex-1 flex flex-col md:flex-row bg-[#0b0f19] text-slate-100 min-h-screen">
+        <div class="w-full md:w-5/12 bg-gradient-to-br from-blue-800 to-indigo-950 p-8 md:p-12 flex flex-col justify-between relative overflow-hidden shrink-0">
+            <div>
+                <button onclick="switchView('view-portal')" class="inline-flex items-center gap-2 text-blue-200 hover:text-white text-xs font-medium mb-8 transition-colors bg-white/10 px-3 py-1.5 rounded-full backdrop-blur-md">
+                    &larr; Kembali ke Beranda
+                </button>
+                <h1 class="text-3xl md:text-4xl font-black text-white leading-tight mb-4">Portal Panitia</h1>
+                <p class="text-blue-200 text-sm leading-relaxed">Kelola token ujian, atur jadwal sesi, buat kelompok, dan pantau seluruh pergerakan kompetisi secara terpusat.</p>
+            </div>
+            <div class="text-xs text-blue-300 pt-6 border-t border-white/10">Akses Terbatas Khusus Dewan Panitia Kecamatan</div>
+        </div>
+        <div class="w-full md:w-7/12 p-6 md:p-12 flex flex-col justify-center items-center bg-[#0b0f19]">
+            <div class="max-w-md w-full bg-[#161f31] p-8 rounded-2xl border border-slate-800 shadow-xl">
+                <h2 class="text-xl font-bold text-white mb-2">Login Panitia</h2>
+                <p class="text-xs text-slate-400 mb-6">Masukkan kredensial admin untuk masuk ke dashboard pengelola.</p>
+                <div class="space-y-4">
+                    <div>
+                        <label class="block text-xs font-bold uppercase tracking-wider text-slate-400 mb-1.5">Username</label>
+                        <input type="text" id="admin-user" class="w-full px-4 py-2.5 bg-[#0b0f19] border border-slate-700 rounded-lg text-white text-sm outline-none focus:border-blue-500" placeholder="Username admin">
+                    </div>
+                    <div>
+                        <label class="block text-xs font-bold uppercase tracking-wider text-slate-400 mb-1.5">Password</label>
+                        <input type="password" id="admin-pass" class="w-full px-4 py-2.5 bg-[#0b0f19] border border-slate-700 rounded-lg text-white text-sm outline-none focus:border-blue-500" placeholder="••••••••" onkeypress="if(event.key==='Enter') handleAdminLogin()">
+                    </div>
+                    <button onclick="handleAdminLogin()" class="w-full py-3 bg-blue-600 hover:bg-blue-500 text-white rounded-lg font-bold text-sm transition-colors shadow-lg mt-2">Masuk Dashboard &rarr;</button>
+                </div>
             </div>
         </div>
     </div>
 
     <!-- VIEW: Login Pemantau Sekolah -->
-    <div id="view-login-sekolah" class="hidden-view flex-1 flex flex-col items-center justify-center p-4">
-        <div class="bg-white p-8 rounded-2xl shadow-lg border border-slate-100 max-w-md w-full relative">
-            <button onclick="switchView('view-portal')" class="absolute top-4 left-4 text-slate-400 hover:text-slate-700"><svg class="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M10 19l-7-7m0 0l7-7m-7 7h18"></path></svg></button>
-            <div class="text-center mb-8 mt-2"><h2 class="text-2xl font-bold text-purple-800">Login Pemantau</h2><p class="text-xs text-slate-500 mt-1">Gunakan akun dari Panitia</p></div>
-            <div class="space-y-4">
-                <div><label class="block text-sm font-medium text-slate-700 mb-1">Username Sekolah</label><input type="text" id="sekolah-user" class="w-full px-4 py-2 border border-slate-300 rounded-lg outline-none"></div>
-                <div><label class="block text-sm font-medium text-slate-700 mb-1">Password</label><input type="password" id="sekolah-pass" class="w-full px-4 py-2 border border-slate-300 rounded-lg outline-none" onkeypress="if(event.key==='Enter') handleSekolahLogin()"></div>
-                <button onclick="handleSekolahLogin()" class="w-full py-3 bg-purple-600 text-white rounded-lg font-bold hover:bg-purple-700 mt-4">Pantau Peringkat</button>
+    <div id="view-login-sekolah" class="hidden-view flex-1 flex flex-col md:flex-row bg-[#0b0f19] text-slate-100 min-h-screen">
+        <div class="w-full md:w-5/12 bg-gradient-to-br from-purple-800 to-indigo-950 p-8 md:p-12 flex flex-col justify-between relative overflow-hidden shrink-0">
+            <div>
+                <button onclick="switchView('view-portal')" class="inline-flex items-center gap-2 text-purple-200 hover:text-white text-xs font-medium mb-8 transition-colors bg-white/10 px-3 py-1.5 rounded-full backdrop-blur-md">
+                    &larr; Kembali ke Beranda
+                </button>
+                <h1 class="text-3xl md:text-4xl font-black text-white leading-tight mb-4">Pemantau Sekolah</h1>
+                <p class="text-purple-200 text-sm leading-relaxed">Guru pendamping atau pemantau dapat melihat token aktif secara real-time, memantau peringkat kelompok, serta mengawasi progres peserta didik.</p>
+            </div>
+            <div class="text-xs text-purple-300 pt-6 border-t border-white/10">Gunakan akun pemantau yang telah dibuatkan oleh Panitia</div>
+        </div>
+        <div class="w-full md:w-7/12 p-6 md:p-12 flex flex-col justify-center items-center bg-[#0b0f19]">
+            <div class="max-w-md w-full bg-[#161f31] p-8 rounded-2xl border border-slate-800 shadow-xl">
+                <h2 class="text-xl font-bold text-white mb-2">Login Pemantau</h2>
+                <p class="text-xs text-slate-400 mb-6">Masukkan akun sekolah untuk memantau hasil kelompok.</p>
+                <div class="space-y-4">
+                    <div>
+                        <label class="block text-xs font-bold uppercase tracking-wider text-slate-400 mb-1.5">Username Sekolah</label>
+                        <input type="text" id="sekolah-user" class="w-full px-4 py-2.5 bg-[#0b0f19] border border-slate-700 rounded-lg text-white text-sm outline-none focus:border-purple-500" placeholder="Username pemantau">
+                    </div>
+                    <div>
+                        <label class="block text-xs font-bold uppercase tracking-wider text-slate-400 mb-1.5">Password</label>
+                        <input type="password" id="sekolah-pass" class="w-full px-4 py-2.5 bg-[#0b0f19] border border-slate-700 rounded-lg text-white text-sm outline-none focus:border-purple-500" placeholder="••••••••" onkeypress="if(event.key==='Enter') handleSekolahLogin()">
+                    </div>
+                    <button onclick="handleSekolahLogin()" class="w-full py-3 bg-purple-600 hover:bg-purple-500 text-white rounded-lg font-bold text-sm transition-colors shadow-lg mt-2">Pantau Peringkat &rarr;</button>
+                </div>
             </div>
         </div>
     </div>
 
     <!-- VIEW: Login Peserta -->
-    <div id="view-login-peserta" class="hidden-view flex-1 flex flex-col items-center justify-center p-4">
-        <div class="bg-white p-8 rounded-2xl shadow-lg border border-slate-100 max-w-md w-full relative">
-            <button onclick="switchView('view-portal')" class="absolute top-4 left-4 text-slate-400 hover:text-slate-700"><svg class="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M10 19l-7-7m0 0l7-7m-7 7h18"></path></svg></button>
-            <div class="text-center mb-8 mt-2"><h2 class="text-2xl font-bold text-slate-800">Login Ujian</h2><p class="text-xs text-slate-500 mt-1">Pastikan Token & Jadwal Sesuai</p></div>
-            <div class="space-y-4">
-                <div><label class="block text-sm font-medium text-slate-700 mb-1">Nama Lengkap</label><input type="text" id="peserta-nama" class="w-full px-4 py-2 border rounded-lg outline-none"></div>
-                <div><label class="block text-sm font-medium text-slate-700 mb-1">Asal Kelompok</label><select id="peserta-kelompok" class="w-full px-4 py-2 border rounded-lg outline-none bg-white"><option value="">-- Menunggu Data Panitia --</option></select></div>
-                <div><label class="block text-sm font-medium text-slate-700 mb-1">Token Ujian</label><input type="text" id="peserta-token" class="w-full px-4 py-2 border rounded-lg outline-none font-mono uppercase font-bold tracking-widest text-center" placeholder="XXXXXX"></div>
-                <button onclick="handlePesertaLogin()" class="w-full py-3 bg-green-600 text-white rounded-lg font-bold hover:bg-green-700 mt-4" id="btn-login-peserta">Mulai Ujian</button>
+    <div id="view-login-peserta" class="hidden-view flex-1 flex flex-col md:flex-row bg-[#0b0f19] text-slate-100 min-h-screen">
+        <div class="w-full md:w-5/12 bg-gradient-to-br from-emerald-800 to-teal-950 p-8 md:p-12 flex flex-col justify-between relative overflow-hidden shrink-0">
+            <div>
+                <button onclick="switchView('view-portal')" class="inline-flex items-center gap-2 text-emerald-200 hover:text-white text-xs font-medium mb-8 transition-colors bg-white/10 px-3 py-1.5 rounded-full backdrop-blur-md">
+                    &larr; Kembali ke Beranda
+                </button>
+                <h1 class="text-3xl md:text-4xl font-black text-white leading-tight mb-4">Portal Peserta</h1>
+                <p class="text-emerald-200 text-sm leading-relaxed">Masukkan nama lengkap, pilih kelompok asal sekolah, dan masukkan token resmi dari panitia/pemantau untuk memulai ujian.</p>
+            </div>
+            <div class="text-xs text-emerald-300 pt-6 border-t border-white/10">Pastikan jadwal dan token sudah sesuai instruksi</div>
+        </div>
+        <div class="w-full md:w-7/12 p-6 md:p-12 flex flex-col justify-center items-center bg-[#0b0f19]">
+            <div class="max-w-md w-full bg-[#161f31] p-8 rounded-2xl border border-slate-800 shadow-xl">
+                <h2 class="text-xl font-bold text-white mb-2">Login Ujian Peserta</h2>
+                <p class="text-xs text-slate-400 mb-6">Lengkapi data diri dan token ujian.</p>
+                <div class="space-y-4">
+                    <div>
+                        <label class="block text-xs font-bold uppercase tracking-wider text-slate-400 mb-1.5">Nama Lengkap</label>
+                        <input type="text" id="peserta-nama" class="w-full px-4 py-2.5 bg-[#0b0f19] border border-slate-700 rounded-lg text-white text-sm outline-none focus:border-emerald-500" placeholder="Nama siswa">
+                    </div>
+                    <div>
+                        <label class="block text-xs font-bold uppercase tracking-wider text-slate-400 mb-1.5">Asal Kelompok</label>
+                        <select id="peserta-kelompok" class="w-full px-4 py-2.5 bg-[#0b0f19] border border-slate-700 rounded-lg text-white text-sm outline-none focus:border-emerald-500"><option value="">-- Menunggu Data Panitia --</option></select>
+                    </div>
+                    <div>
+                        <label class="block text-xs font-bold uppercase tracking-wider text-slate-400 mb-1.5">Token Ujian</label>
+                        <input type="text" id="peserta-token" class="w-full px-4 py-2.5 bg-[#0b0f19] border border-slate-700 rounded-lg text-white font-mono uppercase font-bold tracking-widest text-center text-lg outline-none focus:border-emerald-500" placeholder="XXXXXX">
+                    </div>
+                    <button onclick="handlePesertaLogin()" class="w-full py-3 bg-emerald-600 hover:bg-emerald-500 text-white rounded-lg font-bold text-sm transition-colors shadow-lg mt-2" id="btn-login-peserta">Mulai Ujian &rarr;</button>
+                </div>
             </div>
         </div>
     </div>
