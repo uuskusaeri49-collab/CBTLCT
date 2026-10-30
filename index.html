@@ -54,19 +54,51 @@
             window.deleteDoc = deleteDoc; window.query = query; window.where = where;
             
             const initAuth = async () => {
-                if (typeof __initial_auth_token !== 'undefined' && __initial_auth_token) { await signInWithCustomToken(window.auth, __initial_auth_token); } 
-                else { await signInAnonymously(window.auth); }
+                if (typeof __initial_auth_token !== 'undefined' && __initial_auth_token) { 
+                    await signInWithCustomToken(window.auth, __initial_auth_token); 
+                } else { 
+                    await signInAnonymously(window.auth); 
+                }
+                
+                // Menunggu status Auth benar-benar terdeteksi
+                return new Promise((resolve) => {
+                    const unsub = window.auth.onAuthStateChanged(user => {
+                        if (user) { unsub(); resolve(user); }
+                    });
+                    // Fallback jika proses di atas macet
+                    setTimeout(() => { unsub(); resolve(window.auth.currentUser); }, 3000);
+                });
             };
             
-            window.authReady = initAuth().then(() => {
-                window.userId = window.auth.currentUser.uid;
-                if (window.initAppLogic) window.initAppLogic();
+            window.authReady = initAuth().then((user) => {
+                window.userId = user ? user.uid : 'offline_user';
+                
+                // Polling untuk memastikan script bawah sudah termuat
+                const checkLogic = setInterval(() => {
+                    if (window.initAppLogic) {
+                        clearInterval(checkLogic);
+                        window.initAppLogic();
+                    }
+                }, 50);
             }).catch(err => {
-                console.error("Auth Error:", err); document.getElementById('loading-text').innerText = "Gagal terhubung ke server.";
+                console.error("Auth Error:", err); 
+                document.getElementById('loading-text').innerText = "Mengalihkan ke Mode Offline...";
+                setTimeout(() => {
+                    if (window.fallbackMode) window.fallbackMode();
+                    else {
+                        document.getElementById('view-loading').classList.add('hidden-view');
+                        document.getElementById('view-portal').classList.remove('hidden-view');
+                    }
+                }, 1000);
             });
 
         } catch (e) {
-            console.error("Firebase Init Error:", e); document.getElementById('loading-text').innerText = "Gagal memuat sistem Firebase.";
+            console.error("Firebase Init Error:", e); 
+            document.getElementById('loading-text').innerText = "Gagal memuat sistem. Mengalihkan...";
+            setTimeout(() => {
+                document.getElementById('view-loading').classList.add('hidden-view');
+                document.getElementById('view-portal').classList.remove('hidden-view');
+            }, 1500);
         }
     </script>
 </head>
@@ -97,7 +129,7 @@
             <div>
                 <div class="flex items-center gap-3 mb-8">
                     <div class="w-12 h-12 bg-white/10 rounded-xl flex items-center justify-center backdrop-blur-md border border-white/20 shadow-inner overflow-hidden">
-                        <img src="logo sekolah2.png" alt="Logo" class="w-full h-full object-contain">
+                        <img src="logo sekolah2.png" alt="Logo" class="w-full h-full object-contain" onerror="this.src='https://placehold.co/48x48/ffffff/0b0f19?text=LCT'">
                     </div>
                     <div>
                         <h2 class="font-extrabold text-lg text-white tracking-wide">CBT Cerdas Cermat</h2>
@@ -116,13 +148,10 @@
 
             <!-- BANNER UTAMA LEBAR (PROPOSIONAL 800x200) -->
             <div class="mt-8 mb-6 w-full rounded-2xl overflow-hidden border border-white/20 shadow-2xl bg-blue-950/40 backdrop-blur-md">
-                <img src="bander_lct.jpg" alt="Banner LCT" class="w-full h-auto object-cover opacity-95 hover:scale-[1.02] transition-transform duration-500">
+                <img src="bander_lct.jpg" alt="Banner LCT" class="w-full h-auto object-cover opacity-95 hover:scale-[1.02] transition-transform duration-500" onerror="this.src='https://placehold.co/800x200/1e3a8a/ffffff?text=Banner+CBT'">
             </div>
 
             <div class="flex items-center gap-4 mt-4 md:mt-0 pt-6 border-t border-white/10">
-            </div>
-
-            <div class="flex items-center gap-4 mt-8 md:mt-0 pt-6 border-t border-white/10">
                 <div class="flex items-center gap-2 bg-white/10 px-3 py-1.5 rounded-full border border-white/15 text-xs font-medium text-blue-100">
                     <span class="w-2 h-2 rounded-full bg-emerald-400 animate-pulse"></span> Data Aman
                 </div>
@@ -345,10 +374,11 @@
                     
                     <div id="admin-top-individuals" class="mb-5 bg-gradient-to-br from-slate-900 to-slate-800 rounded-xl p-4 shadow-md hidden shrink-0"></div>
 
-                <div class="flex-1 overflow-y-auto pr-2 grid grid-cols-1 lg:grid-cols-2 gap-3 auto-rows-max" id="leaderboard-container"></div>
-            </div>
-        </div>
-    </div>
+                    <div class="flex-1 overflow-y-auto pr-2 grid grid-cols-1 lg:grid-cols-2 gap-3 auto-rows-max" id="leaderboard-container"></div>
+                </div>
+            </div> <!-- 🟢 PENUTUP flex flex-col md:flex-row gap-6 YANG SEBELUMNYA HILANG -->
+        </div> <!-- 🟢 PENUTUP flex-1 overflow-y-auto p-4 md:p-6 YANG SEBELUMNYA HILANG -->
+    </div> <!-- 🟢 PENUTUP id="view-admin-dash" YANG SEBELUMNYA HILANG -->
 
     <!-- VIEW: Dashboard Pemantau Sekolah -->
     <div id="view-dash-sekolah" class="hidden-view h-full flex flex-col bg-slate-100">
@@ -439,8 +469,9 @@
                         </button>
                     </div>
                 </div>
-            </div>
+            </div> <!-- 🟢 PENUTUP flex flex-col md:flex-row gap-4 YANG SEBELUMNYA HILANG -->
         </div>
+    </div> <!-- 🟢 PENUTUP id="view-exam" YANG SEBELUMNYA HILANG -->
 
     <script>
         // --- BANK SOAL ---
@@ -844,6 +875,11 @@
         }
         function closeModal() { document.getElementById('custom-modal').classList.add('hidden'); }
 
+        window.fallbackMode = function() { 
+            console.warn("Fallback Mode Aktif"); 
+            switchView('view-portal'); 
+        }
+
         function switchView(viewId) {
             ['view-portal', 'view-login-admin', 'view-login-sekolah', 'view-login-peserta', 'view-admin-dash', 'view-dash-sekolah', 'view-exam', 'view-loading']
                 .forEach(v => { const el = document.getElementById(v); if(el) el.classList.add('hidden-view'); });
@@ -851,7 +887,7 @@
         }
 
         window.initAppLogic = async function() {
-            if (!window.db) return fallbackMode();
+            if (!window.db) return window.fallbackMode();
             try {
                 const settingDocRef = window.doc(window.db, 'artifacts', window.appId, 'public', 'data', 'settings', 'global');
                 window.onSnapshot(settingDocRef, (snapshot) => {
@@ -882,6 +918,10 @@
                     startSekolahRealtime(myGroup); switchView('view-dash-sekolah'); return;
                 }
 
+                if (!window.userId || window.userId === 'offline_user') {
+                    return switchView('view-portal');
+                }
+
                 const userStateRef = window.doc(window.db, 'artifacts', window.appId, 'users', window.userId, 'exam', 'state');
                 const userSnap = await window.getDoc(userStateRef);
                 
@@ -895,10 +935,8 @@
                     generateNavGrid(); loadQuestion(data.lastQIndex || 0); switchView('view-exam');
                     clearInterval(timerInterval); timerInterval = setInterval(updateTimer, 1000);
                 } else { switchView('view-portal'); }
-            } catch(e) { console.log(e); fallbackMode(); }
+            } catch(e) { console.log(e); window.fallbackMode(); }
         };
-
-        function fallbackMode() { console.warn("Fallback Mode"); switchView('view-portal'); }
 
         // --- LOGIN LOGIC ---
         function handleAdminLogin() {
@@ -1025,66 +1063,16 @@
             const scoresCollRef = window.collection(window.db, 'artifacts', window.appId, 'public', 'data', 'scores');
             window.onSnapshot(scoresCollRef, (snapshot) => {
                 let tempGroups = {};
-                let daftarPeserta = []; // Wadah untuk Live Monitoring
-                
                 snapshot.forEach(docSnap => {
                     const data = docSnap.data();
-                    daftarPeserta.push(data); // Kumpulkan data peserta
-                    
                     if(!tempGroups[data.group]) tempGroups[data.group] = { score: 0, users: [] };
                     tempGroups[data.group].score += (data.score || 0); 
                     tempGroups[data.group].users.push(data);
                 });
                 renderLeaderboard(tempGroups);
-                renderLiveMonitoringPanitia(daftarPeserta); // Panggil tabel pemantauan!
-            });
-        }
-        
-        // Fungsi Render Tabel Live Monitoring Panitia (FIX DESAIN LIGHT THEME)
-        function renderLiveMonitoringPanitia(dataPeserta) {
-            const tbody = document.getElementById('table-body-monitoring');
-            if (!tbody) return;
-            tbody.innerHTML = ''; 
-
-            if (dataPeserta.length === 0) {
-                tbody.innerHTML = `<tr><td colspan="7" class="p-8 text-center text-slate-400 font-medium">Belum ada peserta yang login.</td></tr>`;
-                return;
-            }
-
-            // Urutkan yang masih mengerjakan di atas, yang selesai di bawah
-            dataPeserta.sort((a, b) => (a.status === 'ongoing' ? -1 : 1));
-
-            dataPeserta.forEach(p => {
-                let statusBadge = '';
-                let skorPG = '-'; let skorPGK = '-'; let skorBS = '-';
-                let nilaiAkhir = '-';
-
-                if (p.status === 'ongoing') {
-                    statusBadge = `<span class="inline-flex items-center gap-1.5 px-2.5 py-1 rounded-full bg-amber-100 text-amber-700 border border-amber-200 text-xs font-bold animate-pulse"><span class="w-1.5 h-1.5 rounded-full bg-amber-500"></span>Mengerjakan</span>`;
-                } else if (p.status === 'finished') {
-                    statusBadge = `<span class="inline-flex items-center gap-1.5 px-2.5 py-1 rounded-full bg-emerald-100 text-emerald-700 border border-emerald-200 text-xs font-bold"><svg class="w-3 h-3" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M5 13l4 4L19 7"></path></svg>Selesai</span>`;
-                    skorPG = p.rincian?.pg ?? 0;
-                    skorPGK = p.rincian?.pgk ?? 0;
-                    skorBS = p.rincian?.bs ?? 0;
-                    nilaiAkhir = `<span class="font-black text-slate-800 text-base bg-slate-100 px-3 py-1 rounded shadow-sm border border-slate-200">${p.score ?? 0}</span>`;
-                }
-
-                const tr = document.createElement('tr');
-                tr.className = "hover:bg-blue-50 transition-colors";
-                tr.innerHTML = `
-                    <td class="p-4 font-bold text-slate-800">${p.participantName || '-'}</td>
-                    <td class="p-4 text-slate-600 font-medium">${p.group || '-'}</td>
-                    <td class="p-4 text-center">${statusBadge}</td>
-                    <td class="p-4 text-center font-mono font-medium text-slate-600">${skorPG}</td>
-                    <td class="p-4 text-center font-mono font-medium text-slate-600">${skorPGK}</td>
-                    <td class="p-4 text-center font-mono font-medium text-slate-600">${skorBS}</td>
-                    <td class="p-4 text-right">${nilaiAkhir}</td>
-                `;
-                tbody.appendChild(tr);
             });
         }
 
-        // FUNGSI RENDER PENGHARGAAN INDIVIDU (Dipakai bersama oleh Panitia & Sekolah)
         function generateTop3Html(top3) {
             let html = `<h3 class="text-sm font-bold text-slate-300 uppercase tracking-wider mb-2 border-b border-slate-700/50 pb-1.5">🌟 Top 3 Individu Terbaik</h3><div class="grid grid-cols-1 sm:grid-cols-3 gap-2">`;
             const medals = ['🥇', '🥈', '🥉'];
@@ -1119,7 +1107,6 @@
             });
             const sorted = Object.entries(groupsData).sort((a,b) => b[1].score - a[1].score);
             
-            // --- Tampilkan Penghargaan Individu (Jika ada data) ---
             allUsers.sort((a, b) => b.score - a.score);
             const top3 = allUsers.slice(0, 3);
             if(top3.length > 0) {
@@ -1180,7 +1167,6 @@
             });
             const sorted = Object.entries(groupsData).sort((a,b) => b[1].score - a[1].score);
             
-            // --- Tampilkan Penghargaan Individu ---
             allUsers.sort((a, b) => b.score - a.score);
             const top3 = allUsers.slice(0, 3);
             if(top3.length > 0) {
@@ -1242,22 +1228,14 @@
             for (let i = arr.length - 1; i > 0; i--) { const j = Math.floor(Math.random() * (i + 1)); [arr[i], arr[j]] = [arr[j], arr[i]]; }
             activeQuestions = arr; answers = {}; raguStatuses = {}; examEndTime = Date.now() + (60 * 60 * 1000); 
 
-            if (window.db && window.userId) {
+            if (window.db && window.userId && window.userId !== 'offline_user') {
                 const userStateRef = window.doc(window.db, 'artifacts', window.appId, 'users', window.userId, 'exam', 'state');
                 await window.setDoc(userStateRef, { status: 'ongoing', participant: participant, qOrder: activeQuestions.map(q => q.id), endTime: examEndTime, answers: {}, raguStatuses: {}, lastQIndex: 0 });
 
-                // 👉 TAMBAHAN: Kirim status awal ke papan skor Panitia!
                 const scoreDocRef = window.doc(window.db, 'artifacts', window.appId, 'public', 'data', 'scores', window.userId); 
-                await window.setDoc(scoreDocRef, { 
-                    participantName: participant.name, 
-                    group: participant.group, 
-                    score: 0, 
-                    status: 'ongoing', 
-                    startedAt: Date.now() 
-                }, { merge: true });
+                await window.setDoc(scoreDocRef, { participantName: participant.name, group: participant.group, score: 0, status: 'ongoing', startedAt: Date.now() }, { merge: true });
             }
 
-            // 👉 BAGIAN INI YANG TADI TERHAPUS: 
             document.getElementById('exam-user-info').innerText = `Peserta: ${participant.name} | ${participant.group}`;
             generateNavGrid(); loadQuestion(0); switchView('view-exam');
             clearInterval(timerInterval); timerInterval = setInterval(updateTimer, 1000);
@@ -1272,7 +1250,7 @@
         }
 
         function backupStateToCloud() {
-            if (window.db && window.userId) {
+            if (window.db && window.userId && window.userId !== 'offline_user') {
                 const userStateRef = window.doc(window.db, 'artifacts', window.appId, 'users', window.userId, 'exam', 'state');
                 window.updateDoc(userStateRef, { answers, raguStatuses, lastQIndex: currentQIndex }).catch(()=>{});
             }
@@ -1295,10 +1273,8 @@
                 else if (q.type === 'bs') isAnswered = answers[q.id] && Object.keys(answers[q.id]).length === q.statements.length; 
                 else isAnswered = !!answers[q.id]; 
                 
-                // Base classes
                 btn.className = 'w-full py-2 border rounded font-bold text-sm transition-all duration-200';
                 
-                // Status colors
                 if (raguStatuses[q.id]) {
                     btn.classList.add('bg-yellow-400', 'text-yellow-900', 'border-yellow-500', 'shadow-sm'); 
                 } else if (isAnswered) { 
@@ -1307,7 +1283,6 @@
                     btn.classList.add('bg-white', 'text-slate-600', 'border-slate-300'); 
                 } 
                 
-                // Active indicator (Cincin outline tebal tanpa merusak border dasar)
                 if (index === currentQIndex) { 
                     btn.classList.add('ring-4', 'ring-blue-300', 'border-blue-700', 'text-blue-900', 'scale-105', 'z-10'); 
                     if (!raguStatuses[q.id] && !isAnswered) {
@@ -1323,7 +1298,7 @@
             document.getElementById('q-type-badge').innerText = typeLabel;
             
             let html = ``; 
-            if(q.img) html += `<div class="text-center mb-6"><img src="${q.img}" class="max-h-64 max-w-full object-contain inline-block rounded-xl border border-slate-200 shadow-sm"></div>`; 
+            if(q.img) html += `<div class="text-center mb-6"><img src="${q.img}" class="max-h-64 max-w-full object-contain inline-block rounded-xl border border-slate-200 shadow-sm" onerror="this.style.display='none';"></div>`; 
             html += `<p class="mb-6 font-semibold text-slate-800 text-lg leading-relaxed">${q.text}</p>`;
             
             const currentAns = answers[q.id];
@@ -1391,19 +1366,17 @@
             clearInterval(timerInterval); if(!isBackground) closeModal(); document.getElementById('view-loading').classList.remove('hidden-view'); document.getElementById('loading-text').innerText = "Menghitung Skor Skala 100...";
             
             let rawScore = 0; let maxRawScore = 0;
-            // 👉 TAMBAHAN: Counter Rincian Nilai
             let benarPG = 0; let benarPGK = 0; let benarBS = 0; 
 
             activeQuestions.forEach(q => {
-                let bobotSoal = (q.type === 'pg') ? 1 : 2; // PG = 1 Poin | PGK & BS = 2 Poin
+                let bobotSoal = (q.type === 'pg') ? 1 : 2; 
                 maxRawScore += bobotSoal;
-
                 const usrAns = answers[q.id];
                 
                 if (q.type === 'kompleks') {
                     if (Array.isArray(usrAns) && Array.isArray(q.answer) && usrAns.length === q.answer.length && usrAns.every(v => q.answer.includes(v))) {
                         rawScore += bobotSoal;
-                        benarPGK++; // Hitung benar PGK
+                        benarPGK++;
                     }
                 } else if (q.type === 'bs') {
                     if (typeof usrAns === 'object') {
@@ -1413,13 +1386,13 @@
                         });
                         if (allCorrect && ansCount === q.statements.length) {
                             rawScore += bobotSoal;
-                            benarBS++; // Hitung benar BS
+                            benarBS++; 
                         }
                     }
                 } else {
                     if (usrAns === q.answer) {
                         rawScore += bobotSoal;
-                        benarPG++; // Hitung benar PG
+                        benarPG++; 
                     }
                 }
             });
@@ -1427,10 +1400,9 @@
             let finalScoreScale100 = (rawScore / maxRawScore) * 100;
             finalScoreScale100 = Math.round(finalScoreScale100 * 100) / 100;
 
-            if (window.db && window.userId) {
+            if (window.db && window.userId && window.userId !== 'offline_user') {
                 try {
                     const scoreDocRef = window.doc(window.db, 'artifacts', window.appId, 'public', 'data', 'scores', window.userId); 
-                    // 👉 TAMBAHAN: Setor status 'finished' dan rincian nilainya
                     await window.setDoc(scoreDocRef, { 
                         participantName: participant.name, 
                         group: participant.group, 
