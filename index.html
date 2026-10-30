@@ -1069,7 +1069,7 @@
             });
         }
         // Fungsi Render Tabel Live Monitoring Panitia
-function renderLiveMonitoringPanitia(dataPeserta) {
+        function renderLiveMonitoringPanitia(dataPeserta) {
             const tbody = document.getElementById('table-body-monitoring');
             if (!tbody) return;
             tbody.innerHTML = ''; 
@@ -1111,40 +1111,6 @@ function renderLiveMonitoringPanitia(dataPeserta) {
                 tbody.appendChild(tr);
             });
         }
-
-    dataPeserta.forEach(p => {
-        let statusBadge = '';
-        let skorPG = '-';
-        let skorPGK = '-';
-        let skorBS = '-';
-        let nilaiAkhir = '-';
-
-        // Deteksi status pengerjaan
-        if (p.status === 'mengerjakan') {
-            statusBadge = `<span class="inline-flex items-center gap-1.5 px-2.5 py-1 rounded-full bg-amber-500/10 text-amber-400 border border-amber-500/20 text-xs font-medium animate-pulse"><span class="w-1.5 h-1.5 rounded-full bg-amber-400"></span>Mengerjakan</span>`;
-        } else if (p.status === 'selesai') {
-            statusBadge = `<span class="inline-flex items-center gap-1.5 px-2.5 py-1 rounded-full bg-emerald-500/10 text-emerald-400 border border-emerald-500/20 text-xs font-medium"><svg class="w-3 h-3" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M5 13l4 4L19 7"></path></svg>Selesai</span>`;
-            // Ambil rincian dari database (Pastikan variabel ini sesuai dengan struktur DB Bosku)
-            skorPG = p.rincian?.pg || 0;
-            skorPGK = p.rincian?.pgk || 0;
-            skorBS = p.rincian?.bs || 0;
-            nilaiAkhir = `<span class="font-bold text-white text-base">${p.nilai || 0}</span>`;
-        }
-
-        const tr = document.createElement('tr');
-        tr.className = "hover:bg-slate-800/30 transition-colors";
-        tr.innerHTML = `
-            <td class="p-4 font-medium text-white">${p.nama}</td>
-            <td class="p-4 text-slate-400">${p.kelompok}</td>
-            <td class="p-4 text-center">${statusBadge}</td>
-            <td class="p-4 text-center font-mono text-slate-400">${skorPG}</td>
-            <td class="p-4 text-center font-mono text-slate-400">${skorPGK}</td>
-            <td class="p-4 text-center font-mono text-slate-400">${skorBS}</td>
-            <td class="p-4 text-right">${nilaiAkhir}</td>
-        `;
-        tbody.appendChild(tr);
-    });
-}
 
         // FUNGSI RENDER PENGHARGAAN INDIVIDU (Dipakai bersama oleh Panitia & Sekolah)
         function generateTop3Html(top3) {
@@ -1318,6 +1284,13 @@ function renderLiveMonitoringPanitia(dataPeserta) {
                     startedAt: Date.now() 
                 }, { merge: true });
             }
+
+            // 👉 BAGIAN INI YANG TADI TERHAPUS: 
+            document.getElementById('exam-user-info').innerText = `Peserta: ${participant.name} | ${participant.group}`;
+            generateNavGrid(); loadQuestion(0); switchView('view-exam');
+            clearInterval(timerInterval); timerInterval = setInterval(updateTimer, 1000);
+            btn.innerText = "Mulai Ujian"; btn.disabled = false;
+        }
 
         function updateTimer() {
             const now = Date.now(); const timeLeft = Math.floor((examEndTime - now) / 1000);
