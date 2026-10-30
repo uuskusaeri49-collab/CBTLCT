@@ -173,7 +173,7 @@
                     <button onclick="switchView('view-login-peserta')" class="w-full group bg-[#161f31] hover:bg-[#1e293b] border border-slate-800 hover:border-emerald-500 p-5 rounded-xl transition-all flex items-center justify-between text-left shadow-lg">
                         <div class="flex items-center gap-4">
                             <div class="w-12 h-12 rounded-lg bg-emerald-500/10 text-emerald-400 flex items-center justify-center group-hover:bg-emerald-600 group-hover:text-white transition-colors">
-                                <svg class="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 6.253v13m0-13C10.832 5.477 9.246 5 7.5 5S4.168 5.477 3 6.253v13C4.168 18.477 5.754 18 7.5 18s3.332.477 4.5 1.253m0-13C13.168 5.477 14.754 5 16.5 5c1.747 0 3.332.477 4.5 1.253v13C19.832 18.477 18.247 18 16.5 18c-1.746 0-3.332.477-4.5 1.253"></path></svg>
+                                <svg class="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 6.253v13m0-13C10.832 5.477 9.246 5 7.5 5S4.168 5.477 3 6.253v13C4.168 18.477 5.754 18 7.5 18s3.332.477 4.5 1.253m0-13C13.168 5.477 14.754 5 16.5 5c1.747 0 3.332.477-4.5 1.253v13C19.832 18.477 18.247 18 16.5 18c-1.746 0-3.332.477-4.5 1.253"></path></svg>
                             </div>
                             <div>
                                 <h3 class="text-base font-bold text-white group-hover:text-emerald-400 transition-colors">Portal Peserta</h3>
@@ -285,99 +285,101 @@
     </div>
 
     <!-- VIEW: Admin Dashboard -->
-    <div id="view-admin-dash" class="hidden-view h-full flex flex-col">
+    <div id="view-admin-dash" class="hidden-view h-full flex flex-col bg-slate-100 overflow-hidden">
         <header class="bg-blue-800 text-white p-4 flex justify-between items-center shadow-md z-10 shrink-0">
             <div class="flex items-center gap-3"><div class="bg-white/20 p-2 rounded-lg"><svg class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 4.354a4 4 0 110 5.292M15 21H3v-1a6 6 0 0112 0v1zm0 0h6v-1a6 6 0 00-9-5.197M13 7a4 4 0 11-8 0 4 4 0 018 0z"></path></svg></div><h1 class="text-xl font-bold tracking-wide">Panel Panitia</h1></div>
             <button onclick="logoutAdmin()" class="text-sm bg-blue-900 hover:bg-red-600 px-4 py-1.5 rounded-full transition-colors font-medium">Logout Admin</button>
         </header>
 
-        <div class="flex-1 p-4 md:p-6 flex flex-col md:flex-row gap-6 overflow-hidden bg-slate-100">
-            <div class="w-full md:w-1/3 bg-white rounded-xl shadow-sm border border-slate-200 p-5 flex flex-col overflow-y-auto">
-                <h2 class="text-base font-bold text-slate-800 border-b pb-2 mb-4">Pengaturan Ujian</h2>
-                
-                <div class="mb-5">
-                    <label class="text-xs font-bold text-slate-500 uppercase tracking-wider block mb-2">1. Daftar Kelompok Peserta</label>
-                    <div class="flex gap-2 mb-2"><input type="text" id="input-new-group" placeholder="Misal: SDN 1 Pusat" class="flex-1 px-3 py-1.5 border rounded text-sm outline-none" onkeypress="if(event.key==='Enter') addGroup()"><button onclick="addGroup()" class="px-3 py-1.5 bg-slate-800 text-white rounded text-sm hover:bg-slate-700">+</button></div>
-                    <div id="admin-group-list" class="flex flex-wrap gap-2 max-h-32 overflow-y-auto p-2 border border-slate-100 bg-slate-50 rounded"></div>
-                </div>
-
-                <div class="mb-5 border-t pt-4 bg-purple-50 p-3 rounded-lg border border-purple-100">
-                    <label class="text-xs font-bold text-purple-700 uppercase tracking-wider block mb-2">2. Buat Akun Pemantau (Guru)</label>
-                    <div class="flex flex-col gap-2 mb-2">
-                        <input type="text" id="input-acc-user" placeholder="Buat Username" class="px-3 py-1.5 border border-purple-200 rounded text-sm outline-none">
-                        <input type="text" id="input-acc-pass" placeholder="Buat Password" class="px-3 py-1.5 border border-purple-200 rounded text-sm outline-none">
-                        <select id="input-acc-group" class="px-3 py-1.5 border border-purple-200 rounded text-sm outline-none bg-white"></select>
-                        <button onclick="addSchoolAccount()" class="w-full py-1.5 bg-purple-600 text-white rounded text-sm font-bold hover:bg-purple-700">Simpan Akun</button>
+        <div class="flex-1 overflow-y-auto p-4 md:p-6 flex flex-col gap-6">
+            <div class="flex flex-col md:flex-row gap-6">
+                <!-- PANEL PENGATURAN -->
+                <div class="w-full md:w-1/3 bg-white rounded-xl shadow-sm border border-slate-200 p-5 flex flex-col">
+                    <h2 class="text-base font-bold text-slate-800 border-b pb-2 mb-4">Pengaturan Ujian</h2>
+                    
+                    <div class="mb-5">
+                        <label class="text-xs font-bold text-slate-500 uppercase tracking-wider block mb-2">1. Daftar Kelompok Peserta</label>
+                        <div class="flex gap-2 mb-2"><input type="text" id="input-new-group" placeholder="Misal: SDN 1 Pusat" class="flex-1 px-3 py-1.5 border rounded text-sm outline-none" onkeypress="if(event.key==='Enter') addGroup()"><button onclick="addGroup()" class="px-3 py-1.5 bg-slate-800 text-white rounded text-sm hover:bg-slate-700">+</button></div>
+                        <div id="admin-group-list" class="flex flex-wrap gap-2 max-h-32 overflow-y-auto p-2 border border-slate-100 bg-slate-50 rounded"></div>
                     </div>
-                    <div id="admin-acc-list" class="space-y-1 mt-3 max-h-24 overflow-y-auto"></div>
-                </div>
 
-                <div class="mb-5 border-t pt-4">
-                    <label class="text-xs font-bold text-slate-500 uppercase tracking-wider block mb-2">3. Akses Token</label>
-                    <div class="bg-blue-50 border border-blue-200 rounded-lg p-3 text-center mb-2"><span id="display-token" class="text-3xl font-mono font-black text-blue-700 tracking-widest">------</span></div>
-                    <button onclick="generateNewToken()" class="w-full py-2 bg-blue-600 text-white rounded text-sm font-medium hover:bg-blue-700">Generate Token Baru</button>
-                </div>
-
-                <div class="border-t pt-4 mt-auto">
-                    <label class="text-xs font-bold text-slate-500 uppercase tracking-wider block mb-2">4. Waktu Mulai Ujian</label>
-                    <div class="flex gap-2 mb-2">
-                        <input type="datetime-local" id="admin-waktu-mulai" class="flex-1 px-3 py-2 border border-slate-300 rounded text-sm outline-none focus:border-blue-500">
-                        <button onclick="resetJadwal()" class="px-3 py-2 bg-red-100 text-red-600 rounded text-sm font-bold hover:bg-red-200 transition-colors" title="Kosongkan Jadwal">✕</button>
+                    <div class="mb-5 border-t pt-4 bg-purple-50 p-3 rounded-lg border border-purple-100">
+                        <label class="text-xs font-bold text-purple-700 uppercase tracking-wider block mb-2">2. Buat Akun Pemantau (Guru)</label>
+                        <div class="flex flex-col gap-2 mb-2">
+                            <input type="text" id="input-acc-user" placeholder="Buat Username" class="px-3 py-1.5 border border-purple-200 rounded text-sm outline-none">
+                            <input type="text" id="input-acc-pass" placeholder="Buat Password" class="px-3 py-1.5 border border-purple-200 rounded text-sm outline-none">
+                            <select id="input-acc-group" class="px-3 py-1.5 border border-purple-200 rounded text-sm outline-none bg-white"></select>
+                            <button onclick="addSchoolAccount()" class="w-full py-1.5 bg-purple-600 text-white rounded text-sm font-bold hover:bg-purple-700">Simpan Akun</button>
+                        </div>
+                        <div id="admin-acc-list" class="space-y-1 mt-3 max-h-24 overflow-y-auto"></div>
                     </div>
-                    <button onclick="simpanJadwal()" class="w-full py-2 bg-green-600 text-white rounded text-sm font-medium hover:bg-green-700">Terapkan Jadwal</button>
-                    <p class="text-xs text-green-600 mt-2 hidden text-center font-medium" id="jadwal-success-msg">Pengaturan tersimpan!</p>
+
+                    <div class="mb-5 border-t pt-4">
+                        <label class="text-xs font-bold text-slate-500 uppercase tracking-wider block mb-2">3. Akses Token</label>
+                        <div class="bg-blue-50 border border-blue-200 rounded-lg p-3 text-center mb-2"><span id="display-token" class="text-3xl font-mono font-black text-blue-700 tracking-widest">------</span></div>
+                        <button onclick="generateNewToken()" class="w-full py-2 bg-blue-600 text-white rounded text-sm font-medium hover:bg-blue-700">Generate Token Baru</button>
+                    </div>
+
+                    <div class="border-t pt-4 mt-auto">
+                        <label class="text-xs font-bold text-slate-500 uppercase tracking-wider block mb-2">4. Waktu Mulai Ujian</label>
+                        <div class="flex gap-2 mb-2">
+                            <input type="datetime-local" id="admin-waktu-mulai" class="flex-1 px-3 py-2 border border-slate-300 rounded text-sm outline-none focus:border-blue-500">
+                            <button onclick="resetJadwal()" class="px-3 py-2 bg-red-100 text-red-600 rounded text-sm font-bold hover:bg-red-200 transition-colors" title="Kosongkan Jadwal">✕</button>
+                        </div>
+                        <button onclick="simpanJadwal()" class="w-full py-2 bg-green-600 text-white rounded text-sm font-medium hover:bg-green-700">Terapkan Jadwal</button>
+                        <p class="text-xs text-green-600 mt-2 hidden text-center font-medium" id="jadwal-success-msg">Pengaturan tersimpan!</p>
+                    </div>
+
+                    <div class="border-t border-red-200 pt-4 mt-5">
+                        <label class="text-xs font-bold text-red-500 uppercase tracking-wider block mb-2">5. Zona Berbahaya</label>
+                        <button onclick="konfirmasiReset()" class="w-full py-2 bg-red-50 text-red-600 border border-red-200 rounded text-sm font-bold hover:bg-red-600 hover:text-white transition-colors">Reset Semua Nilai (Sesi Baru)</button>
+                    </div>
                 </div>
 
-                <div class="border-t border-red-200 pt-4 mt-5">
-                    <label class="text-xs font-bold text-red-500 uppercase tracking-wider block mb-2">5. Zona Berbahaya</label>
-                    <button onclick="konfirmasiReset()" class="w-full py-2 bg-red-50 text-red-600 border border-red-200 rounded text-sm font-bold hover:bg-red-600 hover:text-white transition-colors">Reset Semua Nilai (Sesi Baru)</button>
+                <!-- KLASEMEN SCORE -->
+                <div class="w-full md:w-2/3 bg-white rounded-xl shadow-sm border border-slate-200 p-5 flex flex-col max-h-[600px]">
+                    <div class="flex justify-between items-center border-b pb-4 mb-4 shrink-0">
+                        <h2 class="text-lg font-black text-slate-800 uppercase tracking-wide">🏆 Live Score Kumulatif</h2>
+                        <span class="flex items-center gap-1.5 text-xs font-bold text-green-700 bg-green-100 px-3 py-1.5 rounded-full uppercase tracking-wider shadow-sm"><span class="w-2.5 h-2.5 rounded-full bg-green-500 animate-pulse"></span> Live Sync</span>
+                    </div>
+                    
+                    <div id="admin-top-individuals" class="mb-5 bg-gradient-to-br from-slate-900 to-slate-800 rounded-xl p-4 shadow-md hidden shrink-0"></div>
+
+                    <div class="flex-1 overflow-y-auto pr-2 grid grid-cols-1 lg:grid-cols-2 gap-5 items-start content-start" id="leaderboard-container"></div>
                 </div>
             </div>
 
-            <div class="w-full md:w-2/3 bg-white rounded-xl shadow-sm border border-slate-200 p-5 flex flex-col">
-                <div class="flex justify-between items-center border-b pb-4 mb-4 shrink-0">
-                    <h2 class="text-lg font-black text-slate-800 uppercase tracking-wide">🏆 Live Score Kumulatif</h2>
-                    <span class="flex items-center gap-1.5 text-xs font-bold text-green-700 bg-green-100 px-3 py-1.5 rounded-full uppercase tracking-wider shadow-sm"><span class="w-2.5 h-2.5 rounded-full bg-green-500 animate-pulse"></span> Live Sync</span>
+            <!-- TABEL LIVE MONITORING (DESAIN BARU - LIGHT THEME) -->
+            <div class="bg-white border border-slate-200 rounded-xl overflow-hidden shadow-sm shrink-0">
+                <div class="p-5 border-b border-slate-200 flex justify-between items-center bg-slate-50">
+                    <div>
+                        <h3 class="text-base font-bold text-slate-800">Live Monitoring Peserta</h3>
+                        <p class="text-xs text-slate-500 mt-0.5">Pantau status pengerjaan dan rincian nilai secara real-time</p>
+                    </div>
+                    <div class="flex items-center gap-1.5 text-xs font-bold text-blue-700 bg-blue-100 px-3 py-1.5 rounded-full uppercase tracking-wider">
+                        <span class="w-2.5 h-2.5 rounded-full bg-blue-500 animate-pulse"></span> Live Sync
+                    </div>
                 </div>
-                
-                <!-- PENGHARGAAN TOP 3 INDIVIDU (PANITIA) -->
-                <div id="admin-top-individuals" class="mb-5 bg-gradient-to-br from-slate-900 to-slate-800 rounded-xl p-4 shadow-md hidden shrink-0"></div>
-
-                <div class="flex-1 overflow-y-auto pr-2 grid grid-cols-1 lg:grid-cols-2 gap-5 items-start content-start" id="leaderboard-container"></div>
-            </div>
-        </div>
-        <!-- TAMBAHAN: LIVE MONITORING PESERTA DI DASHBOARD PANITIA -->
-        <div class="mt-8 bg-[#161f31] border border-slate-800 rounded-2xl overflow-hidden shadow-xl">
-            <div class="p-6 border-b border-slate-800 flex justify-between items-center bg-[#0b0f19]/50">
-                <div>
-                    <h3 class="text-lg font-bold text-white">Live Monitoring Peserta</h3>
-                    <p class="text-xs text-slate-400">Pantau status peserta dan rincian nilai secara real-time</p>
+                <div class="overflow-x-auto">
+                    <table class="w-full text-left border-collapse min-w-max">
+                        <thead>
+                            <tr class="bg-slate-100 text-xs uppercase tracking-wider text-slate-600 border-b border-slate-200">
+                                <th class="p-4 font-bold">Nama Peserta</th>
+                                <th class="p-4 font-bold">Kelompok/Sekolah</th>
+                                <th class="p-4 font-bold text-center">Status</th>
+                                <th class="p-4 font-bold text-center" title="Skor Pilihan Ganda">PG</th>
+                                <th class="p-4 font-bold text-center" title="Skor Pilihan Ganda Kompleks">PGK</th>
+                                <th class="p-4 font-bold text-center" title="Skor Benar Salah">BS</th>
+                                <th class="p-4 font-bold text-right text-blue-600">Nilai Akhir</th>
+                            </tr>
+                        </thead>
+                        <tbody id="table-body-monitoring" class="text-sm text-slate-700 divide-y divide-slate-100">
+                            <tr>
+                                <td colspan="7" class="p-8 text-center text-slate-400 font-medium">Memuat data peserta dari server...</td>
+                            </tr>
+                        </tbody>
+                    </table>
                 </div>
-                <div class="flex items-center gap-2">
-                    <span class="w-3 h-3 rounded-full bg-amber-500 animate-pulse"></span>
-                    <span class="text-xs font-medium text-amber-400 tracking-wide">LIVE SYNC</span>
-                </div>
-            </div>
-            <div class="overflow-x-auto">
-                <table class="w-full text-left border-collapse min-w-max">
-                    <thead>
-                        <tr class="bg-[#0b0f19] text-xs uppercase tracking-wider text-slate-400 border-b border-slate-800">
-                            <th class="p-4 font-semibold">Nama Peserta</th>
-                            <th class="p-4 font-semibold">Kelompok/Sekolah</th>
-                            <th class="p-4 font-semibold text-center">Status</th>
-                            <th class="p-4 font-semibold text-center" title="Pilihan Ganda">PG</th>
-                            <th class="p-4 font-semibold text-center" title="Pilihan Ganda Kompleks">PGK</th>
-                            <th class="p-4 font-semibold text-center" title="Benar Salah">BS</th>
-                            <th class="p-4 font-semibold text-right text-blue-400">Nilai Akhir</th>
-                        </tr>
-                    </thead>
-                    <tbody id="table-body-monitoring" class="text-sm text-slate-300 divide-y divide-slate-800/50">
-                        <!-- Data akan otomatis di-render oleh JavaScript -->
-                        <tr>
-                            <td colspan="7" class="p-8 text-center text-slate-500">Memuat data peserta dari server...</td>
-                        </tr>
-                    </tbody>
-                </table>
             </div>
         </div>
     </div>
@@ -495,7 +497,7 @@
     "id": 2,
     "type": "pg",
     "text": "Sebuah bak air berbentuk balok berukuran panjang 80 cm, lebar 50 cm, dan tinggi 60 cm. Jika bak tersebut hanya terisi tiga perempat bagian, berapa liter volume air yang ada di dalam bak tersebut?",
-    "img": "stimulus_2.jpg", // Bak air sebagian terisi (Gambar Bangun Ruang)
+    "img": "stimulus_2.jpg",
     "options": [
       {"val": "A", "text": "180 liter"},
       {"val": "B", "text": "240 liter"},
@@ -508,7 +510,7 @@
     "id": 3,
     "type": "pg",
     "text": "Bu Aminah membeli 3 kg telur dan 2 kg terigu dengan total harga Rp72.000,00. Jika harga 1 kg telur adalah Rp16.000,00, berapakah harga untuk 1 kg terigu?",
-    "img": "stimulus_3.jpg", // Ibu-ibu belanja di warung (Ilustrasi Cerita & Gambar)
+    "img": "stimulus_3.jpg",
     "options": [
       {"val": "A", "text": "Rp12.000,00"},
       {"val": "B", "text": "Rp14.000,00"},
@@ -534,7 +536,7 @@
     "id": 5,
     "type": "pg",
     "text": "Perhatikan denah berikut. Jarak antara rumah Bayu dan sekolah pada denah adalah 8 cm. Jika skala yang digunakan pada denah tersebut adalah 1 : 15.000, berapakah jarak sebenarnya antara rumah Bayu dan sekolah dalam satuan kilometer?",
-    "img": "stimulus_5.jpg", // Denah rumah ke sekolah (Gambar)
+    "img": "stimulus_5.jpg",
     "options": [
       {"val": "A", "text": "1,2 km"},
       {"val": "B", "text": "12 km"},
@@ -547,7 +549,7 @@
     "id": 6,
     "type": "pg",
     "text": "Rina memiliki selembar kertas berbentuk persegi panjang dengan ukuran panjang 24 cm dan lebar 18 cm. Ia ingin memotong kertas tersebut menjadi beberapa persegi kecil yang berukuran sama tanpa ada sisa kertas. Berapakah panjang sisi terbesar dari persegi kecil yang dapat dibuat Rina?",
-    "img": "stimulus_6.jpg", // Ilustrasi kertas dipotong (Ilustrasi Cerita & Gambar)
+    "img": "stimulus_6.jpg",
     "options": [
       {"val": "A", "text": "6 cm"},
       {"val": "B", "text": "3 cm"},
@@ -586,7 +588,7 @@
     "id": 9,
     "type": "pg",
     "text": "Hasil panen padi di sebuah desa selama 5 bulan berturut-turut adalah sebagai berikut: Januari 45 ton, Februari 50 ton, Maret 40 ton, April 55 ton, dan Mei 60 ton. Berapakah rata-rata hasil panen padi desa tersebut setiap bulannya?",
-    "img": "stimulus_9.jpg", // Tabel data panen bulanan (Tabel Data)
+    "img": "stimulus_9.jpg",
     "options": [
       {"val": "A", "text": "50 ton"},
       {"val": "B", "text": "48 ton"},
@@ -599,7 +601,7 @@
     "id": 10,
     "type": "pg",
     "text": "Perhatikan grafik batang penjualan buku di Toko 'Maju' berikut! Selisih penjualan buku paling banyak dan paling sedikit yang terjadi selama lima hari tersebut adalah...",
-    "img": "stimulus_10.jpg", // Grafik batang penjualan buku (Diagram Batang)
+    "img": "stimulus_10.jpg",
     "options": [
       {"val": "A", "text": "50 eksemplar"},
       {"val": "B", "text": "40 eksemplar"},
@@ -612,7 +614,7 @@
     "id": 11,
     "type": "pg",
     "text": "Seorang pedagang membeli 2 lusin pensil dengan harga Rp48.000,00. Jika pedagang tersebut ingin mendapatkan keuntungan sebesar Rp12.000,00 dari penjualan seluruh pensil tersebut, berapakah harga jual eceran untuk setiap batang pensilnya?",
-    "img": "stimulus_11.jpg", // Ilustrasi transaksi atau pensil (Ilustrasi Cerita & Gambar)
+    "img": "stimulus_11.jpg",
     "options": [
       {"val": "A", "text": "Rp2.500,00"},
       {"val": "B", "text": "Rp2.000,00"},
@@ -625,7 +627,7 @@
     "id": 12,
     "type": "pg",
     "text": "Sebuah taman berbentuk lingkaran dengan diameter 28 meter. Di sekeliling taman tersebut akan ditanami pohon palem dengan jarak antar pohon adalah 4 meter. Banyaknya pohon palem yang dibutuhkan adalah...",
-    "img": "stimulus_12.jpg", // Taman lingkaran dan pohon (Gambar)
+    "img": "stimulus_12.jpg",
     "options": [
       {"val": "A", "text": "22 pohon"},
       {"val": "B", "text": "44 pohon"},
@@ -656,7 +658,7 @@
     "id": 14,
     "type": "kompleks",
     "text": "Sebuah toko pakaian memberikan diskon ganda '50% + 20%' untuk semua jenis jaket. Harga awal sebuah jaket adalah Rp200.000,00. Manakah di antara pernyataan berikut yang benar mengenai transaksi tersebut? (Pilihlah dua jawaban yang benar!)",
-    "img": "stimulus_14.jpg", // Gantungan baju berlabel diskon (Ilustrasi Cerita & Gambar)
+    "img": "stimulus_14.jpg",
     "options": [
       {"val": "A", "text": "Potongan harga pertama (50%) membuat harga jaket menjadi Rp100.000,00"},
       {"val": "B", "text": "Harga akhir yang harus dibayar pembeli untuk jaket tersebut adalah Rp60.000,00"},
@@ -669,7 +671,7 @@
     "id": 15,
     "type": "kompleks",
     "text": "Pak Tono memiliki tanah berbentuk persegi panjang dengan panjang 30 meter dan lebar 20 meter. Di dalam tanah tersebut, ia membuat sebuah kolam ikan berbentuk kuadrat (persegi) dengan panjang sisi 10 meter. Manakah dari pernyataan berikut yang sesuai? (Pilihlah dua jawaban yang benar!)",
-    "img": "stimulus_15.jpg", // Denah tanah dan kolam (Gambar)
+    "img": "stimulus_15.jpg",
     "options": [
       {"val": "A", "text": "Luas seluruh tanah Pak Tono sebelum dibuat kolam adalah 600 meter persegi"},
       {"val": "B", "text": "Luas kolam ikan yang dibuat adalah 40 meter persegi"},
@@ -695,7 +697,7 @@
     "id": 17,
     "type": "kompleks",
     "text": "Perhatikan gambar berikut yang menunjukkan beberapa bangun datar: jajar genjang, persegi panjang, belah ketupat, dan trapesium sama kaki. Manakah pernyataan yang merupakan sifat dari jajar genjang dan persegi panjang? (Pilihlah dua jawaban yang benar!)",
-    "img": "stimulus_17.jpg", // Beberapa bangun datar (Gambar)
+    "img": "stimulus_17.jpg",
     "options": [
       {"val": "A", "text": "Kedua bangun tersebut memiliki dua pasang sisi yang sejajar dan sama panjang"},
       {"val": "B", "text": "Kedua bangun tersebut memiliki empat sudut siku-siku (90 derajat)"},
@@ -708,7 +710,7 @@
     "id": 18,
     "type": "kompleks",
     "text": "Pada sebuah peta dengan skala 1 : 250.000, terdapat beberapa kota yang saling terhubung. Jarak kota A ke kota B pada peta adalah 6 cm, sedangkan jarak kota B ke kota C pada peta adalah 4 cm. Manakah pernyataan berikut yang bernilai benar? (Pilihlah dua jawaban yang benar!)",
-    "img": "stimulus_18.jpg", // Peta sederhana dengan jarak antar titik (Gambar)
+    "img": "stimulus_18.jpg",
     "options": [
       {"val": "A", "text": "Jarak sebenarnya dari kota A ke kota B adalah 15 km"},
       {"val": "B", "text": "Jarak sebenarnya dari kota B ke kota C adalah 10 km"},
@@ -734,7 +736,7 @@
     "id": 20,
     "type": "kompleks",
     "text": "Perhatikan grafik lingkaran berikut yang menunjukkan kegemaran olah raga dari 120 siswa kelas 6 SD Harapan: Sepak Bola 40%, Bulu Tangkis 25%, Basket 20%, dan Sisanya Gemar Voli. Manakah pernyataan yang sesuai dengan data tersebut? (Pilihlah dua jawaban yang benar!)",
-    "img": "stimulus_20.jpg", // Diagram lingkaran (Piktogram/Diagram Data)
+    "img": "stimulus_20.jpg",
     "options": [
       {"val": "A", "text": "Jumlah siswa kelas 6 yang gemar sepak bola adalah 48 anak"},
       {"val": "B", "text": "Siswa yang gemar bermain voli adalah sebanyak 15% dari total siswa"},
@@ -767,20 +769,20 @@
     "text": "Perhatikan pernyataan matematika mengenai operasi hitung pecahan berikut. Tentukan apakah pernyataan berikut BENAR atau SALAH!",
     "img": null,
     "statements": [
-      { id: "s1", text: "Hasil dari 3/4 + 1/2 adalah 5/4 atau 1 1/4", "answer": "B"},
-      { id: "s2", text: "Hasil dari 2/3 x 3/5 adalah 2/5", "answer": "B"},
-      { id: "s3", text: "Nilai dari 1/2 : 1/4 adalah 1/8", "answer": "S"}
+      { "id": "s1", "text": "Hasil dari 3/4 + 1/2 adalah 5/4 atau 1 1/4", "answer": "B"},
+      { "id": "s2", "text": "Hasil dari 2/3 x 3/5 adalah 2/5", "answer": "B"},
+      { "id": "s3", "text": "Nilai dari 1/2 : 1/4 adalah 1/8", "answer": "S"}
     ]
   },
   {
-    id: 23,
-    type: "bs",
-    text: "Pak Hari memiliki sebidang tanah berbentuk persegi dengan keliling 80 meter. Di sekeliling tanah tersebut akan dipasang pagar kawat. Tentukan apakah pernyataan berikut BENAR atau SALAH!",
-    img: "stimulus_23.jpg", 
-    statements: [
-      { id: "s1", text: "Panjang sisi tanah persegi Pak Hari adalah 20 meter", answer: "B" },
-      { id: "s2", text: "Luas tanah yang dimiliki Pak Hari adalah 160 meter persegi", answer: "S" },
-      { id: "s3", text: "Jika biaya pembuatan pagar adalah Rp50.000,00 per meter, maka total biaya adalah Rp4.000.000,00", answer: "S" }
+    "id": 23,
+    "type": "bs",
+    "text": "Pak Hari memiliki sebidang tanah berbentuk persegi dengan keliling 80 meter. Di sekeliling tanah tersebut akan dipasang pagar kawat. Tentukan apakah pernyataan berikut BENAR atau SALAH!",
+    "img": "stimulus_23.jpg", 
+    "statements": [
+      { "id": "s1", "text": "Panjang sisi tanah persegi Pak Hari adalah 20 meter", "answer": "B" },
+      { "id": "s2", "text": "Luas tanah yang dimiliki Pak Hari adalah 160 meter persegi", "answer": "S" },
+      { "id": "s3", "text": "Jika biaya pembuatan pagar adalah Rp50.000,00 per meter, maka total biaya adalah Rp4.000.000,00", "answer": "S" }
     ]
   },
   {
@@ -789,42 +791,42 @@
     "text": "Seorang anak bersepeda dari rumahnya menuju ke rumah nenek dengan kecepatan rata-rata 12 km/jam. Jarak rumah anak tersebut ke rumah nenek adalah 6 km. Tentukan apakah pernyataan berikut BENAR atau SALAH!",
     "img": null,
     "statements": [
-      { id: "s1", text: "Waktu yang dibutuhkan anak tersebut untuk sampai ke rumah nenek adalah 30 menit", "answer": "B"},
-      { id: "s2", text: "Jika ia berangkat pukul 08.00, maka ia akan tiba di rumah nenek pukul 08.30", "answer": "B"},
-      { id: "s3", text: "Jika kecepatannya naik menjadi 18 km/jam, waktu tempuhnya menjadi 45 menit", "answer": "S"}
+      { "id": "s1", "text": "Waktu yang dibutuhkan anak tersebut untuk sampai ke rumah nenek adalah 30 menit", "answer": "B"},
+      { "id": "s2", "text": "Jika ia berangkat pukul 08.00, maka ia akan tiba di rumah nenek pukul 08.30", "answer": "B"},
+      { "id": "s3", "text": "Jika kecepatannya naik menjadi 18 km/jam, waktu tempuhnya menjadi 45 menit", "answer": "S"}
     ]
   },
   {
     "id": 25,
     "type": "bs",
     "text": "Berikut adalah tabel tinggi badan lima orang siswa dalam satuan cm: Adi 140, Budi 145, Cici 138, Doni 142, dan Eko 135. Tentukan apakah pernyataan tentang tinggi badan siswa tersebut BENAR atau SALAH!",
-    "img": "stimulus_25.jpg", // Tabel tinggi badan (Tabel Data)
+    "img": "stimulus_25.jpg",
     "statements": [
-      { id: "s1", text: "Siswa yang memiliki tinggi badan paling tinggi di antara mereka adalah Budi", "answer": "B"},
-      { id: "s2", text: "Rata-rata tinggi badan dari kelima siswa tersebut adalah 140 cm", "answer": "B"},
-      { id: "s3", text: "Selisih tinggi badan antara Adi (tertinggi kedua) dan Eko (terpendek) adalah 7 cm", "answer": "S"}
+      { "id": "s1", "text": "Siswa yang memiliki tinggi badan paling tinggi di antara mereka adalah Budi", "answer": "B"},
+      { "id": "s2", "text": "Rata-rata tinggi badan dari kelima siswa tersebut adalah 140 cm", "answer": "B"},
+      { "id": "s3", "text": "Selisih tinggi badan antara Adi (tertinggi kedua) dan Eko (terpendek) adalah 7 cm", "answer": "S"}
     ]
   },
   {
     "id": 26,
     "type": "bs",
     "text": "Sebuah toples berbentuk tabung memiliki diameter alas 14 cm dan tinggi 20 cm. Tentukan apakah pernyataan berikut mengenai tabung tersebut BENAR atau SALAH! (Gunakan pi = 22/7)",
-    "img": "stimulus_26.jpg", // Bangun ruang tabung (Gambar Bangun Ruang)
+    "img": "stimulus_26.jpg",
     "statements": [
-      { id: "s1", text: "Jari-jari alas toples tersebut adalah 7 cm", "answer": "B"},
-      { id: "s2", text: "Luas alas dari toples tersebut adalah 154 cm persegi", "answer": "B"},
-      { id: "s3", text: "Volume maksimal yang dapat ditampung oleh toples tersebut adalah 3.080 cm kubik", "answer": "B"}
+      { "id": "s1", "text": "Jari-jari alas toples tersebut adalah 7 cm", "answer": "B"},
+      { "id": "s2", "text": "Luas alas dari toples tersebut adalah 154 cm persegi", "answer": "B"},
+      { "id": "s3", "text": "Volume maksimal yang dapat ditampung oleh toples tersebut adalah 3.080 cm kubik", "answer": "B"}
     ]
   },
   {
     "id": 27,
     "type": "bs",
     "text": "Perhatikan grafik garis suhu udara di kota Malang selama 5 hari (Senin-Jumat) berikut: Senin 22°C, Selasa 24°C, Rabu 23°C, Kamis 25°C, Jumat 21°C. Tentukan apakah pernyataan berikut BENAR atau SALAH!",
-    "img": "stimulus_27.jpg", // Grafik suhu (Grafik/Diagram Data)
+    "img": "stimulus_27.jpg",
     "statements": [
-      { id: "s1", text: "Suhu udara paling rendah terjadi pada hari Jumat yaitu 21°C", "answer": "B"},
-      { id: "s2", text: "Suhu udara mengalami kenaikan yang paling tinggi dari hari Selasa ke Rabu", "answer": "S"},
-      { id: "s3", text: "Rata-rata suhu udara di kota Malang selama lima hari tersebut adalah 23°C", "answer": "B"}
+      { "id": "s1", "text": "Suhu udara paling rendah terjadi pada hari Jumat yaitu 21°C", "answer": "B"},
+      { "id": "s2", "text": "Suhu udara mengalami kenaikan yang paling tinggi dari hari Selasa ke Rabu", "answer": "S"},
+      { "id": "s3", "text": "Rata-rata suhu udara di kota Malang selama lima hari tersebut adalah 23°C", "answer": "B"}
     ]
   },
   {
@@ -833,20 +835,20 @@
     "text": "Dalam sebuah kotak terdapat 5 bola merah, 3 bola kuning, dan 2 bola hijau. Dari kotak tersebut akan diambil satu bola secara acak. Tentukan apakah pernyataan berikut mengenai peluang tersebut BENAR atau SALAH!",
     "img": null,
     "statements": [
-      { id: "s1", text: "Peluang terambilnya bola berwarna merah adalah 1/2", "answer": "B"},
-      { id: "s2", text: "Peluang terambilnya bola kuning lebih besar daripada peluang terambilnya bola hijau", "answer": "B"},
-      { id: "s3", text: "Jumlah seluruh kejadian yang mungkin (seluruh bola dalam kotak) adalah 10", "answer": "B"}
+      { "id": "s1", "text": "Peluang terambilnya bola berwarna merah adalah 1/2", "answer": "B"},
+      { "id": "s2", "text": "Peluang terambilnya bola kuning lebih besar daripada peluang terambilnya bola hijau", "answer": "B"},
+      { "id": "s3", "text": "Jumlah seluruh kejadian yang mungkin (seluruh bola dalam kotak) adalah 10", "answer": "B"}
     ]
   },
   {
     "id": 29,
     "type": "bs",
     "text": "Sebuah toko elektronik memberikan potongan harga (diskon) sebesar 15% untuk pembelian sebuah kipas angin seharga Rp200.000,00. Tentukan apakah pernyataan berikut BENAR atau SALAH!",
-    "img": "stimulus_29.jpg", // Foto kipas dengan tulisan diskon (Ilustrasi Cerita & Gambar)
+    "img": "stimulus_29.jpg",
     "statements": [
-      { id: "s1", text: "Besar potongan harga (diskon) yang didapatkan pembeli adalah Rp30.000,00", "answer": "B"},
-      { id: "s2", text: "Harga yang harus dibayar pembeli setelah mendapatkan diskon adalah Rp170.000,00", "answer": "B"},
-      { id: "s3", text: "Jika pembeli membayar dengan dua lembar uang seratus ribuan, ia akan menerima kembalian Rp40.000,00", "answer": "S"}
+      { "id": "s1", "text": "Besar potongan harga (diskon) yang didapatkan pembeli adalah Rp30.000,00", "answer": "B"},
+      { "id": "s2", "text": "Harga yang harus dibayar pembeli setelah mendapatkan diskon adalah Rp170.000,00", "answer": "B"},
+      { "id": "s3", "text": "Jika pembeli membayar dengan dua lembar uang seratus ribuan, ia akan menerima kembalian Rp40.000,00", "answer": "S"}
     ]
   },
   {
@@ -855,9 +857,9 @@
     "text": "Rani ingin membuat beberapa segitiga dari kawat. Ia memiliki kawat sepanjang 60 cm. Rani ingin membuat segitiga sama sisi yang panjang setiap sisinya adalah 5 cm. Tentukan apakah pernyataan berikut BENAR atau SALAH!",
     "img": null,
     "statements": [
-      { id: "s1", text: "Keliling dari satu buah segitiga sama sisi yang dibuat Rani adalah 15 cm", "answer": "B"},
-      { id: "s2", text: "Dengan kawat yang dimilikinya, Rani dapat membuat paling banyak 4 buah segitiga sama sisi", "answer": "S"},
-      { id: "s3", text: "Jika Rani hanya membuat 3 buah segitiga sama sisi, sisa kawat yang ia miliki adalah 15 cm", "answer": "B"}
+      { "id": "s1", "text": "Keliling dari satu buah segitiga sama sisi yang dibuat Rani adalah 15 cm", "answer": "B"},
+      { "id": "s2", "text": "Dengan kawat yang dimilikinya, Rani dapat membuat paling banyak 4 buah segitiga sama sisi", "answer": "S"},
+      { "id": "s3", "text": "Jika Rani hanya membuat 3 buah segitiga sama sisi, sisa kawat yang ia miliki adalah 15 cm", "answer": "B"}
     ]
   }
 ];
@@ -1068,14 +1070,15 @@
                 renderLiveMonitoringPanitia(daftarPeserta); // Panggil tabel pemantauan!
             });
         }
-        // Fungsi Render Tabel Live Monitoring Panitia
+        
+        // Fungsi Render Tabel Live Monitoring Panitia (FIX DESAIN LIGHT THEME)
         function renderLiveMonitoringPanitia(dataPeserta) {
             const tbody = document.getElementById('table-body-monitoring');
             if (!tbody) return;
             tbody.innerHTML = ''; 
 
             if (dataPeserta.length === 0) {
-                tbody.innerHTML = `<tr><td colspan="7" class="p-8 text-center text-slate-500">Belum ada peserta yang login.</td></tr>`;
+                tbody.innerHTML = `<tr><td colspan="7" class="p-8 text-center text-slate-400 font-medium">Belum ada peserta yang login.</td></tr>`;
                 return;
             }
 
@@ -1088,24 +1091,24 @@
                 let nilaiAkhir = '-';
 
                 if (p.status === 'ongoing') {
-                    statusBadge = `<span class="inline-flex items-center gap-1.5 px-2.5 py-1 rounded-full bg-amber-500/10 text-amber-400 border border-amber-500/20 text-xs font-medium animate-pulse"><span class="w-1.5 h-1.5 rounded-full bg-amber-400"></span>Mengerjakan</span>`;
+                    statusBadge = `<span class="inline-flex items-center gap-1.5 px-2.5 py-1 rounded-full bg-amber-100 text-amber-700 border border-amber-200 text-xs font-bold animate-pulse"><span class="w-1.5 h-1.5 rounded-full bg-amber-500"></span>Mengerjakan</span>`;
                 } else if (p.status === 'finished') {
-                    statusBadge = `<span class="inline-flex items-center gap-1.5 px-2.5 py-1 rounded-full bg-emerald-500/10 text-emerald-400 border border-emerald-500/20 text-xs font-medium"><svg class="w-3 h-3" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M5 13l4 4L19 7"></path></svg>Selesai</span>`;
-                    skorPG = p.rincian?.pg || 0;
-                    skorPGK = p.rincian?.pgk || 0;
-                    skorBS = p.rincian?.bs || 0;
-                    nilaiAkhir = `<span class="font-bold text-white text-base">${p.score || 0}</span>`;
+                    statusBadge = `<span class="inline-flex items-center gap-1.5 px-2.5 py-1 rounded-full bg-emerald-100 text-emerald-700 border border-emerald-200 text-xs font-bold"><svg class="w-3 h-3" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M5 13l4 4L19 7"></path></svg>Selesai</span>`;
+                    skorPG = p.rincian?.pg ?? 0;
+                    skorPGK = p.rincian?.pgk ?? 0;
+                    skorBS = p.rincian?.bs ?? 0;
+                    nilaiAkhir = `<span class="font-black text-slate-800 text-base bg-slate-100 px-3 py-1 rounded shadow-sm border border-slate-200">${p.score ?? 0}</span>`;
                 }
 
                 const tr = document.createElement('tr');
-                tr.className = "hover:bg-slate-800/30 transition-colors";
+                tr.className = "hover:bg-blue-50 transition-colors";
                 tr.innerHTML = `
-                    <td class="p-4 font-medium text-white">${p.participantName || '-'}</td>
-                    <td class="p-4 text-slate-400">${p.group || '-'}</td>
+                    <td class="p-4 font-bold text-slate-800">${p.participantName || '-'}</td>
+                    <td class="p-4 text-slate-600 font-medium">${p.group || '-'}</td>
                     <td class="p-4 text-center">${statusBadge}</td>
-                    <td class="p-4 text-center font-mono text-slate-400">${skorPG}</td>
-                    <td class="p-4 text-center font-mono text-slate-400">${skorPGK}</td>
-                    <td class="p-4 text-center font-mono text-slate-400">${skorBS}</td>
+                    <td class="p-4 text-center font-mono font-medium text-slate-600">${skorPG}</td>
+                    <td class="p-4 text-center font-mono font-medium text-slate-600">${skorPGK}</td>
+                    <td class="p-4 text-center font-mono font-medium text-slate-600">${skorBS}</td>
                     <td class="p-4 text-right">${nilaiAkhir}</td>
                 `;
                 tbody.appendChild(tr);
